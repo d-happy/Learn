@@ -1,0 +1,54 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="DEPT" directorySegmentName="seg_0" id="40CB48D9-CEAB-66CF-0073-DA7D83CDE1DB">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:54 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<schemaObject>448C727B-E581-0964-926C-FA97870C1BC2</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>0A49B4DE-9FC3-067F-886E-35C754F7FF8E</segment>
+<tableSpace>2D500876-BE96-A0D9-47EF-7B234AF24D56</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="DNAME" id="64BBC997-EE27-B567-45D0-B042A434C20E">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:54 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DEPTNO" id="803F4DA3-609C-E9DC-BFDF-804F8AFA6A72">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:54 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="LOC" id="AB21D34F-70C7-76C8-8A81-A878C9FC4EC9">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:54 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_DEPT" id="B7256DDF-3753-A104-5EFD-651958EAE11F">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:54 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<schemaObject>448C727B-E581-0964-926C-FA97870C1BC2</schemaObject>
+<segment>400B50C1-9EDD-E20D-B642-DED0B3125C7D</segment>
+<tableSpace>2D500876-BE96-A0D9-47EF-7B234AF24D56</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_DEPT" id="00924475-EAF9-1A90-717D-5BDF4173C3E4">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:54 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<segment>400B50C1-9EDD-E20D-B642-DED0B3125C7D</segment>
+<tableSpace>2D500876-BE96-A0D9-47EF-7B234AF24D56</tableSpace>
+<existingIndex>B7256DDF-3753-A104-5EFD-651958EAE11F</existingIndex>
+<indexSegment>400B50C1-9EDD-E20D-B642-DED0B3125C7D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

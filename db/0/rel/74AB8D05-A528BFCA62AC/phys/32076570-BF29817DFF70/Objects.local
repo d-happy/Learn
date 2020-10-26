@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.storage.oracle.v11g.StorageDesignOraclev11g>
+   <object objectType="TSpace" objectID="2D500876-BE96-A0D9-47EF-7B234AF24D56" name="SYSTEM" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.oracle.v10g.TableSpaceOraclev10g" propertyParentId="32076570-BF29817DFF70"/>
+   <object objectType="User" objectID="MDSYS" name="MDSYS" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" propertyParentId="32076570-BF29817DFF70"/>
+   <object objectType="User" objectID="PUBLIC" name="PUBLIC" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" propertyParentId="32076570-BF29817DFF70"/>
+   <object objectType="User" objectID="E0FB4A75-318C-934E-E9C0-D0046E91D174" name="USER01" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" propertyParentId="32076570-BF29817DFF70"/>
+   <object objectType="SType" objectID="47E390DE-0671-C4B1-8428-0F45CBEE18F8" name="SDO_GEOMETRY" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.oracle.v10g.StructuredTypeProxyOraclev10g" propertyParentId="32076570-BF29817DFF70"/>
+   <object objectType="SType" objectID="F72C39E0-D1CA-8821-2AD7-A1E95A37D3D1" name="XMLTYPE" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.oracle.v10g.StructuredTypeProxyOraclev10g" propertyParentId="32076570-BF29817DFF70"/>
+   <object objectType="Table" objectID="40CB48D9-CEAB-66CF-0073-DA7D83CDE1DB" name="DEPT" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" propertyParentId="32076570-BF29817DFF70"/>
+   <object objectType="Table" objectID="6D1373D0-0904-813F-52BC-CAFBF7808CB8" name="EMP07" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" propertyParentId="32076570-BF29817DFF70"/>
+   <object objectType="Segment" objectID="0A49B4DE-9FC3-067F-886E-35C754F7FF8E" name="Storage2" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.oracle.v10g.SegmentOraclev10g" propertyParentId="32076570-BF29817DFF70"/>
+   <object objectType="Segment" objectID="400B50C1-9EDD-E20D-B642-DED0B3125C7D" name="Storage6" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.oracle.v10g.SegmentOraclev10g" propertyParentId="32076570-BF29817DFF70"/>
+</oracle.dbtools.crest.model.design.storage.oracle.v11g.StorageDesignOraclev11g>

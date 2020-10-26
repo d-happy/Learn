@@ -1,0 +1,131 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="6D1373D0-0904-813F-52BC-CAFBF7808CB8" schemaObject="448C727B-E581-0964-926C-FA97870C1BC2" name="EMP07">
+<sourceConnName>USER01</sourceConnName>
+<sourceObjSchema>USER01</sourceObjSchema>
+<sourceObjName>EMP07</sourceObjName>
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="EMPNO" id="0C60E97D-FA1F-0F88-E192-B7253C7EE1E3">
+<sourceConnName>USER01</sourceConnName>
+<sourceObjSchema>EMP07</sourceObjSchema>
+<sourceObjName>EMPNO</sourceObjName>
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,4,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ENAME" id="546A36B0-C588-6C19-C0FD-CFD5FE25F472">
+<sourceConnName>USER01</sourceConnName>
+<sourceObjSchema>EMP07</sourceObjSchema>
+<sourceObjName>ENAME</sourceObjName>
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="AGE" id="59C817FC-57F9-E24B-929C-2063620D2711">
+<sourceConnName>USER01</sourceConnName>
+<sourceObjSchema>EMP07</sourceObjSchema>
+<sourceObjName>AGE</sourceObjName>
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DEPTNO" id="B9B55526-76A5-12B4-A45F-A7F59C483DA8">
+<sourceConnName>USER01</sourceConnName>
+<sourceObjSchema>EMP07</sourceObjSchema>
+<sourceObjName>DEPTNO</sourceObjName>
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,2,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="458271A2-1D63-B12C-D6D9-BD0AB4F96952" referredColumn="803F4DA3-609C-E9DC-BFDF-804F8AFA6A72"/>
+</associations>
+</Column>
+<Column name="HIREDATE" id="5B7136FC-413A-1F81-C9BF-B572665DE944">
+<sourceConnName>USER01</sourceConnName>
+<sourceObjSchema>EMP07</sourceObjSchema>
+<sourceObjName>HIREDATE</sourceObjName>
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="37CFAF9A-E455-813C-EB70-6DE9E9AACB2A" name="EMP07_PK">
+<sourceConnName>USER01</sourceConnName>
+<sourceObjSchema>USER01</sourceObjSchema>
+<sourceObjName>EMP07_PK</sourceObjName>
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0C60E97D-FA1F-0F88-E192-B7253C7EE1E3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6623A06B-EEF1-AB4B-0A96-949B64467FE1" schemaObject="448C727B-E581-0964-926C-FA97870C1BC2" name="EMP07_PK">
+<sourceConnName>USER01</sourceConnName>
+<sourceObjSchema>USER01</sourceObjSchema>
+<sourceObjName>EMP07_PK</sourceObjName>
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0C60E97D-FA1F-0F88-E192-B7253C7EE1E3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E9006E02-9D58-7C44-3925-B45E8919CD32" name="EMP07_FK">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9B55526-76A5-12B4-A45F-A7F59C483DA8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

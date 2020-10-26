@@ -1,0 +1,73 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="EMP07" directorySegmentName="seg_0" id="6D1373D0-0904-813F-52BC-CAFBF7808CB8">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<schemaObject>448C727B-E581-0964-926C-FA97870C1BC2</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>0A49B4DE-9FC3-067F-886E-35C754F7FF8E</segment>
+<tableSpace>2D500876-BE96-A0D9-47EF-7B234AF24D56</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="EMPNO" id="0C60E97D-FA1F-0F88-E192-B7253C7EE1E3">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ENAME" id="546A36B0-C588-6C19-C0FD-CFD5FE25F472">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="AGE" id="59C817FC-57F9-E24B-929C-2063620D2711">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<defaultValue>0</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="HIREDATE" id="5B7136FC-413A-1F81-C9BF-B572665DE944">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<defaultValue>SYSDATE</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="DEPTNO" id="B9B55526-76A5-12B4-A45F-A7F59C483DA8">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="EMP07_PK" id="6623A06B-EEF1-AB4B-0A96-949B64467FE1">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<schemaObject>448C727B-E581-0964-926C-FA97870C1BC2</schemaObject>
+<segment>400B50C1-9EDD-E20D-B642-DED0B3125C7D</segment>
+<tableSpace>2D500876-BE96-A0D9-47EF-7B234AF24D56</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="EMP07_FK" id="E9006E02-9D58-7C44-3925-B45E8919CD32">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="EMP07_PK" id="37CFAF9A-E455-813C-EB70-6DE9E9AACB2A">
+<createdBy>KH302</createdBy>
+<createdTime>2020-09-24 02:04:24 UTC</createdTime>
+<ownerDesignName>0</ownerDesignName>
+<segment>400B50C1-9EDD-E20D-B642-DED0B3125C7D</segment>
+<tableSpace>2D500876-BE96-A0D9-47EF-7B234AF24D56</tableSpace>
+<existingIndex>6623A06B-EEF1-AB4B-0A96-949B64467FE1</existingIndex>
+<indexSegment>400B50C1-9EDD-E20D-B642-DED0B3125C7D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>
