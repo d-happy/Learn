@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="선택하시겠습니까?"
+        android:textSize="30dp"/>
+
+    <CheckBox
+        android:id="@+id/chkStart"
+        android:onClick="show1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="시작함"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:id="@+id/txtChoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="좋아하는 반려동물은?"
+        android:textSize="30dp"
+        android:visibility="invisible"/>
+
+    <RadioGroup
+        android:id="@+id/rGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
+
+        <RadioButton
+            android:id="@+id/rdoDog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="강아지"
+            android:textSize="30dp"/>
+
+        <RadioButton
+            android:id="@+id/rdoCat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="고양이"
+            android:textSize="30dp"/>
+
+        <RadioButton
+            android:id="@+id/rdoBird"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="새"
+            android:textSize="30dp"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="선택 완료"
+        android:textSize="30dp"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/btnRot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="회전"
+        android:textSize="30dp"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/imv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/puppy"
+        android:visibility="invisible"/>
+
+</LinearLayout>

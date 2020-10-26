@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="*"
+    tools:context=".MainActivity">
+
+    <!--TablaLayoutEx-->
+
+    <TableRow>
+        <Button
+            android:text="button1"/>
+        <Button
+            android:text="button2"
+            android:layout_span="2"/>
+        <Button
+            android:text="button3"/>
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:text="button4"
+            android:layout_column="1"/>
+        <Button
+            android:text="button5"/>
+        <Button
+            android:text="button6"/>
+    </TableRow>
+
+
+</TableLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="textSize 속성"
+        android:textSize="30dp"/>
+
+    <!-- ARGB | RGB -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="textColor 속성"
+        android:textSize="30dp"
+        android:textColor="#88CA1414"/>
+
+    <!--italic|bold : | 붙여써야 함-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="textStyle 속성"
+        android:textSize="30dp"
+        android:textStyle="italic|bold"
+        android:textColor="#5DC85D"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="typeFace 속성 - serif"
+        android:textSize="30dp"
+        android:textStyle="italic|bold"
+        android:typeface="serif"
+        android:textColor="#000077"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="typeFace 속성 - sans"
+        android:textSize="30dp"
+        android:textStyle="italic|bold"
+        android:typeface="sans"
+        android:textColor="#88770000"/>
+
+    <!--lines="1" : 1줄 넘어가도 1줄만 표현-->
+    <!--ellipsize="end" : ... / 잘못 만듬! 다 보여주는게 굿-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="typeFace 속성 - monospace typeFace 속성 - monospace"
+        android:textSize="30dp"
+        android:textStyle="italic|bold"
+        android:typeface="monospace"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textColor="#88000000"/>
+
+</LinearLayout>

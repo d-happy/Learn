@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--res 폴더 안에서는, 파일명 소문자-->
+
+    <item
+        android:id="@+id/itemRed"
+        android:title="빨강"/>
+    <item
+        android:id="@+id/itemGreen"
+        android:title="초록"/>
+    <item
+        android:id="@+id/itemBlue"
+        android:title="파랑"/>
+
+    <!--서브 메뉴-->
+    <item
+        android:title="버튼 변경">
+        <menu>
+            <item
+                android:id="@+id/itemRotate"
+                android:title="10도 회전"/>
+            <item
+                android:id="@+id/itemScale"
+                android:title="2배 확대"/>
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnPuppy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="puppy"/>
+        <Button
+            android:id="@+id/btnCat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="cat"/>
+        <Button
+            android:id="@+id/btnBird"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="bird"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/imvPuppy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/puppy"/>
+        <ImageView
+            android:id="@+id/imvCat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/cat"
+            android:visibility="invisible"/>
+        <ImageView
+            android:id="@+id/imvBird"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bird"
+            android:visibility="invisible"/>
+    </FrameLayout>
+
+</LinearLayout>

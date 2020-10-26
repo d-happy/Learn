@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/txtInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="아래에 이름을 입력하세요"
+        android:padding="30dp"
+        android:textSize="30dp"/>
+
+    <EditText
+        android:id="@+id/editInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="이름입력"
+        android:layout_margin="30dp"/>
+
+    <Button
+        android:id="@+id/myButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="클릭"/>
+
+    <Button
+        android:id="@+id/myButton2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="클릭2"/>
+
+    <Button
+        android:id="@+id/myButton3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rotation="45"
+        android:text="클릭3"/>
+
+</LinearLayout>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".ResultActivity">
+
+    <TextView
+        android:id="@+id/txtWin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="djdjdjd"
+        android:gravity="center"
+        android:textSize="30dp"/>
+
+    <ImageView
+        android:id="@+id/imgWin"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:rowCount="10"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="1등"
+            android:textSize="30dp"/>
+        <RatingBar
+            android:id="@+id/star1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="2"
+            android:stepSize="1"
+            style="?android:attr/ratingBarStyleIndicator"/>
+
+        <TextView
+            android:id="@+id/txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="2등"
+            android:textSize="30dp"/>
+        <RatingBar
+            android:id="@+id/star2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="2"
+            android:stepSize="1"
+            style="?android:attr/ratingBarStyleIndicator"/>
+
+        <TextView
+            android:id="@+id/txt3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="3등"
+            android:textSize="30dp"/>
+        <RatingBar
+            android:id="@+id/star3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="2"
+            android:stepSize="1"
+            style="?android:attr/ratingBarStyleIndicator"/>
+
+        <TextView
+            android:id="@+id/txt4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="4등"
+            android:textSize="30dp"/>
+        <RatingBar
+            android:id="@+id/star4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="2"
+            android:stepSize="1"
+            style="?android:attr/ratingBarStyleIndicator"/>
+
+        <TextView
+            android:id="@+id/txt5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="5등"
+            android:textSize="30dp"/>
+        <RatingBar
+            android:id="@+id/star5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="2"
+            android:stepSize="1"
+            style="?android:attr/ratingBarStyleIndicator"/>
+
+        <TextView
+            android:id="@+id/txt6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="6등"
+            android:textSize="30dp"/>
+        <RatingBar
+            android:id="@+id/star6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="2"
+            android:stepSize="1"
+            style="?android:attr/ratingBarStyleIndicator"/>
+
+        <TextView
+            android:id="@+id/txt7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="7등"
+            android:textSize="30dp"/>
+        <RatingBar
+            android:id="@+id/star7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="2"
+            android:stepSize="1"
+            style="?android:attr/ratingBarStyleIndicator"/>
+
+        <TextView
+            android:id="@+id/txt8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="8등"
+            android:textSize="30dp"/>
+        <RatingBar
+            android:id="@+id/star8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="2"
+            android:stepSize="1"
+            style="?android:attr/ratingBarStyleIndicator"/>
+
+        <TextView
+            android:id="@+id/txt9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="9등"
+            android:textSize="30dp"/>
+        <RatingBar
+            android:id="@+id/star9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="2"
+            android:stepSize="1"
+            style="?android:attr/ratingBarStyleIndicator"/>
+
+        <Button
+            android:id="@+id/btnPrev"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="돌아가기"
+            android:layout_columnSpan="2"/>
+    </GridLayout>
+
+
+</LinearLayout>
