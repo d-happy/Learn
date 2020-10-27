@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>페이지가 렌더링된 후 CSS 변경하기</title>
+<style type="text/css">
+	span { font-size: 30pt   }
+	.redtext   { color : #f00   }
+	.italictext { font-style: italic;   }
+</style>
+<!--  type="text/javascript" html5에서는 안 적어도 괜찮음 -->
+<script src="../js/jquery.js"></script>
+<script type="text/javascript">
+	//$("span").css("background-color", "red");
+	//html은 컴파일 없어서?(전체 읽는거 없음) 위에서 아래로 쭉 읽어서 아직 span 태그 못 찾음
+</script>	
+</head>
+<body>
+<span> simple </span>
+<script type="text/javascript">
+/* 	console.log(document);
+	console.log($(document));
+	console.log($()); 
+	console.log("span");
+	console.log($("span"));	*/
+	$("span").css("background-color", "red");
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>엘리먼트에 접근해서 스타일 지정하기-"element", "#id", ".class"</title>
+<style type="text/css">
+   .spotlight {   background-color: #ff0   }
+   .redtext   {   color: #f00   }
+   .largetext {   font-size: 30pt   }
+   .italictext{   font-style: italic;   }
+   <!-- #id // .class // tag명 // 00f : 0000ff -->
+/*    #simpletext1 { color: #00f }
+   .simpletext1 { color: #0f0 }
+   span { font-size: 50px } */
+   
+</style>
+<script src="../js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+   $(document).ready(function() {
+	    //엘리멘트(태그)명으로 찾기
+		$("span").css("color", "red"); //모든 span 태그에 대해서
+		//id로 찾기 : 문서 내에서 1개만 존개 -> 2개 이상이면, 처음만 찾고 끝
+		$("#simpletext1").css("background-color", "yellow");
+		//클래스(그룹) : 문서 내에서 해당 클래스 모두 찾음(여러개)
+		$(".simpletext1").css("background-color", "green");
+   });
+</script>
+</head>
+<body>
+   <span id="simpletext1">simple</span>
+   <div  class="simpletext1">jQuery</div>   
+   <span id="simpletext1">basic</span>
+   <div  class="simpletext1">example</div>
+</body>
+</html>

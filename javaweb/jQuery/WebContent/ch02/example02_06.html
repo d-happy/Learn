@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>모든 엘리먼트에 스타일을 적용하고 인접한 형제를 노드로 추가하기-“*”, “prev + next”</title>
+<style type="text/css">
+.textstyle {
+   font-size:14pt; line-height: 20pt; margin:10px;   
+}
+</style>
+<script src="../js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function() {
+		//모든 엘리먼트에 대해
+		$("*").css("color", "red");
+		
+		//형제 엘리먼트(바로 위, 바로 아래) 중에서 동생 찾기 : +
+		//$("#myA + a").css("background-color", "yellow");
+		
+		$("button").click(function() { //button에 따로 onclick 말고 jQuery 안에서 함수 생성
+			$('#myA').next().css("background-color", "green"); //바로 위, 형, one //''가능
+			$("#myA").prev().css("background-color", "cyan"); //바로 아래, 동생, three
+		});
+	});
+</script>
+</head>
+<body>
+   <em> one  </em>      
+   <a id="myA"> two  </a>
+   <a> three  </a>
+   <b> four </b>
+   <a> five </a>
+   <em> six </em>
+   <hr>
+   <div>
+      <span> prev + next로 검색된 엘리먼트 : </span>
+      <span class="result1"></span>
+   </div>   
+   <button type="button">click</button>   
+</body>
+</html>

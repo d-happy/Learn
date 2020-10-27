@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>선택된 jQuery 확장 객체 집합에서 자손 엘리먼트에 스타일시트 적용하기-“ancestor descendant”</title>
+<style type="text/css">
+   em { font-size: 12pt; line-height: 40pt}
+</style>
+<script src="../js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+   //자식 : >, 자손(자식+후손) : 공백
+   $(function() {
+	   $("div > em").css("background-color", "red");
+	   $("span > em").css("background-color", "yellow");
+   });
+</script>
+</head>
+<body>
+<div>
+   <em>Hello!</em>
+   <em>jQuery</em>
+   <em>forever</em>
+</div>
+<span>
+   <em>Good Bye!</em>
+   <em>javascript</em>
+</span> 
+</body>
+</html>

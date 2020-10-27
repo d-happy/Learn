@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>n번째 혹은 짝수 또는 홀수 자식 엘리먼트 검색하기-:nth-child(n), :nth-child(even), :nth-child(old)</title>
+<style>
+div { float: left;  }
+span { color: blue; }
+</style>
+<script src="../js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function() {
+		//숫자는 인덱스 아님!!! n번째(n)
+		var li2nd = $("div li:nth-child(2)");
+		li2nd.css("background-color", "yellow");
+		
+		var liEven = $("div li:nth-child(even)");
+		liEven.css("color", "red");
+		
+		var liOdd = $("div li:nth-child(odd)");
+		liOdd.css("color", "blue");
+	});
+</script>
+</head>
+<body>
+   <div>
+      <ul>
+         <li>사과</li>
+         <li>바나나</li>
+         <li>복숭아</li>
+
+      </ul>
+   </div>
+   <div>
+      <ul>
+         <li>소나타</li>
+      </ul>
+   </div>
+   <div>
+      <ul>
+         <li>코끼리</li>
+         <li>뱀</li>
+         <li>토끼</li>
+         <li>말</li>
+      </ul>
+   </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>조건에 반대되는 엘리먼트 검색하기-:not()</title>
+<script src="../js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+	//속성으로 찾기 ( type="checkbox" 부분) - 대괄호 []
+	//속성명=속성값 : 일치하는
+	//속성명^=속성값 : 시작하는 -> input[type^=t]
+	//속성명$=속성값 : 끝나는 -> input[type$=x]
+	//속성명*=속성값 : 들어있는 -> input[type*=e]
+	$(function() {
+		$("input[type^=t]").css("background-color", "green");
+		//console.log($("input[type^=t]"));
+		//console.log($("input[type$=x]"));
+		
+		//input 엘리먼트 중에서 type 속성의 값이 checkbox 중에서 checked 된 엘리먼트
+		//의 바로 밑 동생 찾아서 css 적용
+		$("input[type=checkbox]:checked")
+		.next()
+		.css("background-color", "yellow");
+		
+		$("input[type=checkbox]:not(:checked)")
+		.next()
+		.css("background-color", "cyan");
+	});
+</script>
+</head>
+<body>
+   <div>
+      <input type="checkbox" name="fruit" /> <span>사과</span>
+   </div>
+   <div>
+      <input type="checkbox" name="fruit" /> <span>바나나</span>
+   </div>
+   <div>
+      <input type="checkbox" name="fruit" checked="checked" /> <span>오렌지</span>
+   </div>
+   <div>
+      <input type="text" name="name"/> <span>딸기</span>
+   </div>
+</body>
+</html>

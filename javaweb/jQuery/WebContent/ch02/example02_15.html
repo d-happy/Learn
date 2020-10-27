@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery 정의 필터 셀렉터를 이용하여 폼 요소 다루기-:button, :text, :password</title>
+<style type="text/css">
+   div { padding: 5px 5px 5px 5px }
+    .item{float:left; width:100px; }
+</style>
+<script src="../js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+	// .val() - get , val(값) - set
+	//$(document).ready(function() { });
+	$(function() {
+		$("#regBtn").click(function() {
+// 			console.log("click");
+// 			var userId = $("#userId").val(); //값을 가져와서
+// 			$("#userName").val(userId); //값을 넣기(설정)
+// 			$("#mySpan").text("결과 : "+userId); //.val() 아님 (텍스트 노드)
+			
+			//for ( : ) - enhanced for -> .each(function(){});
+			//for (int i=0; i<length; i++) : 인덱스 필요 -> function(i)
+// 			$("input").each(function(i) {
+// 				console.log(i + ":" + $(this));
+// 				if (i % 2 == 0) {
+// 					$(this).css("background-color", "yellow");
+// 				} else {
+// 					$(this).css("background-color", "cyan");
+// 				}
+// 			});
+			//아니면 var ~ = $("input"); 해서 for문 해도 되긴 함
+			
+			//회원가입 버튼 누르면, 
+			//input type="text" 값들을 읽어서(구분자, 사용) id가 mySpan에 출력
+			//input type="password" 값들을 읽어서(구분자, 사용) id가 myInput에 출력
+			//each(function) 사용
+			
+			/* var userId = $("#userId").val();
+			var useName = $("#userName").val();
+			//console.log(userId + " | " +  useName);
+			$("#mySpan").text(userId +", "+ useName);
+			
+			var pwd = $("#pwd").val();
+			var pwdConfirm = $("#pwdConfirm").val();
+			//console.log(pwd + " | " +  pwdConfirm);
+			var str = pwd +", "+ pwdConfirm;
+			$("#myInput").val(str); */
+			
+			/* var el1 = $("input[type*=text]"); 
+			var elOdd, elEven;
+			el1.each(function(i) {
+				if (i % 2 != 0) {
+					elOdd = $(this).val();
+				} else if (i == 0) {
+					elEven = $(this).val();
+				}
+			});
+			var str = elEven +", "+ elOdd;
+			$("#mySpan").text(str);
+			
+			var el2 = $("input[type*=password]");
+			var elPwd, elPweCon;
+			el2.each(function(i) {
+				if (i % 2 ==0) {
+					elPwd = $(this).val();
+				} else {
+					elPweCon = $(this).val();
+				}
+			});
+			var str2 = elPwd +", "+ elPweCon;
+			$("#myInput").val(str2); */
+			
+			var str = ""; //<공백>으로 초기화 하고 
+			$("input[type=text]").each(function(i) {
+				str += $(this).val(); //값 하나하나 구하고
+				//console.log(i +":"+ str);
+				if (i < $("input[type=text]").length-2) {//i=0 값 구하고 , 더하고
+					str += ", ";
+				}
+			});
+			$("#mySpan").text(str);
+		});
+	});
+</script>   
+</head> 
+<body>
+  
+     <div> <span class="item"> 아이디 * </span> <input id="userId" type="text"></div>
+     <div> <span class="item"> 이름   * </span> <input id="userName" type="text"></div>
+     <div> <span class="item"> 암호   * </span> <input id="pwd" type="password"></div>
+     <div> <span class="item"> 암호 확인  * </span> <input id="pwdConfirm" type="password"></div>
+     <div> <span id="mySpan"> 결과  : </span> <input id="myInput" type="text"></div>
+     <input type="button" id="regBtn" value="회원가입">         
+
+</body>
+</html>

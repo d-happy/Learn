@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function checkForm() {
+		var num1 = document.getElementById("num1").value;
+		var num2 = document.getElementById("num2").value;
+		if (num1 == "" || num2 == "") {
+			alert("숫자 올바르게 입력");
+			return;
+		}
+		
+		document.myForm.submit();
+	}
+</script>
+</head>
+<body>
+	<form name="myForm" action="calc_run2.jsp">
+	<!-- name은 jsp 파일 id는 위에 함수 -->
+		<input type = "number" name = "num1" id="num1"/><br/>
+		<input type = "number" name = "num2" id="num2"/><br/>
+		<hr/>
+		<button type = "button" onclick="checkForm()">plus</button>
+	</form>
+</body>
+</html>
