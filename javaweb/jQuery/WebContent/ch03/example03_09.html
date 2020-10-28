@@ -11,7 +11,18 @@ button {   cursor: pointer;}
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-   
+	$(function() {
+		$("button[name=oktbtn]").click(function() {
+// 			var text = $("p:first").text(); //글자만 읽기
+// 			$("#console").text(text);
+
+// 			var html = $("p:first").html(); //html 내용을 그대로 읽기
+// 			$("#console").text(html); //읽은 내용을 text로 처리
+			
+			var html = $("p:first").html();
+			$("#console").html(html); //읽은 내용을 html로 처리
+		});
+	});
 </script>
 </head>
 <body>

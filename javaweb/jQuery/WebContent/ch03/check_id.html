@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$("button").click(function() {
+			var inputId = $("input").val();
+			var arrId = inputId.split("");
+			console.log(arrId);
+			var str;
+			
+			if (inputId == "") {
+				str = "empty"
+				$("button").attr("disabled", true);
+				alert("try");
+			} else if (inputId != "") {
+				// a : 97 ~ z : 122 // 0 : 48 ~ 9 : 57 
+				// ㅁ.charCodeAt() -> ㅁ unicode (console check)
+				for (var v=0; v<arrId.length; v++) {
+					var unicodeId = arrId[v].charCodeAt();
+					
+					if ((unicodeId >= 97 && unicodeId <= 122)
+							||(unicodeId >= 48 && unicodeId <=57)) {
+						str = "ok";
+					} else {
+						str = "not ok"	
+					}
+				} //for
+			} //""check
+			
+			$("#result").text(str);
+			$("input").val("");
+		}); //button.click
+	});
+</script>
+
+</head>
+<body>
+	<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-bordered">
+				<tbody>
+					<tr class="table-success">
+						<td>
+							아이디 :
+						</td>
+						<td>
+							<input/>
+						</td>
+					</tr>
+					<tr class="table-warning">
+						<td colspan=2>
+							<button type=button>check</button>
+						</td>
+					</tr>
+					<tr class="table-danger">
+						<td>
+							체크 결과 :
+						</td>
+						<td id="result"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</body>
+</html>

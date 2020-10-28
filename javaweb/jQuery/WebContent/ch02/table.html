@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+<script>
+//$(document).ready(function() {});
+$(function() {
+	$("button").click(function() {
+		//console.log($("td"));
+		var str1 = $("td:first").text();
+		var str2 = $("td:eq(1)").text();
+		var str3 = $("td:eq(4)").text();
+		var str4 = $("td:eq(5)").text();
+
+		$("td:first").text(str3);
+		$("td:eq(1)").text(str4);
+		$("td:eq(4)").text(str1);
+		$("td:eq(5)").text(str2);
+	});
+});
+</script>
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered">
+					
+					<tbody>
+						<tr class="table-active">
+							<td id="td1">마징가</td> <!-- 자바 -->
+							<td id="td2">태권브이</td> <!-- HTML -->
+						</tr>
+						<tr class="table-success">
+							<td>원더우먼</td>
+							<td>슈퍼우먼</td>
+						</tr>
+						<tr class="table-warning">
+							<td id="td3">자바</td>
+							<td id="td4">HTML</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button type="button" class="btn btn-primary">바꾸기</button>
+							</td>
+						</tr>
+					</tbody>
+					
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

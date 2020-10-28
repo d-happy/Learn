@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		
+		var index;
+		var srcTxt = "../images/";
+		var arrImsges = ["rps_r.png", "rps_p.png", "rps_s.png"];
+		
+		$("button").click(function() {
+			//user rps
+			var input = $("#rpsInput").val();
+			//가위 바위 보 입력해야만 , 컴 랜덤도 같이 나옴
+			if (input == "r" || input == "p" || input == "s") {
+				switch(input) {
+					case "r" : 
+						srcTxt += arrImsges[0];
+						$("img:first").attr("src", srcTxt);
+						srcTxt = "../images/";
+						break;
+					case "p" : 
+						srcTxt += arrImsges[1];
+						$("img:first").attr("src", srcTxt);
+						srcTxt = "../images/";
+						break;
+					case "s" : 
+						srcTxt += arrImsges[2];
+						$("img:first").attr("src", srcTxt);
+						srcTxt = "../images/";
+						break;
+				} //switch
+				
+				//com rps
+				var numRandom = Math.floor(( Math.random()*(3)+1));
+					switch(numRandom) {
+						case 1 : 
+							$("img:last").attr("src", "../images/rps_r.png");
+							break;
+						case 3 : 
+							$("img:last").attr("src", "../images/rps_p.png");
+							break;
+						case 2 : 
+							$("img:last").attr("src", "../images/rps_s.png");
+							break;
+					} //switch
+			} else {
+				alert("try again");
+			}
+			
+			if (input == "r") { //입력 바위
+				if (numRandom == 1) { index = "draw"; } //비김
+				if (numRandom == 2) { index = "win"; } //이김
+				if (numRandom == 3) { index = "lose"; } //짐
+			} else if (input == "p") { //입력 보
+				if (numRandom == 1) { index = "win"; } //비김
+				if (numRandom == 2) { index = "lose"; } //이김
+				if (numRandom == 3) { index = "draw"; } //짐
+			} else if (input == "s") { //입력 가위
+				if (numRandom == 1) { index = "lose"; } //비김
+				if (numRandom == 2) { index = "draw"; } //이김
+				if (numRandom == 3) { index = "win"; } //짐
+			}
+			
+			console.log(input +":"+ numRandom +":"+ index);
+			
+			switch(index) {
+				case "draw" : 
+					$("img:eq(1)").attr("src", "../images/rps_draw.png");
+					break;
+				case "win" : 
+					$("img:eq(1)").attr("src", "../images/rps_win.png");
+					break;
+				case "lose" : 
+					$("img:eq(1)").attr("src", "../images/rps_lose.png");
+					break;
+			} //switch
+			
+		}); //$("button").click
+	});
+</script>
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<!-- 뭐 낼지 입력 -->
+			<div class="col-md-12">
+				<input id="rpsInput"/>
+				<button id="btn" type="button">click</button>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+
+				<table class="table table-bordered">
+					<tbody>
+						<!-- 누가 누구 -->
+						<tr>
+							<td>user</td>
+							<td>Result</td>
+							<td>computer</td>
+						</tr>
+						<!-- 가위바위보 -->
+						<tr>
+							<td>
+								<img>
+							</td>
+							<td>
+								<img>
+							</td>
+							<td>
+								<img>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

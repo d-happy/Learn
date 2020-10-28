@@ -5,11 +5,18 @@
 <title>엘리먼트의 어트리뷰트 값 제거하기</title>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-  
+	//removeAttr(속성명) : 해당 속성 삭제 : 키-값 모두 삭제
+	$(function() {
+		$("button").click(function() {
+			$("img").removeAttr("src")
+					.removeAttr("title");
+			$(this).next().removeAttr("alt"); //next() : 바로 밑 동생
+		});
+	});
 </script>
 </head>
-<body>   
- <button> 어트리뷰트 값 제거하기 </button> 
- <img src="../images/im0.jpg" title="똘이군" alt="puppy picture">  
+<body>
+	<button>어트리뷰트 값 제거하기</button>
+	<img src="../images/im0.jpg" title="똘이군" alt="puppy picture">
 </body>
 </html>

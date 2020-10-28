@@ -8,7 +8,25 @@
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-  
+	$(function() {
+		$("button").click(function() {
+			//서버에서 받은 데이터라고 가정
+			var names = ["banana", "cherry", "kiwi"]; 
+			$("div:first").html("<p class='red'>학생 목록</p>");
+			
+			/* 
+			<ul>
+				<li>banana</li>
+			</ul> 
+			html 구조 만들어서  $("div:last")에 html로 넣기*/
+			var html = "<ul>";
+			for (var v=0; v<names.length; v++) {
+				html += "<li>" + names[v] +"</li>";
+			}
+			html += "</ul>";
+			$("div:last").html(html);
+		});
+	});
 </script>
 </head>
 <body>  

@@ -11,7 +11,30 @@ p {   margin: 4px;  font-size: 20px;  font-weight: bolder;}
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-   
+	$(function() {
+		$("p").addClass("red").addClass("under");
+		//p 엘리먼트 변경
+		//버튼1 클릭 -> 짝수번째 : red, under 클래스 제거
+		//버튼2 클릭 -> 홀수번째 : red, under 제거하고  hightlight 추가 -> 변경
+		
+		//조건은
+		$("button").click(function() {
+			
+// 			$(this).attr("id")
+// 			$("button[id*=remove]") 
+// 			== $("button:first") 
+// 			== $("#removeClass")
+			
+			if ($(this).text() == "removeClass") {
+				//console.log("1");
+				$("p:even").removeClass("red under")
+			} else if ($(this).text() == "changeClass" ) {
+				//console.log("2");
+				$("p:odd").removeClass("red under")
+						  .addClass("highlight");
+			}
+		}); //$("button")
+	});
 </script>
 </head>
 <body>

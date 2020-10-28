@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+<script>
+
+$(function() {
+	//var ?? = $(this).text(); 해서 switch(??) 가능
+	//$("input[type=number]:eq(n)")
+	
+	// 배열??
+	$("button").click(function() {
+		var num1 = $("#num1").val();
+		var num2 = $("#num2").val();
+		var numResult;
+		
+		//num1 num2 둘 다 공백 X 계산 
+		if (num1 != "" && num2 != "") {
+			//console.log("not null");
+			num1 = parseInt($("#num1").val());
+			num2 = parseInt($("#num2").val());
+			
+			if ($(this).text() == "+") {
+				numResult = num1 + num2;
+			} else if ($(this).text() == "-") {
+				numResult = num1 - num2;
+			} else if ($(this).text() == "*") {
+				numResult = num1 * num2;
+			} else if ($(this).text() == "/") {
+				numResult = num1 / num2;
+			}
+			
+			$("#numResult").val(numResult);
+			
+		} else {
+			//console.log("num null");
+			alert("num null");
+		}
+	}); //$("button")
+});
+
+</script>	
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+
+				<table class="table table-bordered">
+					<tbody>
+					
+						<!-- num1 -->
+						<tr class="table-success">
+							<td>숫자1</td>
+							<td>
+								<input type="number" id="num1"></input>
+							</td>
+						</tr>
+
+						<!-- num2 -->
+						<tr class="table-warning">
+							<td>숫자2</td>
+							<td>
+								<input type="number" id="num2"></input>
+							</td>
+						</tr>
+
+						<!-- button -->
+						<tr>
+							<td colspan="2">
+								<button id="plus" type="button" class="btn btn-primary">+</button>
+								<button id="minus" type="button" class="btn btn-success">-</button>
+								<button id="mul" type="button" class="btn btn-warning">*</button>
+								<button id="div" type="button" class="btn btn-danger">/</button>
+							</td>
+						</tr>
+
+						<!-- result -->
+						<tr class="table-danger">
+							<td>결과</td>
+							<td>
+								<input type="number" id="numResult"></input>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>
