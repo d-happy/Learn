@@ -5,7 +5,14 @@
 <title>해당 엘리먼트의 모든 부모 엘리먼트 찾기</title>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-  
+	// parent() - 부모 엘리먼트
+	$(function() {
+		var p = $("b").parent();
+		var name = p.prop("tagName"); //#.prop() #의 정보 빼내기?
+		console.log(p);
+		console.log(name);
+		$("b").append(name); // 자식 추가
+	});
 </script>
 </head>
 <body>

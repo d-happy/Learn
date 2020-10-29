@@ -10,7 +10,24 @@ p {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
- 
+	//
+	$(function() {
+		// 대문자로 변경 - toUpperCase()
+		// 소문자로 변경 - toLowerCase()
+		var arr = [];
+		$("li").each(function(i) {
+			arr[i] = $(this).text().toUpperCase();
+		});
+		console.log(arr);
+		
+		var html = "<ul>";
+		for (var v=0; v<arr.length; v++) {
+			html += "<li>" + arr[v] + "</li>";
+		}
+		html += "</ul>";
+		$("body").append(html);
+		
+	});
 </script>
 </head>
 <body>

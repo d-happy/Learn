@@ -12,7 +12,16 @@ div {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-	
+	//필터에 함수 적용
+	$(function() {
+		$("div").css("background-color", "yellow")
+		.filter(function(index) {
+			//console.log(index);
+			if (index % 2 == 0) {
+				return true;
+			}
+		}).css("border-color", "red");
+	});
 </script>
 </head>
 <body>

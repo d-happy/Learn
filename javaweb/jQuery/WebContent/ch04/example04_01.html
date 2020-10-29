@@ -11,7 +11,14 @@ p{ clear:both;}
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-   
+	//메서드 체이닝
+	//add(엘리먼트) - 엘리먼트를 붙이는게 아니라, 메서드 체이닝에서 함수를 적용할 엘리먼트를 추가
+	$(function() {
+		$("button").click(function() {
+			$("div").addClass("redBorder")
+			.add("p").addClass("yellow") //$("div, p") div 기본
+		});
+	});
 </script>
 </head>
 <body>   

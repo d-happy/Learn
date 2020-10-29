@@ -8,7 +8,22 @@ div { float:left; margin:25px; }
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-   
+	// append(), appendTo() : 뒤에 붙임
+	// prepend(), prependTo() : 앞에 붙임
+	$(function() {
+		var fruits = ["apple", "banana", "mango", "cherry"];
+		var cars = ["소나타", "벤틀리", "제너시스"];
+		
+		$.each(fruits, function(i, v) {
+			$("#fruit_list").prepend("<li>" + v + "</li>");
+			
+		});
+		
+		$.each(cars, function(i, v) {
+			$("<li>" + v + "</li>").prependTo("#car_list")
+			
+		});
+	});
 </script>
 </head>
 <body>   

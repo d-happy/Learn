@@ -15,7 +15,14 @@ div, span {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-  
+	// next() - 바로 다음 동생 1
+	// nextAll() - 모든 동생들
+	$(function() {
+		$("button").click(function() {
+			$("#second").nextAll().addClass("after");
+			$("#second").nextAll(".middle").addClass("selected");
+		});
+	});
 </script>
 </head>
 <body>

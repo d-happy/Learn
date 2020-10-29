@@ -5,7 +5,12 @@
 <title>해당 엘리먼트를 내용을 비우기</title>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-
+	// empty() : 비운다 - 내용물을 없앤다. 해당 엘리먼트 그대로
+	$(function() {
+		$("button").click(function() {
+			$("div").empty(); // div 그대로
+		});
+	});
 </script>
 </head>
 <body>

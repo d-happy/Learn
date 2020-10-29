@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>해당 엘리먼트의 현재 위치 알아내기</title>
+<style type="text/css">
+div.abs{ width: 50px; height: 50px; position: absolute;
+     left:10px; top:35px; background-color: green; 
+     cursor: pointer;
+}
+</style>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript">
+	//setIntervla(f, delay) clearInterval(f)
+	$(function() {
+		
+		var count = 0;
+		var v;
+		//var delay = 1000;
+		
+		var g = 1;
+		
+		var x = $("#box").offset().left;
+		var y = $("#box").offset().top;
+		console.log(x);
+		console.log(y);
+		
+		
+		for (var v=1; v<4; v++) {
+			y += 70;
+			
+			$("#box").after($("#box").clone()
+					 .offset({
+						 "top"  : y
+					 }));
+		}
+		
+		function start() {
+			f = setInterval(function() {
+				console.log("setInterval" +" : "+ count++);
+				
+				for (var v=0; v<4; v++) {
+					var str = ".abs:eq(" + v + ")";
+					$(str).offset({
+						"left" : x += 5 * (v+1), 
+					});
+					console.log(str +":"+ $(str).offset().left);
+					
+				}//for
+				
+				/* $(".abs:eq(i)").offset({
+					"left" : x += 10 * (i+1), 
+				}); */
+				
+				/* $(".abs:first").offset({
+					"left" : x += 10, 
+				});
+				
+				$(".abs:eq(1)").offset({
+					"left" : x += 20, 
+				});
+				
+				$(".abs:eq(2)").offset({
+					"left" : x += 30, 
+				});
+				
+				$(".abs:last").offset({
+					"left" : x += 40, 
+				}); */
+				
+				if ($(str).offset().left >= 200) {
+					/* $(str).offset({
+						"left" : x += 0, 
+					}); */
+					clearInterval(f);
+					console.log("stop");
+					$(str).text("1");
+				}
+				
+				console.log($(".abs:eq(0)") +":"+ $(".abs:eq(0)").offset().left);
+				console.log($(".abs:eq(1)") +":"+ $(".abs:eq(1)").offset().left);
+				console.log($(".abs:eq(2)") +":"+ $(".abs:eq(2)").offset().left);
+				console.log($(".abs:eq(3)") +":"+ $(".abs:eq(3)").offset().left);
+				console.log("----------------------------");
+				
+			}, 1000); //f = setInterval
+		}
+		
+		function stop() {
+			clearInterval(f);
+		}
+		
+		
+		function startInterval(str) {
+			
+			f = setInterval(function() {
+				
+				$(str).offset({
+					"left" : x += 5 * (v+1), 
+				});
+				console.log(str);
+				console.log($(str) +":"+ $(str).offset().left);
+				
+			}, 1000);
+			
+			if ($(str).offset().left >= 200) {
+				clearInterval(f);
+				console.log("stop");
+				$(str).text("1");
+			}
+			
+		}//startInterval
+		
+		$("#btnStart").click(function() {
+			//start();
+			
+			$(".abs").each(function(i) {
+				//delay = 1000 * (i+1);
+				startInterval(this);
+				
+				//console.log(i);
+				//console.log(this);
+				
+				if ($(this).offset().left >= 500) {
+					stop();
+					console.log("stop");
+				}
+			});
+			
+		});
+		
+		$("#btnStop").click(function() {
+			stop();
+		});
+	});
+</script>
+</head>
+<body>
+	<div>
+		<button type="button" id="btnStart">start</button>
+		<button type="button" id="btnStop">stop</button>
+	</div>
+	<div class="abs" id="box"></div>
+</body>
+</html>
+

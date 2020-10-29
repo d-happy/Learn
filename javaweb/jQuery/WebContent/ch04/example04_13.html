@@ -2,10 +2,43 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>해당 엘리먼트의 가장 인접한 부모 엘리먼트 찾기</title>
+<title>해당 엘리먼트의 모든 부모 엘리먼트 찾기</title>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-  
+	// parents() - 모든 조상?
+	$(function() {
+// 		var p = $("b").parents();
+// 		console.log(p);
+		
+		// 배열 - [], new Array() : 
+		//	자바 ArrayList 비슷 (크기 안 정해짐, @~ 주소값 말고 알아서 toString 적용됨)
+		// arr[0] = 값
+		/* var arr = ["cherry", "kiwi", "peach"];
+		arr.reverse(); // 순서 바꿈
+		console.log(arr.join("-")); // #-#-# 식으로 배열 값 사이에 뭐 넣기?
+		console.log(arr); */
+		
+		// 모든 부모 엘리먼트의 태그명을 배열에 담고
+		// <b> 태그에 태그명 추가, 연결 문자 ("-")
+		
+		var pAll = $("b").parents();
+		console.log(pAll);
+		
+		var name = new Array();
+		
+		pAll.each(function(index) {
+			console.log(pAll[index]);
+
+			name[index] = $(pAll[index]).prop("tagName");
+			console.log(name);
+		});
+		
+		var str = name.reverse().join("-");
+		console.log(str);
+		 
+		$("b").append(str);
+
+	});
 </script>
 </head>
 <body>

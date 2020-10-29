@@ -15,7 +15,14 @@ div, span {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-  
+	// prev() - 바로 위에 형
+	// prev("~") - 바로 위에 형 , "~" 조건 가능
+	$(function() {
+		$("button").click(function() {
+			$("#sixth").prev().addClass("before");
+			$("div").prev(".middle").addClass("selected");
+		});
+	});
 </script>
 </head>
 <body>

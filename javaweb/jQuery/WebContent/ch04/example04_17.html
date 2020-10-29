@@ -10,7 +10,13 @@
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-	
+	// end()
+	$(function() {
+		var v = $("div").find("p").addClass("border")
+		.end().addClass("background"); 
+		// div -> p 갔다가 end() 해서 다시 div 로, -> 끝
+		console.log(v);
+	});
 </script>
 </head>
 <body>

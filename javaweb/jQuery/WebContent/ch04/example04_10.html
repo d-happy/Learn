@@ -15,7 +15,13 @@ div, span {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-  
+	//prevAll() - 모든 형들
+	$(function() {
+		$("button").click(function() {
+			$("#sixth").prevAll().addClass("before");
+			$("div").prevAll(".middle").addClass("selected");
+		});
+	});
 </script>
 </head>
 <body>

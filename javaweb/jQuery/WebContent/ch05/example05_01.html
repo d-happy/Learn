@@ -8,7 +8,22 @@ div { float:left; margin:25px; }
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-   
+	// a.append(b) : a에 b를 붙임
+	// a.appendTo(b) : a를 b에 붙임
+	$(function() {
+		var fruits = ["apple", "banana", "mango", "cherry"];
+		var cars = ["소나타", "벤틀리", "제너시스"];
+		
+		$.each(fruits, function(index, value) {
+// 			console.log(index +":"+ value);
+			
+			$("fruit_list").append("<li>" + value + "</li>");
+		});
+		
+		$.each(cars, function(index, value) {
+			$("<li>" + value + "</li>").appendTo("car_list");
+		});
+	});
 </script>
 </head>
 <body>   

@@ -5,7 +5,14 @@
 <title>해당 엘리먼트에 형제 엘리먼트로 추가하기</title>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-   
+	// append, appendTo, prepend, prependTo - 자식 엘리먼트 추가
+	// 형제 엘리먼트 추가 - 동생
+	// after
+	// <header> div 로 여기면 됨???
+	$(function() {
+		$("header").after("<div> 좋아하는 과일 : 사과</div>");
+		$("<div>싫어하는 과일 : 체리</div>").insertAfter($("header"));
+	});
 </script>
 </head>
 <body>  

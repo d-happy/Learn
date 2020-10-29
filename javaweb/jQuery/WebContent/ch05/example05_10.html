@@ -8,7 +8,12 @@ span { display:block; }
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-
+	// 떼어 붙이기 말고, 복제해서 붙이기
+	$(function() {
+		$("span:first").append($("b"));
+// 		$("span:last").clone($("em"));
+		$("em").clone().appendTo($("span:last"));
+	});
 </script>
 </head>
 <body>   

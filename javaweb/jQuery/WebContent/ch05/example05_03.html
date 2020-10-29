@@ -8,7 +8,11 @@ span { display:block; }
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-  
+ 	// append - 존재하는 엘리먼트를 붙일 때, 복사 아니고 떼어 붙이기
+ 	$(function() {
+ 		$("span:first").append($("b"));
+ 		$("span:last").append($("b"));
+ 	});
 </script>
 </head>
 <body>   

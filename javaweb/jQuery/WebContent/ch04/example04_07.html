@@ -15,7 +15,16 @@ div, span {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-  
+	// 블록 라벨, 인라인 레벨 (안에 블록~ 있으면 안 됨)
+	// next() - 바로 다음 동생 엘리먼트
+	// html 에 오류가 있으면, 브라우저에서 어떻게 하는지 확인 (렌더링된 상태)
+	$(function() {
+		$("button").click(function() {
+			$("div").next().addClass("after");
+			$("div").next("#fourth").addClass("selected");
+			
+		});
+	});
 </script>
 </head>
 <body>
