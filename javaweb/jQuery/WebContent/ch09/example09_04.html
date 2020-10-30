@@ -13,6 +13,30 @@ div {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
+	$(function() {
+		$("#menu1").click(function() {
+			$.ajax({
+				"url"       : "menu.html",
+				"datatype" : "html", 
+				"success"   : function(receivedData) {
+					console.log(receivedData);
+					$("#message1").html(receivedData);
+				}
+			});
+		});
+		
+		$("#menu2").click(function() {
+			$.ajax({
+				"url" : "menu.html",
+				"dataType" : "html",
+				"success" : function(data) {
+					var ul = $("data").filter("ul");
+					console.log(ul);
+					$("#message2").append(ul);
+				}
+			});
+		});
+	});
 </script>
 </head>
 <body>

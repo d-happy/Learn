@@ -10,6 +10,14 @@ img{
 </style>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
+	// value 가 변화될 때
+	$(function() {
+		$("#sel").change(function() {
+			var v = $(this).val();
+			console.log(v);
+			$("#img").attr("src", v);
+		});
+	});
 </script>
 </head>
 <body>

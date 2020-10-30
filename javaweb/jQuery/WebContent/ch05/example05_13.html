@@ -6,13 +6,29 @@
 <style type="text/css">
 div{ width: 70px; height: 50px; 
      background-color: red; cursor: pointer;
+     padding: 10px; border: 5px solid blue;
      margin: 5px
 }
 span { display :block }
 </style>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
-
+	// width() - 기본 너비
+	// height() - 기본 높이
+	// innerWidth() - width + padding  (상하좌우 다 더하기)
+	// innerHeight() - height + padding
+	// outerWidth() - innerWidth + border
+	// outerHeight() - innerHeight + border
+	// outerWidth(true) - outerWidth + margin
+	// outerHeight(true) - outerHeight + margin
+	
+	$(function() {
+		var div = $("div");
+		console.log("basic : "+ div.width() +", "+ div.height()); // 70, 50
+		console.log("inner : "+ div.innerWidth() +", "+ div.innerHeight()); // 90, 70
+		console.log("outer : "+ div.outerWidth() +", "+ div.outerHeight()); // 100, 80
+		console.log("outer(true) : "+ div.outerWidth(true) +", "+ div.outerHeight(true)); // 110, 90
+	});
 </script>
 </head>
 <body>

@@ -11,7 +11,18 @@ div{ width: 70px; height: 50px; float:left;
 </style>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
-
+	// mousedown
+	// mouseup
+	$(function() {
+		$("div").bind({
+			"mousedown" : function() {
+				$(this).css("background-color", "yellow");
+			},
+			"mouseup"   : function() {
+				$(this).css("background-color", "green");
+			}
+		});
+	});
 </script>
 </head>
 <body>   

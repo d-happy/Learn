@@ -5,9 +5,20 @@
 <title>포커스를 받으면 글씨 지우고 포커스를 잃으면 글씨 나타내기</title>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
+	// focus  얻기 <-> blur 잃기
+	$(function() {
+		$("#id").bind({
+			"focus" : function() {
+				$(this).val("");
+			},
+			"blur"  : function() {
+				$(this).val("id input !!!1");
+			}
+		});
+	});
 </script>
 </head>
 <body>
-	<INPUT TYPE="text" id="ID">
+	<input type="text" id="id" value="id input !!!1">
 </body>
 </html>

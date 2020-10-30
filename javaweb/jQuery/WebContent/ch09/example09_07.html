@@ -10,9 +10,48 @@ td {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
+	// http 요청방식 8가지 : get, post
+	$(function() {
+		$("button").click(function() {
+			$.get("item.xml", function(data) {
+				console.log(data);
+				$("#treeData").append($("#hiddenTable tr").eq(0).clone());
+				var items = $(data).find("item");
+				console.log(items);
+				items.each(function() {
+					var id = $(this).attr("id");
+					var name = $(this).attr("name");
+					var price = $(this).find("price").text();
+					var description = $(this).find("description").text();
+
+					var tr = $("#hiddenTable tr").eq(1).clone();
+					tr.find("td:eq(0)").text(id);
+					tr.find("td:eq(1)").text(name);
+					tr.find("td:eq(2)").text(price);
+					tr.find("td:eq(3)").text(description);
+					$("#treeData").append(tr);
+				});
+			});
+		});
+	});
 </script>
 </head>
 <body>
-  <table id="treeData"></table>
+	<table style="display:none" id="hiddenTable">
+		<tr>
+			<th>번호</th>
+			<th>이름</th>
+			<th>가격</th>
+			<th>설명</th>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<button type="button">data get</button>
+	<table id="treeData"></table>
 </body>
 </html>

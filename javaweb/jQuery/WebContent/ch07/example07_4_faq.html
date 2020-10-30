@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sliding</title>
+<style>
+div {
+	background: yellow;
+	margin: 10px;
+}
+.answer { 
+	background: cyan; 
+	display : none; 
+}
+</style>
+<script src="../js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function() {
+		
+// 		$(".answer").css("background-color", "cyan").slideUp();
+		
+		$(".question").click(function() {
+			$(this).next().slideToggle();
+		});
+		
+		$("button").click(function() {
+// 			$("div").slideUp();
+			$(".answer").slideDown();
+// 			$(".answer").slideToggle();
+		});
+	});
+</script>
+</head>
+<body>
+	<button >모두보기</button>
+	<p>
+	<div class="question">1.배송은 언제 되나요?</div>
+	<div class="answer">답변:당일 가능합니다.</div>
+	<div class="question">2.교환은 가능한가요?</div>
+	<div class="answer">답변:안됩니다.</div>
+	<div class="question">3.환불은 가능한가요?</div>
+	<div class="answer">답변:당연히 안되죠.</div>
+</body>
+</html>

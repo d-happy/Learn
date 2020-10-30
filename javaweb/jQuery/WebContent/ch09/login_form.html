@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>login_form.html</title>
+<script src="../js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function() {
+		$("button").click(function() {
+			var user_id = $("input[name=user_id]").val();
+			var user_pw = $("input[name=user_pw]").val();
+			
+			console.log(user_id +" : "+ user_pw);
+			
+			var v = {
+					"user_id" : user_id,
+					"user_pw" : user_pw
+			};
+			
+			$.post("login_run.jsp", v, function(data) {
+				var result = data.trim();
+				console.log(result);
+				
+				if (result == "success") {
+					location.href="login_success.html";
+				} else if (result == "fail"){
+					location.href="login_fail.html";
+				}
+				// 서버 사이에 이동하는 데이터 : 문자열, 바이너리
+				
+				// <~ name="" id="" ~>
+				// name : jsp에서 해당 엘리먼트의 값을 읽을 수 있음 ??? (서버 전달 가능!!!)
+				// id : html ? 브라우저 내에서 엘리컨트 각각 구별 가능
+			});
+			
+		});
+	});
+</script>
+</head>
+<body>
+	<form>
+		<label>아이디:</label>
+		<input type = "text" name="user_id"/>
+		<br/>
+		<label>패스워드:</label>
+		<input type = "password" name="user_pw">
+		<br/>
+		<button type="button">로그인</button>
+	</form>
+</body>
+</html>

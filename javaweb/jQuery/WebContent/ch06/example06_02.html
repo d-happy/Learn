@@ -5,7 +5,22 @@
 <title>하나의 DOM 엘리멘트에 여러 개의 이벤트 적용하기</title>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
-	
+	// mouseover : 마우스 올라왔을때
+	// mouseout : 마우스 빠져나갈때
+	// click : 마우스 click
+	$(function() {
+		$("img").bind({
+			"mouseover" : function() {
+				$(this).attr("src", "../images/but2.gif");
+			},
+			"mouseout"  : function() {
+				$(this).attr("src", "../images/but1.gif");
+			},
+			"click"     : function() {
+				alert("click");
+			}
+		});
+	});
 </script>
 </head>
 <body>   

@@ -10,9 +10,60 @@ td {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
+	// JSON : JavaScript Object Notation : 자바스크립트 객체 - { }
+	$(function() {
+		$("button").click(function() {
+			$.getJSON("item.json", function(data) {
+				console.log(data);
+				var header = "<tr>";
+				header += "<th>번호</th>";
+				header += "<th>이름</th>";
+				header += "<th>가격</th>";
+				header += "<th>설명</th>";
+				header += "</tr>";
+				
+				$("#treeData").append(header);
+				
+				// data : [ { }, { }, { }, { }, { }, { } ] 배열 안에 객체 6개
+				// 객체 안에 따로 다 값 여러개 있음 this.***
+				$.each(data, function(index) {
+					if (true) { // index <= 2 : 0, 1, 2 가능,, 조건 없으면 필요 없음
+// 						var tr = "<tr>";
+// 						tr += "<td>" + this.id + "</td>" 
+// 						tr += "<td>" + this.name + "</td>" 
+// 						tr += "<td>" + this.price + "</td>" 
+// 						tr += "<td>" + this.description + "</td>" 
+// 						// $제이쿼리 tool?사용 		$(this).@@@		이 아니라
+// 						// 자바스크립트 데이터 자체만 사용하니 그냥 this (JSON 그자체)
+// 						tr += "</tr>";
+						
+						var tr = $("#sample_tr").clone();
+						tr.find("td:eq(0)").text(this.id);
+						tr.find("td:eq(1)").text(this.name);
+						tr.find("td:eq(2)").text(this.price);
+						tr.find("td:eq(3)").text(this.description);
+						// 태그 하나하나 치기 어려우면????
+						// <body>에 구조 만들어서 안 보이게 하고
+						// 구조 복사해서 받은 JSON 객체 하나씩 집어넣기
+
+						$("#treeData").append(tr);
+					} //if
+				});
+			});
+		});
+	});
 </script>
 </head>
 <body>
+	<table style="display:none">
+		<tr id="sample_tr">
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<button type="button">data get</button>
 	<table id="treeData"></table>
 </body>
 </html>

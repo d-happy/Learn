@@ -10,7 +10,18 @@ img{
 </style>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
-	
+	// toggleClass(class name)
+	// toggle(f, f) - function(){} 번갈아 시행
+	$(function() {
+		$("img").toggle(
+				function() {
+					$(this).css("opacity", 0.5);
+				}, 
+				function() {
+					$(this).css("opacity", 1);
+				}
+		);
+	});
 </script>
 </head>
 <body>

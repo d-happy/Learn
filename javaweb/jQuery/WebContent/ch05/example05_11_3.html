@@ -11,7 +11,7 @@ div.abs{ width: 50px; height: 50px; position: absolute;
 </style>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
-	//setIntervla(f, delay) clearInterval(f)
+	//###.setIntervla(f, delay) clearInterval(f) // ###. 생략된 window
 	$(function() {
 		
 		var count = 0;
@@ -33,6 +33,7 @@ div.abs{ width: 50px; height: 50px; position: absolute;
 					 .offset({
 						 "top"  : y
 					 }));
+			//형제 말고 body 에 append 하면 순서대로 됨
 		}
 		
 		function start() {

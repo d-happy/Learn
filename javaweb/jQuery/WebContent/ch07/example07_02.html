@@ -10,6 +10,27 @@ span {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
+	// show <-> hide
+	$(function() {
+		var span1 = $("span:first");
+		var span2 = $("span:last");
+		$("button").eq(0).click(function() {
+			span1.show();
+		});
+		$("button").eq(1).click(function() {
+			span1.hide();
+		});
+		$("button").eq(2).click(function() {
+			span2.show(2000, function() {
+				span2.css("background-color", "yellow");
+			});
+		});
+		$("button").eq(3).click(function() {
+			span2.hide(2000, function() {
+				span2.css("background-color", "cyan");
+			});
+		});
+	});
 </script>
 </head>
 <body>

@@ -10,7 +10,14 @@ img{
 </style>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
-	
+	$(function() {
+// 		$("img").bind("click", function() {
+		$("img").one("click", function() {
+			console.log("gg");
+			$(this).width($(this).width()*2);
+			$(this).height($(this).height()*2);
+		});
+	});
 </script>
 </head>
 <body>   

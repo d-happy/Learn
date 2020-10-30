@@ -8,7 +8,14 @@ ul { float:left; margin:30px}
 <title>DOM 엘리멘트에 이벤트 적용하기</title>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
-
+	$(function() {
+		$("a").click(function(e) {
+			console.log(e);
+			e.preventDefault(); //기본 설정된 기능 막기
+			var href = $(this).attr("href");
+			$("img").attr("src", href);
+		});
+	});
 </script>
 </head>
 <body>   

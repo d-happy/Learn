@@ -10,10 +10,23 @@ img{
 </style>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
-	
+	// bind <-> unbind
+	$(function() {
+		var count1 = 0; // 이런 식보다 data-count="0" 나음
+		$("img").bind("click", function() {
+			var count = parseInt($(this).attr("data-count"));
+// 			console.log(count);
+			$(this).attr("data-count", ++count);
+			if (count >= 3) {
+				$(this).unbind("click");
+				$(this).css("border", "5px dashed red");
+			}
+		});
+	});
 </script>
 </head>
 <body>   
-   <img src="../images/im18.jpg">
+   <img src="../images/im18.jpg" data-count="0">
+   <img src="../images/im18.jpg" data-count="0">
 </body>
 </html>

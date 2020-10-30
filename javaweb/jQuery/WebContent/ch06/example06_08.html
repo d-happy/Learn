@@ -10,7 +10,13 @@ img{
 </style>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
-
+	// 더블클릭, 거의 안 씀.....
+	$(function() {
+		$("img").dblclick(function() {
+			$(this).width($(this).width()*2);
+			$(this).height($(this).height()*2);
+		});
+	});
 </script>
 </head>
 <body>   

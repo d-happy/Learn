@@ -9,7 +9,17 @@
 </style>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
-
+	$(function() {
+	// 처음에 ready() 상태에서 읽어진 것만 가능, 새로 생성된 p 는 적용 안 됨
+// 		$("p").click(function() {
+// 			$(this).after("<p>Click You</p>");
+// 		});
+		
+	// on -> 적용할 엘리먼트의 부모 대상으로
+		$("body").on("click", "p", function() {
+			$(this).after("<p>Click You</p>");
+		});
+	});
 </script>
 </head>
 <body>

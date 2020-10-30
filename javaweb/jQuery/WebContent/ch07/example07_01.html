@@ -10,6 +10,19 @@ span {
 </style>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
+	//
+	$(function() {
+// 		$("span:eq(0)")
+		$("button").eq(0).click(function() {
+			$(this).next().show();
+		});
+		$("button").eq(1).click(function() {
+			$(this).next().show(3000, function() {
+				alert("show");
+			}); // normal, slow, fast, 3000밀리초, ..
+			
+		});
+	});
 </script>
 </head>
 <body>

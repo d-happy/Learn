@@ -11,6 +11,17 @@ div{ width: 200px; height: 150px;
 </style>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
+	// 자바 마우스 어댑터 비슷
+	$(function() {
+		$("div").mousemove(function(e) {
+			var cx = e.clientX;
+			var cy = e.clientY;
+			var sx = e.screenX;
+			var sy = e.screenY;
+			$("p:first").text(cx +", "+ cy);
+			$("p:last").text(sx +", "+ sy);
+		});
+	});
 </script>
 </head>
 <body>   
