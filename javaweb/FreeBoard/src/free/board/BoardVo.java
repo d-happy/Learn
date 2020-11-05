@@ -10,6 +10,9 @@ public class BoardVo {
     private String m_id;
     private String b_ip;
     private int b_readcount;
+    private int re_group;
+    private int re_sequence;
+    private int re_level;
     
 	public BoardVo() {
 		super();
@@ -83,10 +86,35 @@ public class BoardVo {
 		this.b_readcount = b_readcount;
 	}
 
+	public int getRe_group() {
+		return re_group;
+	}
+
+	public void setRe_group(int re_group) {
+		this.re_group = re_group;
+	}
+
+	public int getRe_sequence() {
+		return re_sequence;
+	}
+
+	public void setRe_sequence(int re_sequence) {
+		this.re_sequence = re_sequence;
+	}
+
+	public int getRe_level() {
+		return re_level;
+	}
+
+	public void setRe_level(int re_level) {
+		this.re_level = re_level;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVo [b_no=" + b_no + ", b_title=" + b_title + ", b_content=" + b_content + ", b_date=" + b_date
-				+ ", m_id=" + m_id + ", b_ip=" + b_ip + ", b_readcount=" + b_readcount + "]";
+				+ ", m_id=" + m_id + ", b_ip=" + b_ip + ", b_readcount=" + b_readcount + ", re_group=" + re_group
+				+ ", re_sequence=" + re_sequence + ", re_level=" + re_level + "]";
 	}
 
 }//BoardVo

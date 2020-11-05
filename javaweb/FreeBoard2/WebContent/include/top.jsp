@@ -12,7 +12,6 @@
 					<h1 style="color:pink;">게시판 2 self ?!?!?!?!?!</h1>
 			</div>
 		</div><br/>
-		
 
 		<!-- 로그인 여부 -->
 		<div class="row">
@@ -34,13 +33,13 @@
 							id="m_pw" name="m_pw" required placeholder="PW"/>
 						</div>
 						<button id="btnLogin" type="submit" class="btn btn-primary">Login</button><br/>
-						<a href="" class="btn btn-success">Join</a>
+						<a href="member_join_form.jsp" class="btn btn-success">Join</a>
 				<% 	
 					} else {
 				%>
 					<!-- 로그인 Yes -->
-					<h4><%=memberVo.getM_id()%>(<%=memberVo.getM_name() %>)님 반가반가</h4><br/>
-					<a href="logout.jsp" class="btn btn-warning">Logout</a>			
+						<h4><%=memberVo.getM_id()%>(<%=memberVo.getM_name() %>)님 반가반가</h4><br/>
+						<a href="logout.jsp" class="btn btn-warning">Logout</a>			
 				<% 	
 					} //if
 				%>

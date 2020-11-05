@@ -67,8 +67,10 @@ public class BoardDao {
 				Timestamp b_date = rs.getTimestamp("b_date");
 				String m_id  = rs.getString("m_id");
 				String b_ip      = rs.getString("b_ip");
+				int b_readcount  = rs.getInt("b_readcount");
 				
-				BoardVo vo = new BoardVo(b_no, b_title, b_content, b_date, m_id,b_ip);
+				BoardVo vo = new BoardVo
+						(b_no, b_title, b_content, b_date, m_id, b_ip, b_readcount);
 				list.add(vo);
 			}
 //			System.out.println("dao, getList : "+ list);
@@ -128,6 +130,7 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 		
 		try {
+			System.out.println(vo.toString());
 			String sql = "insert into tbl_free_board"
 					+ "	  (b_no, b_title, b_content, m_id, b_ip)"
 					+ "   values (seq_board_bno.nextval, ?, ?, ?, ?)";
@@ -147,48 +150,56 @@ public class BoardDao {
 	}//insertArticle
 	
 	//글 수정
-	public void modifyArticle(BoardVo vo) {
+	public boolean modifyArticle(BoardVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			String sql = "update tbl_free_board set"
 					+ "	  b_title = ?,"
-					+ "	  m_id = ?,"
 					+ "   b_content = ?"
-					+ "   where b_no = ?";
+					+ "   where b_no = ?"
+					+ "   and m_id = ?";
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			int i = 0;
 			pstmt.setString(++i, vo.getB_title());
-			pstmt.setString(++i, vo.getM_id());
 			pstmt.setString(++i, vo.getB_content());
 			pstmt.setInt   (++i, vo.getB_no());
+			pstmt.setString(++i, vo.getM_id());
 			pstmt.executeUpdate();
+			
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(conn, pstmt);
 		}
+		return false;
 	}//modifyArticle
 	
 	//글 삭제
-	public void deleteArticle(BoardVo vo) {
+	public int deleteArticle(BoardVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			String sql = "delete from tbl_free_board "
-					+ "   where b_no = ?";
+			String sql = "delete from tbl_free_board " // db에 저장된 글번호, 작성자 동일 여부 확인
+					+ "   where b_no = ?"
+					+ "   and m_id = ?";
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt   (1, vo.getB_no());
-			pstmt.executeUpdate();
+			pstmt.setString(2, vo.getM_id());
+			int count = pstmt.executeUpdate();
+			
+			return count;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(conn, pstmt);
 		}
+		return 0;
 	}//deleteArticle
 	
 }//BoardDao

@@ -54,7 +54,8 @@
 					<tbody>
 						<tr>
 							<td>글번호</td>
-							<td id="td_bno"><%=vo.getB_no() %></td>
+<%-- 							<td id="td_bno"><%=vo.getB_no() %></td> --%>
+							<td><%=vo.getB_no() %></td>
 						</tr>
 						<tr class="table-active">
 							<td>글제목</td>
@@ -95,14 +96,17 @@
 				} //if
 			%>
 				<a class="btn btn-success" href="list.jsp">목록</a>
+				<a class="btn btn-info" href="reply_form.jsp?b_no=<%=vo.getB_no()%>&re_group=<%=vo.getRe_group()%>&re_sequence=<%=vo.getRe_sequence()%>&re_level=<%=vo.getRe_level()%>">
+				답글</a>
+				<!-- 세션에 넣으면 해당 링크가 없어서??? -->
 			</div>
 		</div>
 		
 		<!-- 모달 -->
-			<div class="row">
+		<div class="row">
 			<div class="col-md-12">
 				 <a id="modal-delete" href="#modal-container-delete" role="button" 
-				 	class="btn btn-sm btn-danger" data-toggle="modal">삭제 모달</a>
+				 	class="btn btn-danger" data-toggle="modal">삭제 모달</a>
 				
 				<div class="modal fade" id="modal-container-delete" role="dialog" 
 					aria-labelledby="myModalLabel" aria-hidden="true">

@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="include/header.jsp" %>
-<%@ include file="login_check_run.jsp" %>
+<%@ include file="include/login_check_run.jsp" %>
     
-<title>글쓰기</title>
+<title>게시판2-글쓰기</title>
 </head>
 <body>
 <div class="container-fluid">
@@ -16,19 +16,11 @@
 					<input type="text" class="form-control" id="b_title" name="b_title"/>
 				</div>
 				<div class="form-group">
-					<label for="b_writer">작성자</label>
-					<input type="text" class="form-control" id="b_writer" name="b_writer"/>
-				</div>
-				<div class="form-group">
-					<label for="b_pass">비밀번호</label>
-					<input type="password" class="form-control" id="b_pass" name="b_pass"/>
-				</div>
-				<div class="form-group">
 					<label for="b_content">내용</label>
 					<textarea class="form-control" id="b_content" name="b_content"></textarea>
 				</div>
-				<button type="submit" class="btn btn-sm btn-primary">작성완료</button>
-<!-- 				<a href="write_run.jsp" class="btn btn-sm btn-primary" >작성완료</a> -->
+				<button type="submit" class="btn btn-primary">작성완료</button>
+				<a href="list.jsp" class="btn btn-warning">취소</a>
 			</form>
 		</div>
 	</div>

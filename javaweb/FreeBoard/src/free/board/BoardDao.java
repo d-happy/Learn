@@ -52,7 +52,9 @@ public class BoardDao {
 		ResultSet rs = null;
 		
 		try {
-			String sql = "select * from tbl_free_board order by b_no desc";
+			// 글 그룹으로 내림차순, 같은 글 그룹 내에서는 시퀀스 값으로 오름차순
+			String sql = "select * from tbl_free_board "
+					+ "	  order by re_group desc, re_seq asc";
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -65,9 +67,11 @@ public class BoardDao {
 				String m_id = rs.getString("m_id");
 				String b_ip = rs.getString("b_ip");
 				int b_readcount = rs.getInt("b_readcount");
+				int re_level = rs.getInt("re_level");
 				
 				BoardVo vo = new BoardVo(
 						b_no, b_title, b_content, b_date, m_id, b_ip, b_readcount);
+				vo.setRe_level(re_level);
 				list.add(vo);
 			}
 //			System.out.println("BoardDao, getList(), list : " + list);
@@ -123,7 +127,6 @@ public class BoardDao {
 			
 			String sql = "select * from tbl_free_board"
 					+ "		where b_no = ?";
-			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,  b_no);
 			rs = pstmt.executeQuery();
@@ -134,9 +137,15 @@ public class BoardDao {
 				String b_ip = rs.getString("b_ip");
 				String b_content = rs.getString("b_content");
 				int b_readcount = rs.getInt("b_readcount");
+				int re_group = rs.getInt("re_group");
+				int re_sequence = rs.getInt("re_seq"); // db 랑 re_sequence 이름 동일!!!!
+				int re_level = rs.getInt("re_level");
 				
 				BoardVo vo = new BoardVo(
 						b_no, b_title, b_content, b_date, m_id, b_ip, b_readcount);
+				vo.setRe_group(re_group);
+				vo.setRe_sequence(re_sequence);
+				vo.setRe_level(re_level);
 				return vo;
 			}
 		} catch (Exception e) {
@@ -194,5 +203,62 @@ public class BoardDao {
 			close(pstmt, conn);
 		}
 	}//modifyArticle
+	
+	//답글 달기
+	public int reply(BoardVo vo) { // boolean 가능
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		
+		try {
+			conn = getConnection();
+			conn.setAutoCommit(false); // DML이 2개 이상인 경우 트랜잭션 처리 / 자동 커밋 막아두기
+			// seq 값들에 대해서 업데이트 -update
+			String updateSql = "update tbl_free_board set"
+					+ "				re_seq = re_seq + 1"
+//					+ "				re_level = re_level + 1"
+					+ "			where re_group = ?"
+					+ "			and re_seq > ?";
+			pstmt = conn.prepareStatement(updateSql);
+			pstmt.setInt(1, vo.getRe_group());
+			pstmt.setInt(2, vo.getRe_sequence());
+			int count = pstmt.executeUpdate();
+			
+			// 답글은 인서트 - insert
+			String insertSql = "insert into tbl_free_board "
+					+ "(b_no, b_title, b_content, m_id, b_ip, "
+					+ "re_group, re_seq, re_level)"
+					+ "values (seq_board_bno.nextval, ?, ?, ?, ?, ?, ?, ?)";
+			pstmt2 = conn.prepareStatement(insertSql);
+			pstmt2.setString(1, vo.getB_title());
+			pstmt2.setString(2, vo.getB_content());
+			pstmt2.setString(3, vo.getM_id());
+			pstmt2.setString(4, vo.getB_ip());
+			pstmt2.setInt(5, vo.getRe_group());
+			pstmt2.setInt(6, vo.getRe_sequence() + 1);
+			pstmt2.setInt(7, vo.getRe_level() + 1);
+			count += pstmt2.executeUpdate();
+			
+			conn.commit(); // 여기까지 오면 문제 없으니 커밋 고고
+			
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback(); // 문제 생기면 롤백
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			close(pstmt2);
+			close(pstmt, conn);
+		}
+		return 0;
+	}//reply
 	
 }//BoardDao

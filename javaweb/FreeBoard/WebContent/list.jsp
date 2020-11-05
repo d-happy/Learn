@@ -52,11 +52,12 @@ $(function() {
 							<td><%= vo.getB_no() %></td>
 							<td>
 							<%
-							if (vo.getB_readcount() > 5) {
+							if (vo.getB_readcount() > 50) {
 								out.print("[HOT]");
 							} 
 							%>
 							<a href="content.jsp?b_no=<%= vo.getB_no() %>">
+							<img src="images/white.png" width="<%=vo.getRe_level()*50%>" height="1"/>
 							<%= vo.getB_title() %></a></td>
 							<td><%= vo.getM_id() %></td>
 							<td><%= vo.getB_readcount() %></td>

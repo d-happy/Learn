@@ -74,5 +74,27 @@ public class MemberDao {
 		return null;
 	}//loginMemberVo
 	
+	//Join
+	public void joinMemberVo(MemberVo memberVo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+//			System.out.println(memberVo.toString());
+			String sql = "insert into tbl_member"
+					+ "	  (m_id, m_pw, m_name)"
+					+ "   values(?, ?, ?)";
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberVo.getM_id());
+			pstmt.setString(2, memberVo.getM_pw());
+			pstmt.setString(3, memberVo.getM_name());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, pstmt);
+		}
+	}//joinMemberVo
 	
 }//BoardDao
