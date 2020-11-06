@@ -26,7 +26,7 @@
 			<div class="col-md-12">
 				<form role="form" id="frmWrite" action="relpy_run.jsp" method="post">
 					<input type="hidden" name="re_group" value="<%=boardVo.getRe_group()%>"/>
-					<input type="hidden" name="re_sequence" value="<%=boardVo.getRe_sequence()%>"/>
+					<input type="hidden" name="re_sequence" value="<%=boardVo.getRe_seq()%>"/>
 					<input type="hidden" name="re_level" value="<%=boardVo.getRe_level()%>"/>
 					<div class="form-group">
 

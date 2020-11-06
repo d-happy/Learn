@@ -16,7 +16,7 @@
 
 <script type="text/javascript">
 	$(function() {
-		$("#btnDelete").click(function() {
+		$("#btnDelete").click(function() { // 모달에서 삭제 버튼 누를 때
 			var b_no = $("#td_b_no").text();
 			
 			var url = "delete_run_ajax.jsp";
@@ -31,7 +31,7 @@
 			});
 		}); 
 		
-		$("#btnDel").click(function(e) {
+		$("#btnDel").click(function(e) { // 상세창에서 삭제 버튼
 			e.preventDefault(); // 브라우저 기본 기능 막기
 			
 			if (confirm("정말 삭제할거임??")) { // 삭제한다면 삭제 런으로 보내기
@@ -40,7 +40,7 @@
 			}
 		});
 		
-		$("#btnMod").click(function() {
+		$("#btnMod").click(function() { // 상세창에서 수정 버튼, 인풋 활성화 여부
 // 			var b_title_readonly = $("#b_title").prop("readonly"); // attr 아님....
 // 			var b_content_readonly = $("#b_content").prop("readonly");
 			
@@ -67,6 +67,21 @@
 				});
 			}
 		});
+		
+// 		$("#btnReply").click(function() {
+// 			var b_no = $("#td_b_no").text();
+// 			var b_title = $("#b_title").val();
+			
+// 			var url = "reply_form.jsp"; 
+// 			var sendData = {
+// 					"b_no" : b_no,
+// 					"b_title" : b_title
+// 			};
+// 			$.post(url, sendData, function(data) { //비동기,  url 로 보내서 처리하는 거지 이동 안 함!!!
+// 				console.log("gg22");
+// 				console.log(data);
+// 			});
+// 		});
 	});
 </script>
 <title>게시판2-상세보기</title>
@@ -105,17 +120,22 @@
 					</tbody>
 				</table>
 				<!-- <a href class="btn/ 스크립트 에서 아이디? / ??? -->
-				<a href="list.jsp" class="btn btn-success" >목록</a>
+				
+				
+				
 				<%
 				if(m_id_session.equals(vo.getM_id())) {
 				%>
 <%-- 				href="modify_form.jsp?b_no=<%=vo.getB_no() %>" --%>
 					<a class="btn btn-warning" id="btnMod">수정</a>
-					<a href="delete_run.jsp?b_no=<%=vo.getB_no() %>" 
+					<a href="delete_run.jsp?b_no=<%=vo.getB_no()%>" 
 					class="btn btn-danger" id="btnDel">삭제</a>
 				<%
 				}//if
 				%>
+				<a href="list.jsp" class="btn btn-success" >목록</a>
+				<a href="reply_form.jsp?b_no=<%=vo.getB_no()%>"
+				class="btn btn-primary" id="btnReply">답글</a>
 			</div>
 		</div>
 		
@@ -123,7 +143,7 @@
 			<div class="row">
 			<div class="col-md-12">
 				 <a id="modal-delete" href="#modal-container-delete" role="button" 
-				 	class="btn btn-danger" data-toggle="modal">삭제 모달</a>
+				 	class="btn btn-outline-danger" data-toggle="modal">삭제 모달</a>
 				
 				<div class="modal fade" id="modal-container-delete" role="dialog" 
 					aria-labelledby="myModalLabel" aria-hidden="true">

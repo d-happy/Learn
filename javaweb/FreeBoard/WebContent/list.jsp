@@ -52,7 +52,7 @@ $(function() {
 							<td><%= vo.getB_no() %></td>
 							<td>
 							<%
-							if (vo.getB_readcount() > 50) {
+							if (vo.getB_readcount() > 100) {
 								out.print("[HOT]");
 							} 
 							%>

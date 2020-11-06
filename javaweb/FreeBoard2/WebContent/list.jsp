@@ -20,13 +20,15 @@
 		<%
 			BoardDao dao = BoardDao.getInstance();
 			List<BoardVo> list = dao.getList();
+			
+// 			MemberVo memberVo = (MemberVo)session.getAttribute("memberVo");
 		%>
 		
 		<%@ include file="include/top.jsp" %>
 		
 		<div class="row">
 			<div class="col-md-12">
-				<a href="write_form.jsp" class="btn btn-sm btn-primary">글쓰기</a>
+				<a href="write_form.jsp" class="btn btn-primary">글쓰기</a><br/><br/>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -44,9 +46,11 @@
 						<tr>
 							<td><%=vo.getB_no() %></td>
 							<td>
+							<!-- <%=vo.getRe_level()*50%> 해야지 너비 나옴 -->
+							<img src="images/white.png" width="<%=vo.getRe_level()*50%>" height="1"/>
 							<a href="content.jsp?b_no=<%=vo.getB_no()%>">
 							<%
-							if (vo.getB_readcount() > 50) {
+							if (vo.getB_readcount() > 100) {
 								out.print("[HOT]");
 							} 
 							%>

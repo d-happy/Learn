@@ -91,8 +91,8 @@ public class BoardDao {
 		
 		try {
 			String sql = "insert into tbl_free_board "
-					+ "		(b_no, b_title, m_id, b_content, b_ip)"
-					+ "		values (seq_board_bno.nextval, ?, ?, ?, ?)";
+					+ "		(b_no, b_title, m_id, b_content, b_ip, re_group)"
+					+ "		values (seq_board_bno.nextval, ?, ?, ?, ?, seq_board_bno.nextval)";
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			int i = 0;
@@ -138,13 +138,13 @@ public class BoardDao {
 				String b_content = rs.getString("b_content");
 				int b_readcount = rs.getInt("b_readcount");
 				int re_group = rs.getInt("re_group");
-				int re_sequence = rs.getInt("re_seq"); // db 랑 re_sequence 이름 동일!!!!
+				int re_seq = rs.getInt("re_seq"); // db 랑 re_sequence 이름 동일!!!!
 				int re_level = rs.getInt("re_level");
 				
 				BoardVo vo = new BoardVo(
 						b_no, b_title, b_content, b_date, m_id, b_ip, b_readcount);
 				vo.setRe_group(re_group);
-				vo.setRe_sequence(re_sequence);
+				vo.setRe_seq(re_seq);
 				vo.setRe_level(re_level);
 				return vo;
 			}
@@ -221,7 +221,7 @@ public class BoardDao {
 					+ "			and re_seq > ?";
 			pstmt = conn.prepareStatement(updateSql);
 			pstmt.setInt(1, vo.getRe_group());
-			pstmt.setInt(2, vo.getRe_sequence());
+			pstmt.setInt(2, vo.getRe_seq());
 			int count = pstmt.executeUpdate();
 			
 			// 답글은 인서트 - insert
@@ -235,7 +235,7 @@ public class BoardDao {
 			pstmt2.setString(3, vo.getM_id());
 			pstmt2.setString(4, vo.getB_ip());
 			pstmt2.setInt(5, vo.getRe_group());
-			pstmt2.setInt(6, vo.getRe_sequence() + 1);
+			pstmt2.setInt(6, vo.getRe_seq() + 1);
 			pstmt2.setInt(7, vo.getRe_level() + 1);
 			count += pstmt2.executeUpdate();
 			

@@ -11,7 +11,7 @@ public class BoardVo {
     private String b_ip;
     private int b_readcount;
     private int re_group;
-    private int re_sequence;
+    private int re_seq;
     private int re_level;
     
 	public BoardVo() {
@@ -94,12 +94,12 @@ public class BoardVo {
 		this.re_group = re_group;
 	}
 
-	public int getRe_sequence() {
-		return re_sequence;
+	public int getRe_seq() {
+		return re_seq;
 	}
 
-	public void setRe_sequence(int re_sequence) {
-		this.re_sequence = re_sequence;
+	public void setRe_seq(int re_seq) {
+		this.re_seq = re_seq;
 	}
 
 	public int getRe_level() {
@@ -114,7 +114,7 @@ public class BoardVo {
 	public String toString() {
 		return "BoardVo [b_no=" + b_no + ", b_title=" + b_title + ", b_content=" + b_content + ", b_date=" + b_date
 				+ ", m_id=" + m_id + ", b_ip=" + b_ip + ", b_readcount=" + b_readcount + ", re_group=" + re_group
-				+ ", re_sequence=" + re_sequence + ", re_level=" + re_level + "]";
+				+ ", re_seq=" + re_seq + ", re_level=" + re_level + "]";
 	}
 
 }//BoardVo

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,8 @@ public class BoardDao {
 		ResultSet rs = null;
 		
 		try {
-			String sql = "select * from tbl_free_board order by b_no desc";
+			String sql = "select * from tbl_free_board "
+					+ "   order by re_group desc, re_seq asc";
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -68,9 +70,15 @@ public class BoardDao {
 				String m_id  = rs.getString("m_id");
 				String b_ip      = rs.getString("b_ip");
 				int b_readcount  = rs.getInt("b_readcount");
+				int re_group     = rs.getInt("re_group");
+				int re_seq       = rs.getInt("re_seq");
+				int re_level     = rs.getInt("re_level");
 				
 				BoardVo vo = new BoardVo
 						(b_no, b_title, b_content, b_date, m_id, b_ip, b_readcount);
+				vo.setRe_group(re_group);
+				vo.setRe_seq(re_seq);
+				vo.setRe_level(re_level);
 				list.add(vo);
 			}
 //			System.out.println("dao, getList : "+ list);
@@ -111,8 +119,14 @@ public class BoardDao {
 				String b_content = rs.getString("b_content");
 				Timestamp b_date = rs.getTimestamp("b_date");
 				String m_id  = rs.getString("m_id");
+				int re_group     = rs.getInt("re_group");
+				int re_seq       = rs.getInt("re_seq");
+				int re_level     = rs.getInt("re_level");
 				
 				vo = new BoardVo(b_no, b_title, b_content, b_date, m_id, null);
+				vo.setRe_group(re_group);
+				vo.setRe_seq(re_seq);
+				vo.setRe_level(re_level);
 			}
 			return vo;
 		} catch (Exception e) {
@@ -132,8 +146,8 @@ public class BoardDao {
 		try {
 			System.out.println(vo.toString());
 			String sql = "insert into tbl_free_board"
-					+ "	  (b_no, b_title, b_content, m_id, b_ip)"
-					+ "   values (seq_board_bno.nextval, ?, ?, ?, ?)";
+					+ "	  (b_no, b_title, b_content, m_id, b_ip, re_group)"
+					+ "   values (seq_board_bno.nextval, ?, ?, ?, ?, seq_board_bno.nextval)";
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			int i = 0;
@@ -184,7 +198,7 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String sql = "delete from tbl_free_board " // db에 저장된 글번호, 작성자 동일 여부 확인
+			String sql = "delete from tbl_free_board" // db에 저장된 글번호, 작성자 동일 여부 확인
 					+ "   where b_no = ?"
 					+ "   and m_id = ?";
 			conn = getConnection();
@@ -201,5 +215,62 @@ public class BoardDao {
 		}
 		return 0;
 	}//deleteArticle
+	
+	//답글 달기
+	public int reply(BoardVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		
+		try {
+			conn = getConnection();
+			conn.setAutoCommit(false); // DML이 2개 이상인 경우 트랜잭션 처리 / 자동 커밋 막아두기
+			// seq 값들에 대해서 업데이트 -update
+			String updateSql = "update tbl_free_board set"
+					+ "				re_seq = re_seq + 1"
+					+ "			where re_group = ?"
+					+ "			and re_seq > ?";
+			pstmt = conn.prepareStatement(updateSql);
+			pstmt.setInt(1, vo.getRe_group());
+			pstmt.setInt(2, vo.getRe_seq());
+			int count = pstmt.executeUpdate();
+			
+			// 답글은 인서트 - insert
+			String insertSql = "insert into tbl_free_board ("
+					+ "				b_no, b_title, b_content, m_id, b_ip,"
+					+ "				re_group, re_seq, re_level)"
+					+ "			values (seq_board_bno.nextval, ?, ?, ?, ?, ?, ?, ?)";
+			pstmt2 = conn.prepareStatement(insertSql);
+			int i = 0;
+			pstmt2.setString(++i, vo.getB_title());
+			pstmt2.setString(++i, vo.getB_content());
+			pstmt2.setString(++i, vo.getM_id()); // 로그인 한 사람의 아이디값, 세션에 저장됨
+			pstmt2.setString(++i, vo.getB_ip());
+			pstmt2.setInt   (++i, vo.getRe_group()); // 원글 이랑 같음
+			pstmt2.setInt   (++i, vo.getRe_seq() + 1); // 원글에 달린 답글이라서, 순서 추가
+			pstmt2.setInt   (++i, vo.getRe_level() + 1); // 원글에 달린 답글이라서, 한 칸 들어감
+			count += pstmt2.executeUpdate();
+			
+			conn.commit();
+			
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback(); // 문제 생기면 롤백
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true); // 문제 생겨서 롤백했든 문제 없어서 진행했든 끝날땐 자동 커밋 설정 다시 실행
+			} catch (Exception e3) {
+				e3.printStackTrace();
+			}
+			close(pstmt2);
+			close(conn, pstmt);
+		}
+		return 0;
+	}//reply
 	
 }//BoardDao

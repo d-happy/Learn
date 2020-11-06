@@ -97,4 +97,4 @@ public class MemberDao {
 		}
 	}//joinMemberVo
 	
-}//BoardDao
+}//MemberDao

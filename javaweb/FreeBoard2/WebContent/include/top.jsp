@@ -18,10 +18,10 @@
 			<div class="col-md-3">
 				<form role="form" action="login_run.jsp" method="post">
 				<%
-					Object obj = session.getAttribute("memberVo");
-					MemberVo memberVo = (MemberVo)obj;
+					Object obj_top = session.getAttribute("memberVo");
+					MemberVo memberVo_top = (MemberVo)obj_top;
 					
-					if (obj == null) {
+					if (obj_top == null) {
 				%>
 					<!-- 로그인 No -->
 						<div class="form-group">
@@ -38,7 +38,7 @@
 					} else {
 				%>
 					<!-- 로그인 Yes -->
-						<h4><%=memberVo.getM_id()%>(<%=memberVo.getM_name() %>)님 반가반가</h4><br/>
+						<h4><%=memberVo_top.getM_id()%>(<%=memberVo_top.getM_name() %>)님 반가반가</h4><br/>
 						<a href="logout.jsp" class="btn btn-warning">Logout</a>			
 				<% 	
 					} //if
