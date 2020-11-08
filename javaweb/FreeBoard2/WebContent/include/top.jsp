@@ -18,10 +18,11 @@
 			<div class="col-md-3">
 				<form role="form" action="login_run.jsp" method="post">
 				<%
+					// session에 memberVo 값 여부 확인
 					Object obj_top = session.getAttribute("memberVo");
 					MemberVo memberVo_top = (MemberVo)obj_top;
 					
-					if (obj_top == null) {
+					if (obj_top == null) { // 로그인 전이면 id, pw, 회원가입 보여주고
 				%>
 					<!-- 로그인 No -->
 						<div class="form-group">
@@ -35,7 +36,7 @@
 						<button id="btnLogin" type="submit" class="btn btn-primary">Login</button><br/>
 						<a href="member_join_form.jsp" class="btn btn-success">Join</a>
 				<% 	
-					} else {
+					} else { // 로그인(회원 맞음 == session에 값 있음 == MemberVo 에 정보 있음)
 				%>
 					<!-- 로그인 Yes -->
 						<h4><%=memberVo_top.getM_id()%>(<%=memberVo_top.getM_name() %>)님 반가반가</h4><br/>

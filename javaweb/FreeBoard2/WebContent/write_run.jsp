@@ -5,8 +5,10 @@
     pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
+	// write_form.jsp 에서 받은 글제목, 글내용
 	String b_title = request.getParameter("b_title");
 	String b_content= request.getParameter("b_content");
+	// ip 값은 알아서 받을 수 있음
 	String b_ip = request.getRemoteAddr();
 	
 	Object obj = session.getAttribute("memberVo");

@@ -2,7 +2,7 @@ package free.board;
 
 import java.sql.Timestamp;
 
-public class BoardVo {
+public class BoardVo { // 게시판에 올라온 글에 대한 정보 -> 자바빈
 	private int b_no;
 	private String b_title;
 	private String b_content;

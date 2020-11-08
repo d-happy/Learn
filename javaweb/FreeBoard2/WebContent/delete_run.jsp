@@ -11,9 +11,11 @@
 	vo.setB_no(b_no);
 	vo.setM_id(m_id);
 	
+	// b_no랑 m_id 확인해서 맞으면 db 에서 해당 글 삭제하기
 	BoardDao dao = BoardDao.getInstance();
 	int count = dao.deleteArticle(vo);
 	
+	// 0 보다 큰 수면 삭제 제대로 됨 -> list.jsp 이동
 	if (count > 0) {
 		response.sendRedirect("list.jsp");
 	} 

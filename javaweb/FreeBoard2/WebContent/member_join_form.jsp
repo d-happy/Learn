@@ -5,11 +5,11 @@
 
 <script type="text/javascript">
 	$(function() {
-		$("#formJoin").submit(function() { //보내는 건 formJoin 얘가 함
+		$("#formJoin").submit(function() { //보내는 건 <form> id="formJoin" 얘가 함
 			if($("#m_pw_join").val() != $("#m_pw_join2").val()) {
 				alert("비번 내용 같은지 확인하셈");
 				$("#m_pw_join2").val("").focus();
-				return false;
+				return false; // <form> action="#" 못 함
 			} 
 // 			else {
 // 				alert("★회원가입 축하축하★");
@@ -26,6 +26,7 @@
 <%@ include file="include/top.jsp" %>
 
 	<div class="col-md-12">
+		<!-- <form> : 자식 태그에서 받은 값들을 action="#" 으로 method="#" 방법으로 보냄-->
 		<form role="form" id="formJoin" action="member_join_run.jsp" method="post">
 			<div class="form-group">
 				<label for="m_id">아이디</label>
@@ -47,6 +48,7 @@
 				<input type="text" class="form-control" id="m_name_join" name="m_name_join"
 				required maxlength="6"/>
 			</div>
+			<!-- <button type="submit"> 누르면 위에 자바스크립트 실행 -->
 			<button type="submit" class="btn btn-primary">회원가입</button>
 			<a href="list.jsp" class="btn btn-warning">취소</a>
 		</form>

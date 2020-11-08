@@ -3,6 +3,7 @@
     
 <%@ include file="include/header.jsp" %>
 <%@ include file="include/login_check_run.jsp" %>
+<!-- 회원 여부에 따라서 글쓰기창 여부 바뀜 -->
     
 <title>게시판2-글쓰기</title>
 </head>

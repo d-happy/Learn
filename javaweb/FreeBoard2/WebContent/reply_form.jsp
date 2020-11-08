@@ -5,6 +5,7 @@
 <%@ include file="include/header.jsp" %>
 <%@ include file="include/top.jsp" %>
 <%-- <%@ include file="include/login_check_run.jsp" %> --%>
+<%-- 이미 상세창에서 로그인 해야 볼 수 있으니 -> 답글 쓰기 창도 마찬가지 ??? --%>
 
 <%
 	int b_no     = Integer.parseInt(request.getParameter("b_no"));
@@ -24,7 +25,6 @@
 	<div class="row">
 		<div class="col-md-12">
 			<form role="form" action="reply_run.jsp" method="post">
-				<input type="hidden" value="<%=b_no%>"/>
 				<div class="form-group">
 <!-- 					<input type="hidden" value="b_no"/> -->
 					<input type="hidden" name="re_group" value="<%=vo.getRe_group()%>"/>

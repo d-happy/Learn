@@ -2,7 +2,7 @@ package free.board;
 
 import java.sql.Timestamp;
 
-public class CommentVo {
+public class CommentVo { // 게시판에 있는 글에 달려있는 댓글에 대한 정보 -> 자바빈
 	private int c_no;
 	private String c_content;
 	private String m_id;

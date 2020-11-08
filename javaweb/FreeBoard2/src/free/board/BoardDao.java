@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardDao {
+public class BoardDao { // 게시판 글에 대한 데이터베이스 처리 모음
 
 	private static BoardDao instance;
 	private BoardDao() { /* singleton */ }
@@ -25,7 +25,7 @@ public class BoardDao {
 	private final String USER = "JSP02";
 	private final String PW = "1234";
 	
-	private Connection getConnection() {
+	private Connection getConnection() { // 오라클 연결
 		try {
 			Class.forName(DRIVER);
 			Connection conn = DriverManager.getConnection(URL, USER, PW);
@@ -36,6 +36,7 @@ public class BoardDao {
 		return null;
 	}
 	
+	// 해당 처리 다 끝나면 종료
 	private void close(PreparedStatement pstmt) {
 		if (pstmt != null) try { pstmt.close(); } catch (Exception e) { }
 	}
@@ -51,7 +52,7 @@ public class BoardDao {
 	
 	//글 목록
 	public List<BoardVo> getList() {
-		Connection conn = null;
+		Connection conn = null; // 항상 메소드 안에서 오라클 연결 생성하고 종료해야 함
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		

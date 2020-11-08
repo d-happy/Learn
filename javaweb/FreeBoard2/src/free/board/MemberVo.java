@@ -1,6 +1,6 @@
 package free.board;
 
-public class MemberVo {
+public class MemberVo { // 게시판에 가입된 회원에 대한 정보 -> 자바빈
 	private String m_id;
 	private String m_pw;
 	private String m_name;

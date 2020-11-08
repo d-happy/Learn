@@ -45,7 +45,7 @@ public class MemberDao {
 		if (rs != null)    try { rs.close(); }    catch (Exception e) { }
 	}
 	
-	//로그인 확인
+	// 로그인 확인 (데이터베이스에 있는 회원 여부 확인)
 	public MemberVo loginMemberVo(String m_id, String m_pw) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -74,7 +74,7 @@ public class MemberDao {
 		return null;
 	}//loginMemberVo
 	
-	//Join
+	// 회원 가입
 	public void joinMemberVo(MemberVo memberVo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

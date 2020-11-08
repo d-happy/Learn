@@ -11,10 +11,11 @@
 	vo.setB_no(b_no);
 	vo.setM_id(m_id);
 	
+	// b_no랑 m_id 확인해서 맞으면 db 에서 해당 글 삭제하기
 	BoardDao dao = BoardDao.getInstance();
 	int count = dao.deleteArticle(vo);
 	
-	if (count > 0) {
-		out.print(count);
-	} 
+	// 삭제 여부 상관없이 출력? -> content.jsp에서 $.post로 보내서 count 받아옴
+	out.print(count);
+// 	if (count > 0) { }
 %>
