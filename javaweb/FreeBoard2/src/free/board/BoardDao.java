@@ -82,7 +82,7 @@ public class BoardDao { // 게시판 글에 대한 데이터베이스 처리 모
 				vo.setRe_level(re_level);
 				list.add(vo);
 			}
-//			System.out.println("dao, getList : "+ list);
+			System.out.println("dao, getList : "+ list);
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();

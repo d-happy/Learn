@@ -17,6 +17,7 @@
 			e.preventDefault(); //브라우저 기본 기능 막기
 			
 			if (confirm("삭제함???")) {
+				<% vo.setB_exists("false"); %>
 				var href = $(this).attr("href");
 				location.href = href;
 			}
@@ -185,9 +186,9 @@
 				if (memberVo.getM_id().equals(vo.getM_id())) {
 			%>
 				<a class="btn btn-warning" 
-				href="modify_form.jsp?b_no=<%= vo.getB_no() %>">수정</a>
+				href="modify_form.jsp?b_no=<%=vo.getB_no()%>">수정</a>
 				<a id="btnDel" class="btn btn-danger" 
-				href="delete_run.jsp?b_no=<%= vo.getB_no() %>">삭제</a>
+				href="delete_run.jsp?b_no=<%=vo.getB_no()%>&b_exists=<%=vo.getB_exists()%>">삭제</a>
 			<%
 				} //if
 			%>

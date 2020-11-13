@@ -13,6 +13,7 @@ public class BoardVo {
     private int re_group;
     private int re_seq;
     private int re_level;
+    private String b_exists;
     
 	public BoardVo() {
 		super();
@@ -110,11 +111,19 @@ public class BoardVo {
 		this.re_level = re_level;
 	}
 
+	public String getB_exists() {
+		return b_exists;
+	}
+
+	public void setB_exists(String b_exists) {
+		this.b_exists = b_exists;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVo [b_no=" + b_no + ", b_title=" + b_title + ", b_content=" + b_content + ", b_date=" + b_date
 				+ ", m_id=" + m_id + ", b_ip=" + b_ip + ", b_readcount=" + b_readcount + ", re_group=" + re_group
-				+ ", re_seq=" + re_seq + ", re_level=" + re_level + "]";
+				+ ", re_seq=" + re_seq + ", re_level=" + re_level + ", b_exists=" + b_exists + "]";
 	}
-
+	
 }//BoardVo

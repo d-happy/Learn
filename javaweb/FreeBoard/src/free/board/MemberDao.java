@@ -41,9 +41,6 @@ public class MemberDao {
 		if (pstmt != null) try { pstmt.close(); } catch (Exception e) { }
 		if (conn != null)  try { conn.close(); }  catch (Exception e) { }
 	}
-	private void close(PreparedStatement pstmt) {
-		if (pstmt != null) try { pstmt.close(); } catch (Exception e) { }
-	}
 	
 	//로그인
 	public MemberVo login(String m_id, String m_pw) {
@@ -62,7 +59,8 @@ public class MemberDao {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				String m_name = rs.getString("m_name");
-				MemberVo vo = new MemberVo(m_id, m_pw, m_name);
+				String m_image = rs.getString("m_image");
+				MemberVo vo = new MemberVo(m_id, m_pw, m_name, m_image);
 				return vo;
 			}
 		} catch (Exception e) {
@@ -79,13 +77,14 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String sql = "insert into tbl_member (m_id, m_pw, m_name)"
-					+ "   values(?, ?, ?)";
+			String sql = "insert into tbl_member (m_id, m_pw, m_name, m_image)"
+					+ "   values(?, ?, ?, ?)";
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getM_id());
 			pstmt.setString(2, vo.getM_pw());
 			pstmt.setString(3, vo.getM_name());
+			pstmt.setString(4, vo.getM_image());
 			int count = pstmt.executeUpdate();
 			return count;
 		} catch (Exception e) {

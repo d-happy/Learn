@@ -68,10 +68,12 @@ public class BoardDao {
 				String b_ip = rs.getString("b_ip");
 				int b_readcount = rs.getInt("b_readcount");
 				int re_level = rs.getInt("re_level");
+				String b_exists = rs.getString("b_exists");
 				
 				BoardVo vo = new BoardVo(
 						b_no, b_title, b_content, b_date, m_id, b_ip, b_readcount);
 				vo.setRe_level(re_level);
+				vo.setB_exists(b_exists);
 				list.add(vo);
 			}
 //			System.out.println("BoardDao, getList(), list : " + list);
@@ -157,7 +159,7 @@ public class BoardDao {
 		return null;
 	}//selectByBno
 	
-	//글 삭제
+	//글 삭제 - 완전 삭제
 	public int deleteArticle(int b_no, String m_id_client) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -170,6 +172,31 @@ public class BoardDao {
 			pstmt  = conn.prepareStatement(sql);
 			pstmt.setInt(1, b_no);;
 			pstmt.setString(2, m_id_client); // 로그인한 사람의 m_id
+			int count = pstmt.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt, conn);
+		}
+		return 0;
+	}//deleteArticle
+	
+	//글 삭제 - 그대로, 눈에만 안 보임
+	public int existsArticle(int b_no, String m_id_client, String b_exists) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "update tbl_free_board set"
+					+ "			b_exists = ?"
+					+ "	  where b_no = ?"
+					+ "   and m_id = ?";
+			conn = getConnection();
+			pstmt  = conn.prepareStatement(sql);
+			pstmt.setString(1, b_exists);
+			pstmt.setInt(2, b_no);
+			pstmt.setString(3, m_id_client); // 로그인한 사람의 m_id
 			int count = pstmt.executeUpdate();
 			return count;
 		} catch (Exception e) {
