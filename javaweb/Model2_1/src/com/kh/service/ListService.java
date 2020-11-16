@@ -32,7 +32,7 @@ public class ListService implements IService{
 		
 		// page
 		int totalCount = boardDao.getTotalCount(searchType, keyword);
-		int totalPage = (int) Math.ceil((double) totalCount / 10);
+//		int totalPage = (int) Math.ceil((double) totalCount / 10);
 		
 		int page = 1;
 		String strPage = request.getParameter("page");

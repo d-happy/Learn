@@ -27,6 +27,14 @@
 			$("#frmPaging > input[name=page]").val(1);
 			$("#frmPaging").submit();
 		});
+		
+		$(".content_link").click(function(e) {
+			e.preventDefault();
+			var b_no = $(this).attr("data-bno");
+			$("#frmPaging > input[name=b_no]").val(b_no);
+			$("#frmPaging").attr("action", "content.md2");
+			$("#frmPaging").submit();
+		});
 	});
 </script>
 <title>글목록2</title>
@@ -35,7 +43,8 @@
 
 <!-- Paging hidden form-->
 <form id="frmPaging" action="list.md2" method="get">
-	<input type="hidden" name="page"/>
+	<input type="hidden" name="b_no"/>
+	<input type="hidden" name="page" value="${pagingDto.page}"/>
 	<input type="hidden" name="perPage" value="${pagingDto.perPage}"/>
 	<input type="hidden" name="searchType" value="${pagingDto.searchType}"/>
 	<input type="hidden" name="keyword" value="${pagingDto.keyword}"/>
@@ -62,7 +71,7 @@
 			<div class="col-md-2"></div>
 			<!-- 검색 -->
 			<div class="col-md-4" style="float: left">
-				<form action="list2.kh" method="get">
+				<form action="list.md2" method="get">
 				
 					<div style="float: left">
 						<select name="searchType" class="form-control">
@@ -139,7 +148,7 @@
 								</c:choose>
 								height="20">
 							</td>
-							<td class="text-muted"><a href="content.md2?b_no=${boardVo.b_no}">${boardVo.b_title}</a></td>
+							<td class="text-muted"><a class="content_link" data-bno="${boardVo.b_no}" href="#">${boardVo.b_title}</a></td>
 							<td class="text-muted">${boardVo.m_id}</td>
 							<td class="text-muted">${boardVo.b_readcount}</td>
 							<td class="text-muted">${boardVo.b_date}</td>

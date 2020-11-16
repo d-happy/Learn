@@ -13,6 +13,18 @@ public class PagingDto {
 	private int perPage = 10;
 	private final int PAGE_BLOCK = 10;
 	
+	
+	
+	public PagingDto() { }
+
+	public PagingDto(int perPage, int page, String searchType, String keyword) {
+		super();
+		this.page = page;
+		this.searchType = searchType;
+		this.keyword = keyword;
+		this.perPage = perPage;
+	}
+
 	public void setPagingData(String searchType, String keyword, int perPage, int totalCount, int page) {
 		this.searchType = searchType;
 		this.keyword = keyword;

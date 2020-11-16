@@ -9,10 +9,15 @@
 <script>
 	$(function() {
 		
+		var message = "${sessionScope.message}"; // ""가 있어야 변수 처리 안 되고 내용 자체가 됨
+		if (message == "success") {
+			alert("수정 완료");
+		}
+		
 		// 수정 상태 애니메이션
 		function changeStateModify() {
 			$("#btnModify").fadeOut("slow");
-			$("#readonly").fadeIn("slow");
+// 			$("#readonly").fadeIn("slow");
 			
 			$("#divFile").slideDown(1000);
 			$("#btnFinish").slideDown(1000);
@@ -23,11 +28,27 @@
 			changeStateModify();
 		});
 		
+		//목록 버튼
+		$("#btnList").click(function() {
+			$("#frmPaging").submit();
+		});
+		
 	});
 </script>
 <title>글 내용 보기</title>
 </head>
 <body>
+
+<!-- Paging form -->
+<form id="frmPaging" action="list.kh" method="get">
+	<input type="hidden" name="b_no"/>
+	<input type="hidden" name="page" value="${pagingDto.page}"/>
+	<input type="hidden" name="perPage" value="${pagingDto.perPage}"/>
+	<input type="hidden" name="searchType" value="${pagingDto.searchType}"/>
+	<input type="hidden" name="keyword" value="${pagingDto.keyword}"/>
+</form>
+<!-- // Paging form -->
+
 	<div class="container-fluid">
 		
 		<!-- 상단 배너 -->
@@ -41,6 +62,8 @@
 		</div>
 		<!-- // 상단 배너 -->
 		
+		${boardVo}<br/><br/>
+		
 		<!-- 글 상세 보기 -->
 		<div class="row">
 			<div class="col-md-2"></div>
@@ -48,7 +71,7 @@
 				<form role="form" action="modify_run.kh" method="post" enctype="multipart/form-data">
 				
 					<input type="hidden" name="b_no" value="${boardVo.b_no}"/>
-					<input type="hidden" name="b_file_path_original" value="${boardVo.b_file_path}"/>
+					<input type="hidden" name="org_b_file_path" value="${boardVo.b_file_path}"/>
 					
 					<div class="form-group">
 						<label for="b_title">글제목</label> 
@@ -92,6 +115,7 @@
 					
 					<button type="button" class="btn btn-warning" id="btnModify">수정</button>
 					<button type="submit" class="btn btn-primary" id="btnFinish" style="display:none">완료</button>
+					<button type="button" class="btn btn-success" id="btnList">목록</button>
 					
 				</form>
 			</div>
@@ -102,3 +126,4 @@
 	</div>
 </body>
 </html>
+<% session.removeAttribute("message"); %>

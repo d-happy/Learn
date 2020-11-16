@@ -211,4 +211,33 @@ public class BoardDao {
 		return null;
 	}//selectByBno
 	
+	// 글 수정
+	public int modifyArticle(BoardVo boardVo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "update tbl_board set"
+					+ "			b_title = ?,"
+					+ "			b_content = ?, "
+					+ "			m_id = ?,"
+					+ "			b_file_path = ?"
+					+ "	  where b_no = ?";
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, boardVo.getB_title());
+			pstmt.setString(2, boardVo.getB_content());
+			pstmt.setString(3, boardVo.getM_id());
+			pstmt.setString(4, boardVo.getB_file_path());
+			pstmt.setInt   (5, boardVo.getB_no());
+			int count = pstmt.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt, conn);
+		}
+		return 0;
+	}//modifyArticle
+	
 }//BoardDao

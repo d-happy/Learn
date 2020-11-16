@@ -1,6 +1,6 @@
 package com.kh.util;
 
-import java.io.IOException;
+import java.io.File;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -9,12 +9,17 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 public class FileUploadUtil {
+	
+	private static String getUploadPath(HttpServletRequest request) {
+		ServletContext application =  request.getServletContext(); // 내장객체 - application
+		String saveDirectory = application.getRealPath("upload");
+		System.out.println("saveDirectory :" + saveDirectory); // saveDirectory 콘솔
+		return saveDirectory;
+	} //getUploadPath
 
 	public static MultipartRequest upload(HttpServletRequest request) { // 파일 업로드 only !!!!
 		
-		ServletContext application =  request.getServletContext(); // 내장객체 - application
-		String saveDirectory = application.getRealPath("upload");
-		System.out.println("saveDirectory :" + saveDirectory);
+		String saveDirectory = getUploadPath(request);
 		int maxSize = 5 * 1024 * 1024; // 5MB
 		
 		try {
@@ -32,5 +37,16 @@ public class FileUploadUtil {
 		}
 		return null;
 	} //upload
+	
+	public static boolean delete(HttpServletRequest request, String fileName) {
+		
+		String saveDirectory = getUploadPath(request);
+		File f = new File(saveDirectory + File.separator + fileName); // File.separator 슬래시/ 라고 보면 됨
+		if (f.exists()) {
+			boolean result = f.delete();
+			return result;
+		}
+		return false;
+	} //delete
 	
 } //FileUploadUtil

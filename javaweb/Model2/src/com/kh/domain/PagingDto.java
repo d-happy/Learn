@@ -13,6 +13,16 @@ public class PagingDto {
 	private int perPage = 10; // 일단 처음에는 글 10개 보임
 	private final int PAGE_BLOCK = 10; // 밑에 페이지 숫자 는 10개 단위로 보임
 	
+	public PagingDto() { }
+	
+	public PagingDto(int perPage, int page, String searchType, String keyword) {
+		super();
+		this.page = page;
+		this.searchType = searchType;
+		this.keyword = keyword;
+		this.perPage = perPage;
+	}
+
 	// 메소드 setPagingData로 PagingDto 관련 데이터 세팅 -> 개별 데이터 세터 필요 없어서 주석 처리
 	public void setPagingData(String searchType, String keyword, int perPage, int totalCount, int page) {
 		this.searchType = searchType;

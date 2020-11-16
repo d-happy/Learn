@@ -17,6 +17,14 @@
 			alert("글쓰기 성공")
 		}
 		
+		$(".content_link").click(function(e) {
+			e.preventDefault(); // 브라우저의 기본 기능 막기 -> a 태그 무력화
+			var b_no = $(this).attr("data-bno");
+			$("#frmPaging > input[name=b_no]").val(b_no);
+			$("#frmPaging").attr("action", "content.kh");
+			$("#frmPaging").submit();
+		});
+		
 		$(".page-link").click(function(e) {
 			e.preventDefault();
 			var page = $(this).attr("href");
@@ -38,7 +46,8 @@
 
 <!-- Paging form -->
 <form id="frmPaging" action="list.kh" method="get">
-	<input type="hidden" name="page"/>
+	<input type="hidden" name="b_no"/>
+	<input type="hidden" name="page" value="${pagingDto.page}"/>
 	<input type="hidden" name="perPage" value="${pagingDto.perPage}"/>
 	<input type="hidden" name="searchType" value="${pagingDto.searchType}"/>
 	<input type="hidden" name="keyword" value="${pagingDto.keyword}"/>
@@ -142,7 +151,7 @@
 								</c:otherwise>
 							</c:choose>
 							height="20"/></td>
-							<td class="text-muted"><a href="content.kh?b_no=${boardVo.b_no}">${boardVo.b_title}</a></td>
+							<td class="text-muted"><a class="content_link" data-bno="${boardVo.b_no}" href="#">${boardVo.b_title}</a></td>
 							<td class="text-muted">${boardVo.m_id}</td>
 							<td class="text-muted">${boardVo.b_readcount}</td>
 							<td class="text-muted">${boardVo.b_date}</td>
