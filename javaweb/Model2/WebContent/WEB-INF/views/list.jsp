@@ -15,6 +15,10 @@
 		var message = "${sessionScope.message}";
 		if (message == "write_run_success") {
 			alert("글쓰기 성공")
+		} else if (message == "delete_success"){
+			alert("삭제 완료");
+		} else if (message == "reply_success") {
+			alert("답글 달기 완료");
 		}
 		
 		$(".content_link").click(function(e) {
@@ -131,7 +135,7 @@
 						<tr>
 							<th class="table-info text-muted">글번호</th>
 							<th class="table-active text-muted">이미지</th>
-							<th class="table-warning text-muted">제목</th>
+							<th style="background:rgb(51, 255, 204)">제목</th>
 							<th class="table-success text-muted">아이디</th>
 							<th class="table-active text-muted">조회수</th>
 							<th class="table-primary text-muted">날짜</th>
@@ -141,7 +145,7 @@
 					<c:forEach var="boardVo" items="${list}">
 						<tr>
 							<td class="text-muted">${boardVo.b_no}</td>
-							<td><img 
+							<td><img alt="이미지"
 							<c:choose>
 								<c:when test="${not empty boardVo.b_file_path}">
 									src="upload/${boardVo.b_file_path}"
@@ -151,7 +155,8 @@
 								</c:otherwise>
 							</c:choose>
 							height="20"/></td>
-							<td class="text-muted"><a class="content_link" data-bno="${boardVo.b_no}" href="#">${boardVo.b_title}</a></td>
+							<td class="text-muted" style="padding-left:${boardVo.re_level * 50}px"> <!-- re_level 간격 -->
+							<a class="content_link" data-bno="${boardVo.b_no}" href="#">${boardVo.b_title}</a></td>
 							<td class="text-muted">${boardVo.m_id}</td>
 							<td class="text-muted">${boardVo.b_readcount}</td>
 							<td class="text-muted">${boardVo.b_date}</td>

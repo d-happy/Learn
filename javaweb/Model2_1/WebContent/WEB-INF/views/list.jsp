@@ -11,8 +11,12 @@
 		
 		var message = "${sessionScope.message}";
 		if (message == "write_run_success") {
-			alert("글쓰기 성공")
-		}
+			alert("글쓰기 성공2");
+		} else if(message == "delete_success") {
+			alert("삭제 완료2");
+		} else if(message == "reply_success") {
+			alert("답글 작성 완료2");
+		} 
 		
 		$(".page-link").click(function(e) {
 			e.preventDefault();
@@ -148,7 +152,8 @@
 								</c:choose>
 								height="20">
 							</td>
-							<td class="text-muted"><a class="content_link" data-bno="${boardVo.b_no}" href="#">${boardVo.b_title}</a></td>
+							<td class="text-muted"style="padding-left:${boardVo.re_level * 50}px">
+							<a class="content_link" data-bno="${boardVo.b_no}" href="#">${boardVo.b_title}</a></td>
 							<td class="text-muted">${boardVo.m_id}</td>
 							<td class="text-muted">${boardVo.b_readcount}</td>
 							<td class="text-muted">${boardVo.b_date}</td>

@@ -95,9 +95,11 @@ public class MyFrontController extends HttpServlet {
 		
 		boolean isRedirect = path.startsWith("redirect:"); // redirect:list.kh
 		if (isRedirect) {
+			// sendRedirect : request 새로 생성, request에 있는 데이터 이동할 페이지에서 필요 없을 때
 			response.sendRedirect(path.substring("redirect:".length())); // list.kh
 		} else {
 			// list.jsp 숨기고 -> http://localhost/Model2/list.kh 치면 리스트 나옴
+			// forward : request 그대로, request에 있는 데이터 이동할 페이지에서 여전히 필요할 때
 			RequestDispatcher dispatcher = 
 					request.getRequestDispatcher(PREFIX + path + SUFFIX);
 			dispatcher.forward(request, response);

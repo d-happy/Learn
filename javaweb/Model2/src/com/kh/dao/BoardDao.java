@@ -40,7 +40,7 @@ public class BoardDao {
 			e.printStackTrace();
 		}
 		return null;
-	}//getConnection
+	} //getConnection
 	
 	private void close(ResultSet rs, PreparedStatement pstmt, Connection conn) {
 		if (rs != null)    try { rs.close(); }    catch (Exception e) { }
@@ -113,7 +113,7 @@ public class BoardDao {
 			close(rs, pstmt, conn);
 		}
 		return null;
-	}//getList
+	} //getList
 	
 	// 글갯수
 	public int getTotalCount(String searchType, String keyword) {
@@ -139,7 +139,7 @@ public class BoardDao {
 			close(rs, pstmt, conn);
 		}
 		return 0;
-	}//getTotalCount
+	} //getTotalCount
 	
 	// 글쓰기
 	public int insertArticle(BoardVo boardVo) {
@@ -163,7 +163,7 @@ public class BoardDao {
 			close(pstmt, conn);
 		}
 		return 0;
-	}//insertArticle
+	} //insertArticle
 	
 	// 글 상세 보기
 	public BoardVo selectByBno(int b_no) {
@@ -209,7 +209,7 @@ public class BoardDao {
 			close(rs, pstmt, conn);
 		}
 		return null;
-	}//selectByBno
+	} //selectByBno
 	
 	// 글 수정
 	public int modifyArticle(BoardVo boardVo) {
@@ -238,6 +238,74 @@ public class BoardDao {
 			close(pstmt, conn);
 		}
 		return 0;
-	}//modifyArticle
+	} //modifyArticle
 	
-}//BoardDao
+	public int deleteArticle(int b_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "delete from tbl_board"
+					+ "	  where b_no = ?";
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_no);
+			
+			int count = pstmt.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt, conn);
+		}
+		return 0;
+	} //delete
+	
+	// 답글 쓰기
+	public int replyArticle(BoardVo boardVo) { // re 관련 정보는 원글 정보
+		Connection conn = null;
+		PreparedStatement pstmtUpdate = null;
+		PreparedStatement pstmtInsert = null;
+		
+		try {
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			
+			String sqlUpdate = "update tbl_board set"
+					+ "				re_seq = re_seq + 1"
+					+ "			where re_group = ?"
+					+ "			and re_seq > ?"; // 새로 생길 답글보다 밑에 있는 글들, 1줄씩 밑으로
+			pstmtUpdate = conn.prepareStatement(sqlUpdate);
+			pstmtUpdate.setInt(1, boardVo.getRe_group());
+			pstmtUpdate.setInt(2, boardVo.getRe_seq());
+			int count = pstmtUpdate.executeUpdate();
+			
+			String sqlInsert = "insert into tbl_board "
+					+ "				(b_no, b_title, b_content, m_id, re_group, re_seq, re_level)"
+					+ "			values (seq_board_bno.nextval, ?, ?, ?, ?, ?, ?)";
+			pstmtInsert = conn.prepareStatement(sqlInsert);
+			pstmtInsert.setString(1, boardVo.getB_title());
+			pstmtInsert.setString(2, boardVo.getB_content());
+			pstmtInsert.setString(3, boardVo.getM_id());
+			pstmtInsert.setInt   (4, boardVo.getRe_group());
+			pstmtInsert.setInt   (5, boardVo.getRe_seq()+1);
+			pstmtInsert.setInt   (6, boardVo.getRe_level()+1);
+			count += pstmtInsert.executeUpdate();
+			
+			conn.commit();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			// SQLException 뭐 할 수 있는게 없으니 걍 e2.printStackTrace(); 안 함???
+			try { conn.rollback(); } catch (SQLException e1) { }
+		} finally {
+			try { conn.setAutoCommit(true); } catch (SQLException e2) { }
+			
+			close(pstmtUpdate, conn);
+			close(pstmtInsert);
+		}
+		return 0;
+	} //replyArticle
+	
+} //BoardDao

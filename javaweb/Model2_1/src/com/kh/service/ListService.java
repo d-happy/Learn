@@ -45,7 +45,7 @@ public class ListService implements IService{
 		
 		// TODO dao - list get
 		List<BoardVo> list = boardDao.getList(pagingDto);
-		// list 보내기
+		// list, pagingDto 보내기
 		request.setAttribute("list", list);
 		request.setAttribute("pagingDto", pagingDto);
 		

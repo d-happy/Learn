@@ -237,4 +237,68 @@ public class BoardDao {
 		return 0;
 	} //modifyArticle
 	
+	// 글 삭제
+	public int deleteArticle(int b_no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "delete from tbl_board"
+					+ "   where b_no = ?";
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_no);
+			int count = pstmt.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt, conn);
+		}
+		return 0;
+	} //deleteArticle
+	
+	// 답글 작성
+	public int replyArticle(BoardVo boardVo) {
+		Connection conn = null;
+		PreparedStatement pstmtUpdate = null;
+		PreparedStatement pstmtInsert = null;
+		
+		try {
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			String sqlUpdate = "update tbl_board set"
+					+ "				re_seq = re_seq + 1"
+					+ "			where re_group = ?"
+					+ "			and re_seq > ?";
+			pstmtUpdate = conn.prepareStatement(sqlUpdate);
+			pstmtUpdate.setInt(1, boardVo.getRe_group());
+			pstmtUpdate.setInt(2, boardVo.getRe_seq());
+			int count = pstmtUpdate.executeUpdate();
+			
+			String sqlInsert = "insert into tbl_board"
+					+ "				(b_no, b_title, b_content, m_id, re_group, re_seq, re_level)"
+					+ "			values (seq_board_bno.nextval, ?, ?, ?, ?, ?, ?)";
+			pstmtInsert = conn.prepareStatement(sqlInsert);
+			pstmtInsert.setString(1, boardVo.getB_title());
+			pstmtInsert.setString(2, boardVo.getB_content());
+			pstmtInsert.setString(3, boardVo.getM_id());
+			pstmtInsert.setInt   (4, boardVo.getRe_group());
+			pstmtInsert.setInt   (5, boardVo.getRe_seq()+1);
+			pstmtInsert.setInt   (6, boardVo.getRe_level()+1);
+			count += pstmtInsert.executeUpdate();
+			
+			conn.commit();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			try { conn.rollback(); } catch (SQLException e1) { }
+		} finally {
+			try { conn.setAutoCommit(true); } catch (SQLException e) { }
+			close(pstmtUpdate);
+			close(pstmtInsert, conn);
+		}
+		return 0;
+	} //replyArticle
+	
 }//BoardDao

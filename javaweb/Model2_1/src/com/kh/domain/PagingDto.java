@@ -17,7 +17,7 @@ public class PagingDto {
 	
 	public PagingDto() { }
 
-	public PagingDto(int perPage, int page, String searchType, String keyword) {
+	public PagingDto(int page, int perPage, String searchType, String keyword) {
 		super();
 		this.page = page;
 		this.searchType = searchType;

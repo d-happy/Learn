@@ -15,12 +15,13 @@ public class PagingDto {
 	
 	public PagingDto() { }
 	
-	public PagingDto(int perPage, int page, String searchType, String keyword) {
+	// 파라미터 순서 주의!!!!
+	public PagingDto(int page, int perPage,  String searchType, String keyword) {
 		super();
 		this.page = page;
+		this.perPage = perPage;
 		this.searchType = searchType;
 		this.keyword = keyword;
-		this.perPage = perPage;
 	}
 
 	// 메소드 setPagingData로 PagingDto 관련 데이터 세팅 -> 개별 데이터 세터 필요 없어서 주석 처리

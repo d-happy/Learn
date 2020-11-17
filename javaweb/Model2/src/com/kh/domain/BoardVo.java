@@ -8,7 +8,6 @@ public class BoardVo {
     private String b_content;
     private Timestamp b_date;
     private String m_id;
-    private String b_ip;
     private int b_readcount;
     private int re_group;
     private int re_seq;
@@ -45,12 +44,6 @@ public class BoardVo {
 	public void setM_id(String m_id) {
 		this.m_id = m_id;
 	}
-	public String getB_ip() {
-		return b_ip;
-	}
-	public void setB_ip(String b_ip) {
-		this.b_ip = b_ip;
-	}
 	public int getB_readcount() {
 		return b_readcount;
 	}
@@ -84,7 +77,7 @@ public class BoardVo {
 	@Override
 	public String toString() {
 		return "BoardVo [b_no=" + b_no + ", b_title=" + b_title + ", b_content=" + b_content + ", b_date=" + b_date
-				+ ", m_id=" + m_id + ", b_ip=" + b_ip + ", b_readcount=" + b_readcount + ", re_group=" + re_group
+				+ ", m_id=" + m_id + ", b_readcount=" + b_readcount + ", re_group=" + re_group
 				+ ", re_seq=" + re_seq + ", re_level=" + re_level + ", b_file_path=" + b_file_path + "]";
 	}
 	

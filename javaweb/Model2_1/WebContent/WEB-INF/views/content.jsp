@@ -10,24 +10,48 @@
 	$(function() {
 		
 		var message = "${sessionScope.message}";
-		if (message == "success") {
+		if (message == "modify_success") {
 			alert("수정 완료2");
 		}
 		
 		function show() {
 			$("#btnModify").fadeOut("slow");
 			$("#divFile").slideDown(1000);
-			$("#btnModifyEnd").slideDown(1000);
+			$("#btnFinish").slideDown(1000);
 			$(".input-modify").prop("readonly", false);
 		}
 		
+		// 상세 - 수정 버튼 : 수정~ 변화
 		$("#btnModify").click(function() {
 			show();
 		});
 		
+		$("#btnFinish").click(function() {
+			var pagingInput = $("#frmPaging > input").clone();
+			$("#frmContent").prepend(pagingInput);
+			$("#frmContent").submit();
+		});
+		
+		// 목록 돌아가기
 		$("#btnList").click(function() {
 			$("#frmPaging").submit();
 		});
+		
+		// 상세-삭제 버튼
+		$("#btnDelModal").click(function() {
+			$("#modal-Delete").trigger("click");
+		});	
+		
+		// 모달-삭제 버튼
+		$("#btnModalDelete").click(function() {
+			$("#frmPaging").attr("action", "delete_run.md2");
+			var bnoInput = "<input type='hidden' name=b_no value='${boardVo.b_no}'/>";
+			var bfilInput = "<input type='hidden' name=b_file_path value='${boardVo.b_file_path}'/>";
+			$("#frmPaging").append(bnoInput);
+			$("#frmPaging").append(bnoInput);
+			$("#frmPaging").submit();
+		});	
+		
 	});
 </script>
 <title>글 내용 보기2</title>
@@ -36,7 +60,6 @@
 
 <!-- Paging hidden form-->
 <form id="frmPaging" action="list.md2" method="get">
-	<input type="hidden" name="b_no"/>
 	<input type="hidden" name="page" value="${pagingDto.page}"/>
 	<input type="hidden" name="perPage" value="${pagingDto.perPage}"/>
 	<input type="hidden" name="searchType" value="${pagingDto.searchType}"/>
@@ -45,6 +68,38 @@
 <!-- // Paging hidden form -->
 
 	<div class="container-fluid">
+		
+		<div class="row">
+			<div class="col-md-12">
+				<!-- 삭제 모달 -->
+				<a id="modal-Delete" href="#modal-container-Delete" role="button" 
+				class="btn" data-toggle="modal" style="display:none">삭제 모달 버튼</a>
+					
+				<div class="modal fade" id="modal-container-Delete" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							
+							<div class="modal-header">
+								<h5 class="modal-title" id="myModalLabel">삭제 확인 모달</h5>
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							
+							<div class="modal-body">정말 삭제할거임??</div>
+							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" id="btnModalDelete">삭제</button>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- // 삭제 모달 -->
 		
 		<!-- 상단 배너 -->
 		<div class="row">
@@ -63,7 +118,7 @@
 		<div class="row">
 			<div class="col-md-2"></div>
 			<div class="col-md-8">
-				<form role="form" action="modify_run.md2" method="post" enctype="multipart/form-data">
+				<form id="frmContent" role="form" action="modify_run.md2" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="b_no" value="${boardVo.b_no}"/>
 					<input type="hidden" name="org_b_file_path" value="${boardVo.b_file_path}"/>
 				
@@ -108,9 +163,10 @@
 					</c:if>
 					
 					<button type="button" class="btn btn-warning" id="btnModify">수정</button>
-					<button type="submit" class="btn btn-primary" style="display:none" id="btnModifyEnd">작성완료</button>
+					<button type="button" class="btn btn-primary" style="display:none" id="btnFinish">수정완료</button>
+					<button type="button" class="btn btn-danger" id="btnDelModal">삭제</button>
+					<a type="button" class="btn btn-info" id="btnReply" href="reply_form.md2?b_no=${boardVo.b_no}">답글</a>
 					<button type="button" class="btn btn-success" id="btnList">목록</button>
-					
 				</form>
 			</div>
 			<div class="col-md-2"></div>
