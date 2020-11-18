@@ -16,7 +16,9 @@
 			alert("삭제 완료2");
 		} else if(message == "reply_success") {
 			alert("답글 작성 완료2");
-		} 
+		} else if (message == "login_success") {
+			alert("로그인 성공");
+		}
 		
 		$(".page-link").click(function(e) {
 			e.preventDefault();

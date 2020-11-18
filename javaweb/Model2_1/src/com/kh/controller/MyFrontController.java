@@ -20,7 +20,7 @@ import com.kh.service.ListService;
 import com.kh.service.WriteFormService;
 import com.kh.service.WriteRunService;
 
-@WebServlet("*.md2")
+@WebServlet({"*.md2", "*.do"})
 public class MyFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final String PREFIX = "WEB-INF/views/";
@@ -58,22 +58,24 @@ public class MyFrontController extends HttpServlet {
     
     private String getCommand(HttpServletRequest request) {
     	String uri = request.getRequestURI();
+    	System.out.println("uri :"+ uri);
     	String contextPath = request.getContextPath();
     	int startIndex = contextPath.length() + 1;
-    	int endIndex = uri.lastIndexOf(".");
-    	String command = uri.substring(startIndex, endIndex);
+//    	int endIndex = uri.lastIndexOf(".");
+    	String command = uri.substring(startIndex);
     	return command;
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("method : GET");
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.setCharacterEncoding("utf-8");
 		String command = getCommand(request);
-//		System.out.println("command :"+ command);
+		System.out.println("command :"+ command);
 		
 		String path = "";
 		IService service = commandMap.get(command);
-//		System.out.println("service :" + service);
+		System.out.println("service :" + service);
 		
 		try {
 			path = service.execute(request, response);
@@ -93,6 +95,7 @@ public class MyFrontController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("method : POST");
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

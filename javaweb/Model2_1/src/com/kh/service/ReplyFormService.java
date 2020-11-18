@@ -15,7 +15,7 @@ public class ReplyFormService implements IService {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		int b_no = Integer.parseInt(request.getParameter("b_no"));
-		BoardVo boardVo = boardDao.selectByBno(b_no);
+		BoardVo boardVo = boardDao.selectByBno(b_no, false);
 		request.setAttribute("boardVo", boardVo);
 		
 		return "reply_form";

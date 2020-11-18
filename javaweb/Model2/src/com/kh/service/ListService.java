@@ -56,7 +56,7 @@ public class ListService implements IService { // class 로 만들고 interface 
 //		request.setAttribute("message", request.getParameter("message"));
 		
 		
-		// list.jsp 로 포워딩 -> /WEB-INF/views/list.jsp
+		// list.jsp 로 포워딩 : request.setAttribute() 사용함 -> /WEB-INF/views/list.jsp
 		
 		
 		return "list";

@@ -21,7 +21,7 @@ public class ContentService implements IService {
 		String keyword = request.getParameter("keyword");
 		
 		PagingDto pagingDto = new PagingDto(page, perPage, searchType, keyword);
-		BoardVo boardVo = boardDao.selectByBno(b_no);
+		BoardVo boardVo = boardDao.selectByBno(b_no, true); // 조회수 증가
 		request.setAttribute("pagingDto", pagingDto);
 		request.setAttribute("boardVo", boardVo);
 //		System.out.println(boardVo.toString());

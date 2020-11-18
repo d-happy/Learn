@@ -163,15 +163,27 @@ public class BoardDao {
 	} //insertArticle
 	
 	// 글 상세 보기
-	public BoardVo selectByBno(int b_no) {
+	public BoardVo selectByBno(int b_no, boolean isRead) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
 		
 		try {
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			
+			if (isRead) {
+				String sql2 = "update tbl_board set"
+						+ "			b_readcount = b_readcount + 1"
+						+ "    where b_no = ?";
+				pstmt2 = conn.prepareStatement(sql2);
+				pstmt2.setInt(1, b_no);
+				pstmt2.executeUpdate();
+			}
+			
 			String sql = "select * from tbl_board"
 					+ "   where b_no = ?";
-			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, b_no);
 			rs = pstmt.executeQuery();
@@ -198,11 +210,14 @@ public class BoardDao {
 				boardVo.setRe_level(re_level);
 				boardVo.setB_file_path(b_file_path);
 				
+				conn.commit();
 				return boardVo;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			try { conn.rollback(); } catch (SQLException e1) { }
 		} finally {
+			try { conn.setAutoCommit(true); } catch (SQLException e1) { }
 			close(rs, pstmt, conn);
 		}
 		return null;

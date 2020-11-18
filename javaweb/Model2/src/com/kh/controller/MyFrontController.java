@@ -18,7 +18,9 @@ import com.kh.service.ListService;
 import com.kh.service.WriteFormService;
 import com.kh.service.WriteRunService;
 
-@WebServlet("*.kh")
+// do -> 로그인 하지 않아도 접근 가능
+// kh -> 로그인 해야 접근 가능
+@WebServlet({"*.kh", "*.do"})
 public class MyFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final String PREFIX = "/WEB-INF/views/";
@@ -62,17 +64,19 @@ public class MyFrontController extends HttpServlet {
     
     private String getCommand(HttpServletRequest request) {
     	String uri = request.getRequestURI(); // /Model2/write_form.jsp
+    	System.out.println("uri :" + uri);
     	String contextPath = request.getContextPath(); // /Model2
     	int startIndex = contextPath.length() + 1; // w의 인덱스
-    	int endIndex = uri.lastIndexOf("."); // .의 위치 (뒤에서부터 찾음)
-    	String command = uri.substring(startIndex, endIndex); // write_form
+//    	int endIndex = uri.lastIndexOf("."); // .의 위치 (뒤에서부터 찾음)
+    	String command = uri.substring(startIndex); // write_form.kh
     	return command;
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("method : GET");
 		request.setCharacterEncoding("utf-8");
 		String command = getCommand(request);
-//		System.out.println("command :" + command);
+		System.out.println("command :" + command);
 		
 		String path = "";
 //		IService service = null;
@@ -85,7 +89,7 @@ public class MyFrontController extends HttpServlet {
 //		} else if (command.equals("write_run")) {
 //			service = commandMap.get("write_run");
 //		}
-//		System.out.println("service :" + service); // com.kh.service.ListService@689eca74 객체로 생성됨
+		System.out.println("service :" + service); // com.kh.service.ListService@689eca74 객체로 생성됨
 		
 		try { // 인터페이스 IService 추상메소드 execute 에서 throws Exception 한 거 받으려고 try~catch
 			path = service.execute(request, response);
@@ -107,6 +111,7 @@ public class MyFrontController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("method : POST");
 		// TODO Auto-generated method stub
 		doGet(request, response); 
 		// 서블릿 생성할 때 기본으로 doGet, doPost 생기는데 이때

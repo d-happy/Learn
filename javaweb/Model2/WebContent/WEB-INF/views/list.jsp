@@ -19,6 +19,8 @@
 			alert("삭제 완료");
 		} else if (message == "reply_success") {
 			alert("답글 달기 완료");
+		} else if (message == "login_success") {
+			alert("로그인 성공");
 		}
 		
 		$(".content_link").click(function(e) {
@@ -48,7 +50,7 @@
 </head>
 <body>
 
-<!-- Paging form -->
+<!-- Paging form : method="get" 으로 해서 주소창으로 넘어감 -->
 <form id="frmPaging" action="list.kh" method="get">
 	<input type="hidden" name="b_no"/>
 	<input type="hidden" name="page" value="${pagingDto.page}"/>
@@ -133,12 +135,12 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th class="table-info text-muted">글번호</th>
-							<th class="table-active text-muted">이미지</th>
-							<th style="background:rgb(51, 255, 204)">제목</th>
-							<th class="table-success text-muted">아이디</th>
-							<th class="table-active text-muted">조회수</th>
-							<th class="table-primary text-muted">날짜</th>
+							<th class="text-muted">글번호</th>
+							<th class="text-muted">이미지</th>
+							<th class="text-muted" style="">제목</th>
+							<th class="text-muted">아이디</th>
+							<th class="text-muted">조회수</th>
+							<th class="text-muted">날짜</th>
 						</tr>
 					</thead>
 					<tbody>

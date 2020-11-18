@@ -165,8 +165,70 @@ public class BoardDao {
 		return 0;
 	} //insertArticle
 	
+	// 글 상세 보기 -> 상황에 따라서 조회수 변경 여부 다름 : 상세1, 수정2, 상세1->답글0
+	public BoardVo selectByBno(int b_no, boolean isUpdateReadCount) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			
+			if (isUpdateReadCount) {
+				String sql2 = "update tbl_board set"
+						+ "			b_readcount = b_readcount + 1"
+						+ "	   where b_no = ?";
+				pstmt2 = conn.prepareStatement(sql2);
+				pstmt2.setInt(1, b_no);
+				pstmt2.executeUpdate();
+			}
+			
+			String sql = "select * from tbl_board"
+					+ "   where b_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_no);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				String b_title = rs.getString("b_title");
+				String b_content = rs.getString("b_content");
+				Timestamp b_date = rs.getTimestamp("b_date");
+				String m_id = rs.getString("m_id");
+				int b_readcount = rs.getInt("b_readcount");
+				int re_group = rs.getInt("re_group");
+				int re_seq = rs.getInt("re_seq");
+				int re_level = rs.getInt("re_level");
+				String b_file_path = rs.getString("b_file_path");
+				
+				BoardVo boardVo = new BoardVo();
+				boardVo.setB_no(b_no);
+				boardVo.setB_title(b_title);
+				boardVo.setB_content(b_content);
+				boardVo.setB_date(b_date);
+				boardVo.setM_id(m_id);
+				boardVo.setB_readcount(b_readcount);
+				boardVo.setRe_group(re_group);
+				boardVo.setRe_seq(re_seq);
+				boardVo.setRe_level(re_level);
+				boardVo.setB_file_path(b_file_path);
+				
+				conn.commit();
+				return boardVo;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			try { conn.rollback(); } catch (SQLException e1) { }
+		} finally {
+			try { conn.setAutoCommit(true); } catch (SQLException e1) { }
+			close(pstmt2);
+			close(rs, pstmt, conn);
+		}
+		return null;
+	} // selectByBno 조회수 변경 여부 다름
+	
 	// 글 상세 보기
-	public BoardVo selectByBno(int b_no) {
+	/*public BoardVo selectByBno(int b_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -209,8 +271,8 @@ public class BoardDao {
 			close(rs, pstmt, conn);
 		}
 		return null;
-	} //selectByBno
-	
+	}*/ //selectByBno
+
 	// 글 수정
 	public int modifyArticle(BoardVo boardVo) {
 		Connection conn = null;
@@ -240,6 +302,7 @@ public class BoardDao {
 		return 0;
 	} //modifyArticle
 	
+	// 글 삭제
 	public int deleteArticle(int b_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

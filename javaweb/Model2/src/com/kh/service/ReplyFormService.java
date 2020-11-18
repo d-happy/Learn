@@ -17,7 +17,7 @@ public class ReplyFormService implements IService {
 		// content.jsp에서 받은 b_no
 		int b_no = Integer.parseInt(request.getParameter("b_no"));
 		// boardVo 새로 하나 만들고
-		BoardVo boardVo = boardDao.selectByBno(b_no);
+		BoardVo boardVo = boardDao.selectByBno(b_no, false); // 조회수 증가 X
 		// boardVo라는 이름으로 넣어서 reply_form.jsp로 보냄
 		request.setAttribute("boardVo", boardVo);
 		
