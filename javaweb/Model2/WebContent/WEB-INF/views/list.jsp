@@ -5,11 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.span-mid{
+	cursor : pointer;
+	color : LightCoral;
+}
+</style>
 <meta charset="UTF-8">
 <%@ include file="include/bootstrap_cdn.jsp" %>
 <script type="text/javascript">
 	$(function() {
-		
 // 		var message = "${param.message}"; // 글목록 새로고침 할 때 마다 반복
 		// 세션 사용 해서 불러오고 사용하면 "% session.removeAttribute("message"); %" 해서 끈다 // 주소 노노
 		var message = "${sessionScope.message}";
@@ -44,11 +49,99 @@
 			$("#frmPaging > input[name=page]").val(1);
 			$("#frmPaging").submit();
 		});
+		
+		// 아이디 클릭
+		/*$(".td-mid").click(function(e) {
+			var left = $(this).position().left;
+			var top = $(this).position().top;
+			console.log("left :" + left + " || top :" + top);
+			$("#mid-popup").offset({ // 위치 지정?
+				"left" : left + 400,
+				"top" : top + 480,
+			}).show(); // display:none X 이제 보임
+			// 이벤트 전파 중단 (이벤트 버블링 무력화) : body에 걸린 이벤트 X
+			// body - div - td 있을때 td 이벤트 생기면, td->div->body 순으로 이벤트 다 걸림 : 이벤트 버블링
+			// 레이어0 - 레이어1 - 레이어2 이런식으로 밑의 레이어들도 다 걸림
+			e.stopPropagation();
+		}); */
+		/*$("body").click(function() {
+			console.log("body click");
+			$("#mid-popup").hide();
+		});*/
+		
+		// 회원 정보 : 화면 이동 말고 모달
+		$(".show-mid").click(function(e) {
+			e.preventDefault();
+			$("#modal-memberInfo").trigger("click");
+		});
+		
+		$("#modal-memberInfo").click(function(e) {
+			var href = $(".show-mid").attr("href");
+			var hrefs = href.split("?");
+			console.log(hrefs);
+			var url = hrefs[0];
+			var values = hrefs[1].split("=");
+			var sendData = {
+				m_id : values[1]	
+			};
+			console.log(sendData);
+			
+			$.ajax({
+				"url" : url,
+				"datatype" : sendData,
+				"success" : function() {
+					
+				}
+			});
+		});
 	});
 </script>
 <title>글목록</title>
 </head>
 <body>
+
+<!-- 회원 정보 모달 -->
+	<div class="row">
+		<div class="col-md-12">
+			 <a id="modal-memberInfo" href="#modal-container-memberInfo" style="display:none;"
+			 role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+			
+			<div class="modal fade" id="modal-container-memberInfo" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">회원 정보</h5>
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+								아이디 : 
+								<input type="text" class="form-control" value="${sessionScope.memberVo.m_id}" readonly/>
+								이름 : 
+								<input type="text" class="form-control" value="${sessionScope.memberVo.m_name}" readonly/>
+								포인트 : 
+								<input type="text" class="form-control" value="${sessionScope.memberVo.m_point}" readonly/>
+						</div>
+						<div class="modal-footer">
+<!-- 							<button type="button" class="btn btn-primary"></button> -->
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+<!-- // 회원 정보 모달 -->
+
+<!-- 아이디 팝업 메뉴 -->
+<!-- position:absolute; 절대 위치? / z-index:100; 레이어0 위로 100? 항상 맨 위 레이어 /  display:none; 일단 안 보임 -->
+<!-- <ul id="mid-popup" class="list-group" style="width:150px; position:absolute; z-index:100; display:none;"> -->
+<!-- 	<li class="list-group-item"><a href="show_member_info.kh">회원 정보</a></li> -->
+<!-- 	<li class="list-group-item"><a href="send_message.kh">쪽지 보내기</a></li> -->
+<!-- </ul> -->
+<!-- //아이디 팝업 메뉴 -->
 
 <!-- Paging form : method="get" 으로 해서 주소창으로 넘어감 -->
 <form id="frmPaging" action="list.kh" method="get">
@@ -68,15 +161,22 @@
 				<div style="background : rgb(255, 230, 230)" class="jumbotron">
 					<h2 class="text-muted font-weight-bold">모델 2 게시판 - 수업</h2>
 					<p class="text-muted font-weight-bold">MVC 패턴을 이용한 새 게시판</p>
+					<p class="text-muted">
+						<span style="background-color:WhiteSmoke;">
+						${sessionScope.memberVo.m_id}(${sessionScope.memberVo.m_name})님</span>
+						<span class="badge badge-light">${sessionScope.memberVo.m_point} 포인트</span>
+					</p>
 					<p>
 						<a class="btn btn-success" href="write_form.kh">글쓰기</a>
+						<a class="btn btn-outline-warning" href="logout.kh">로그아웃</a>
 					</p>
 				</div>
 			</div>
 		</div>
 		<!-- // 상단 배너 -->
 		
-		${pagingDto.toString()}<br/><br/>
+		${pagingDto.toString()}<br/>
+		${sessionScope.memberVo.toString()}<br/><br/>
 		
 		<div class="row">
 			<div class="col-md-2"></div>
@@ -159,7 +259,25 @@
 							height="20"/></td>
 							<td class="text-muted" style="padding-left:${boardVo.re_level * 50}px"> <!-- re_level 간격 -->
 							<a class="content_link" data-bno="${boardVo.b_no}" href="#">${boardVo.b_title}</a></td>
-							<td class="text-muted">${boardVo.m_id}</td>
+							<!--  -->
+							<td class="text-muted">
+								<div class="dropdown">
+									<c:choose>
+										<c:when test="${sessionScope.memberVo.m_id != boardVo.m_id}">
+											<span class="span-mid" data-toggle="dropdown">${boardVo.m_id}</span>
+											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+<!-- 										 	<a class="dropdown-item disabled" href="#">Action</a>  -->
+												 <!-- GET 방식으로 m_id 값 보내고 / show_member_info.kh=### command 에 등록된 서비스로 고고-->
+												 <a class="show-mid dropdown-item" href="show_member_info.kh?m_id=${boardVo.m_id}">회원 정보 보기</a> 
+												 <a class="dropdown-item" href="send_message_form.kh?m_id=${boardVo.m_id}">쪽지 보내기</a>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<span>${boardVo.m_id}</span>
+										</c:otherwise>
+									</c:choose>
+								</div>
+							</td>
 							<td class="text-muted">${boardVo.b_readcount}</td>
 							<td class="text-muted">${boardVo.b_date}</td>
 						</tr>

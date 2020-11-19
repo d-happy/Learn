@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kh.dao.BoardDao;
 import com.kh.domain.BoardVo;
+import com.kh.domain.MemberVo;
 import com.kh.util.FileUploadUtil;
 import com.oreilly.servlet.MultipartRequest;
 
@@ -22,7 +23,11 @@ public class WriteRunService implements IService {
 		
 		String b_title = multi.getParameter("b_title");
 		String b_content = multi.getParameter("b_content");
-		String m_id = multi.getParameter("m_id");
+//		String m_id = multi.getParameter("m_id");
+		
+		HttpSession session = request.getSession();
+		MemberVo memberVo = (MemberVo)session.getAttribute("memberVo");
+		String m_id = memberVo.getM_id();
 		
 		Enumeration<String> fileNames = multi.getFileNames();
 		String fileName = fileNames.nextElement();
@@ -37,7 +42,7 @@ public class WriteRunService implements IService {
 		// BoardDao - insert
 		int count = boardDao.insertArticle(boardVo);
 		String view = "";
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 		if (count > 0) {
 			session.setAttribute("message", "write_run_success");
 			view = "redirect:list.md2";

@@ -49,10 +49,10 @@
 						<textarea class="form-control" id="b_content" name="b_content">${boardVo.b_content}------------</textarea>
 					</div>
 					
-					<div class="form-group">
-						<label for="m_id">아이디</label> 
-						<input type="text" class="form-control" id="m_id" name="m_id" required/>
-					</div>
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="m_id">아이디</label>  -->
+<!-- 						<input type="text" class="form-control" id="m_id" name="m_id" required/> -->
+<!-- 					</div> -->
 					
 					<button type="submit" class="btn btn-primary ">답글 완료</button>
 					

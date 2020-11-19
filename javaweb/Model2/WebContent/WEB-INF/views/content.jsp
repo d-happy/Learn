@@ -110,7 +110,7 @@
 							
 							<div class="modal-footer">
 								<!-- 버튼(삭제버튼에는 아이디 부여, 취소버튼은 두면 됩니다.) -->
-								<button type="button" class="btn btn-primary" id="btnModalDelete">삭제</button>
+								<button type="button" class="btn btn-danger" id="btnModalDelete">삭제</button>
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">취소</button>
 							</div>
@@ -134,7 +134,8 @@
 		</div>
 		<!-- // 상단 배너 -->
 		
-		${boardVo}<br/><br/>
+		${boardVo}<br/>
+		${sessionScope.memberVo.toString()}<br/><br/>
 		
 		<!-- 글 상세 보기 -->
 		<div class="row">
@@ -158,9 +159,9 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="m_id">아이디</label> 
-						<input type="text" class="form-control user-input" id="m_id" name="m_id" 
-						 value="${boardVo.m_id}" readonly/>
+						<label for="m_id">아이디</label> <!-- 로그인 후, m_id 수정할 필요 없음 -->
+						<input type="text" class="form-control" 
+						id="m_id" value="${boardVo.m_id}" readonly/>
 					</div>
 					
 					<div class="form-group" id="divFile" style="display:none">
@@ -186,9 +187,12 @@
 					</c:if>
 					
 					<!-- button type="button" 으로 해서 폼 액션(type="submit") 바로 이동 못 함 -->
+					<!-- requestScope : request 뿐이면 생략, 나머지는 구분하기 위해서 sessionScope 적는게 좋음 -->
+					<c:if test="${boardVo.m_id == sessionScope.memberVo.m_id}">
 					<button type="button" class="btn btn-warning" id="btnModify">수정</button>
 					<button type="button" class="btn btn-primary" id="btnFinish" style="display:none">수정완료</button>
 					<button type="button" class="btn btn-danger" id="btnDelete">삭제</button>
+					</c:if>
 					<!-- 앵커로  b_no 보내면서 이동-->
 <%-- 					<a type="button" class="btn btn-info" id="btnReply" href="reply_form.kh?b_no=${boardVo.b_no}">답글</a> --%>
 					<button type="button" class="btn btn-info" id="btnReply" >답글</button>

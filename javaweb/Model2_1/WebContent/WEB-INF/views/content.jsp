@@ -112,7 +112,8 @@
 		</div>
 		<!-- // 상단 배너 -->
 		
-		${boardVo}<br/><br/>
+		${boardVo}<br/>
+		${sessionScope.memberVo.toString()}<br/><br/>
 		
 		<!-- 글 상세 보기 -->
 		<div class="row">
@@ -136,8 +137,8 @@
 					
 					<div class="form-group">
 						<label for="m_id">아이디</label> 
-						<input type="text" class="form-control input-modify" id="m_id" name="m_id" 
-						 value="${boardVo.m_id}" readonly/>
+						<input type="text" class="form-control" 
+						id="m_id" value="${boardVo.m_id}" readonly/>
 					</div>
 					
 					<div class="form-group" style="display:none" id="divFile">
@@ -162,9 +163,11 @@
 					</div>
 					</c:if>
 					
+					<c:if test="${boardVo.m_id == sessionScope.memberVo.m_id}">
 					<button type="button" class="btn btn-warning" id="btnModify">수정</button>
 					<button type="button" class="btn btn-primary" style="display:none" id="btnFinish">수정완료</button>
 					<button type="button" class="btn btn-danger" id="btnDelModal">삭제</button>
+					</c:if>
 					<a type="button" class="btn btn-info" id="btnReply" href="reply_form.md2?b_no=${boardVo.b_no}">답글</a>
 					<button type="button" class="btn btn-success" id="btnList">목록</button>
 				</form>

@@ -26,7 +26,7 @@ public class ModifyRunService implements IService {
 		String org_b_file_path = multi.getParameter("org_b_file_path");
 		String b_title = multi.getParameter("b_title");
 		String b_content = multi.getParameter("b_content");
-		String m_id = multi.getParameter("m_id");
+//		String m_id = multi.getParameter("m_id");
 		String b_file_path = multi.getFilesystemName("b_file_path");
 		
 		// 페이징 정보
@@ -41,7 +41,7 @@ public class ModifyRunService implements IService {
 		boardVo.setB_no(Integer.parseInt(b_no));
 		boardVo.setB_title(b_title);
 		boardVo.setB_content(b_content);
-		boardVo.setM_id(m_id);
+//		boardVo.setM_id(m_id);
 		boardVo.setB_file_path(b_file_path);
 		
 		int count = boardDao.modifyArticle(boardVo);

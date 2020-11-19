@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kh.dao.BoardDao;
 import com.kh.domain.BoardVo;
+import com.kh.domain.MemberVo;
 import com.kh.util.FileUploadUtil;
 import com.oreilly.servlet.MultipartRequest;
 
@@ -27,7 +28,12 @@ public class WriteRunService implements IService {
 		// enctype="multipart/form-data" -> multi.~~~ 해야함!!!!
 		String b_title = multi.getParameter("b_title"); 
 		String b_content = multi.getParameter("b_content");
-		String m_id = multi.getParameter("m_id");
+//		String m_id = multi.getParameter("m_id");
+		
+		// 로그인 후에 m_id는 session에 저장된 memberVo에서
+		HttpSession session = request.getSession();
+		MemberVo memberVo = (MemberVo)session.getAttribute("memberVo");
+		String m_id = memberVo.getM_id(); // 로그인할 때 session에 넣었던 memberVo에서 m_id 가져옴
 		
 		Enumeration<String> fileNames = multi.getFileNames(); // 파일명(X)
 		String fileName = fileNames.nextElement();
@@ -43,7 +49,7 @@ public class WriteRunService implements IService {
 		// TODO DAO 한테 insert 요청
 		int count = boardDao.insertArticle(boardVo);
 		String view = "";
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 		if (count > 0) {
 //			view = "redirect:list.kh?message=write_run_success"; // 주소창에 게속 남아 있어서 무한 반복..
 //			request.setAttribute("message", "write_run_success"); // 새 페이이 요청이라 안 됨 

@@ -232,16 +232,16 @@ public class BoardDao {
 			String sql = "update tbl_board set"
 					+ "			b_title = ?,"
 					+ "			b_content = ?,"
-					+ "			m_id = ?,"
+//					+ "			m_id = ?,"
 					+ "			b_file_path = ?"
 					+ "   where b_no = ? ";
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, boardVo.getB_title());
 			pstmt.setString(2, boardVo.getB_content());
-			pstmt.setString(3, boardVo.getM_id());
-			pstmt.setString(4, boardVo.getB_file_path());
-			pstmt.setInt   (5, boardVo.getB_no());
+//			pstmt.setString(3, boardVo.getM_id());
+			pstmt.setString(3, boardVo.getB_file_path());
+			pstmt.setInt   (4, boardVo.getB_no());
 			int count = pstmt.executeUpdate();
 			return count;
 		} catch (Exception e) {

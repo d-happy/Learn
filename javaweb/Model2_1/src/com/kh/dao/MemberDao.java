@@ -134,4 +134,36 @@ public class MemberDao {
 		return null;
 	} //login
 	
+	// 회원 정보
+	public MemberVo selectMember(String m_id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			String sql = "select * from tbl_member"
+					+ "   where m_id = ?";
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m_id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				String m_name = rs.getString("m_name");
+				int m_point = rs.getInt("m_point");
+				
+				MemberVo memberVo = new MemberVo();
+				memberVo.setM_id(m_id);
+				memberVo.setM_name(m_name);
+				memberVo.setM_point(m_point);
+				
+				return memberVo;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstmt, conn);
+		}
+		return null;
+	} //selectMember
+	
 }//BoardDao

@@ -4,6 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.span-mid{
+	cursor : pointer;
+	color : LightSeaGreen; 
+}
+</style>
 <meta charset="UTF-8">
 <%@ include file="include/bootstrap_cdn.jsp" %>
 <script type="text/javascript">
@@ -65,13 +71,22 @@
 				<div class="jumbotron" style="background : rgb(229, 255, 249)">
 					<h2 class="text-secondary font-weight-bold">모델 2 게시판 - self...</h2>
 					<p class="text-muted font-weight-bold">MVC 패턴을 이용한 새 게시판</p>
+					<p class="text-muted">
+						<span style="background-color:WhiteSmoke;">
+						${sessionScope.memberVo.m_id}(${sessionScope.memberVo.m_name})님</span>
+						<span class="badge badge-success">${sessionScope.memberVo.m_point} 포인트</span>
+					</p>
 					<p>
 						<a class="btn btn-outline-success" href="write_form.md2">글쓰기</a>
+						<a class="btn btn-outline-dark" href="logout.md2">로그아웃</a>
 					</p>
 				</div>
 			</div>
 		</div>
 		<!-- // 상단 배너? -->
+		
+		${pagingDto.toString()}<br/>
+		${sessionScope.memberVo.toString()}<br/><br/>
 		
 		<div class="row">
 			<div class="col-md-2"></div>
@@ -156,7 +171,22 @@
 							</td>
 							<td class="text-muted"style="padding-left:${boardVo.re_level * 50}px">
 							<a class="content_link" data-bno="${boardVo.b_no}" href="#">${boardVo.b_title}</a></td>
-							<td class="text-muted">${boardVo.m_id}</td>
+							<td class="text-muted">
+								<c:choose>
+									<c:when test="${sessionScope.memberVo.m_id != boardVo.m_id}">
+										<div class="dropdown">
+											<span class="span-mid" data-toggle="dropdown">${boardVo.m_id}</span>
+											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												 <a class="dropdown-item" href="show_member_info.md2?m_id=${boardVo.m_id}">회원 정보 보기</a> 
+												 <a class="dropdown-item" href="send_message_form.md2?m_id=${boardVo.m_id}">쪽지 보내기</a>
+											</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<span>${boardVo.m_id}</span>
+									</c:otherwise>
+								</c:choose>
+							</td>
 							<td class="text-muted">${boardVo.b_readcount}</td>
 							<td class="text-muted">${boardVo.b_date}</td>
 						</tr>

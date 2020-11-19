@@ -37,10 +37,10 @@
 						<textarea class="form-control" id="b_content" name="b_content"></textarea>
 					</div>
 					
-					<div class="form-group">
-						<label for="m_id">아이디</label> 
-						<input type="text" class="form-control" id="m_id" name="m_id" required/>
-					</div>
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="m_id">아이디</label>  -->
+<!-- 						<input type="text" class="form-control" id="m_id" name="m_id" required/> -->
+<!-- 					</div> -->
 					
 					<div class="form-group">
 						<label for="b_file_path">첨부파일</label> 

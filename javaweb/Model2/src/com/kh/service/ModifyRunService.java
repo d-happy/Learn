@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kh.dao.BoardDao;
 import com.kh.domain.BoardVo;
+import com.kh.domain.MemberVo;
 import com.kh.domain.PagingDto;
 import com.kh.util.FileUploadUtil;
 import com.kh.util.QueryStringMaker;
@@ -31,7 +32,8 @@ public class ModifyRunService implements IService {
 		String org_b_file_path = multi.getParameter("org_b_file_path");
 		String b_title = multi.getParameter("b_title");
 		String b_content = multi.getParameter("b_content");
-		String m_id = multi.getParameter("m_id");
+		// 자기글만 수정할 수 있으니 m_id 자체가 필요 없음
+//		String m_id = multi.getParameter("m_id");
 		String b_file_path = multi.getFilesystemName("b_file_path");
 		
 //		System.out.println("ModifyRunService, b_no :" + b_no );
@@ -40,7 +42,7 @@ public class ModifyRunService implements IService {
 		boardVo.setB_no(Integer.parseInt(b_no));
 		boardVo.setB_title(b_title);
 		boardVo.setB_content(b_content);
-		boardVo.setM_id(m_id);
+//		boardVo.setM_id(m_id);
 		boardVo.setB_file_path(b_file_path);
 		
 		// dao로 데이터베이스에서 글 수정
