@@ -19,7 +19,8 @@ public class ShowMemberInfoService implements IService {
 		
 		System.out.println(memberVo.toString());
 		
-		return "show_member_info";
+//		return "show_member_info";
+		return "data_memberInfo";
 	}
 
 } //ShowMemberInfoService

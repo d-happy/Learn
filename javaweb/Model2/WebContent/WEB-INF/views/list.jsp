@@ -71,27 +71,40 @@
 		
 		// 회원 정보 : 화면 이동 말고 모달
 		$(".show-mid").click(function(e) {
-			e.preventDefault();
-			$("#modal-memberInfo").trigger("click");
+			e.preventDefault(); // <a href> 막아두기
+			$("#modal-memberInfo").click(); // 모달 여는 버튼 클릭
+			var url = "show_member_info.kh";
+			var m_id = $(".span-mid").attr("mid"); // mid라는 태그 만들어서 값 넣어두기
+			var sendData = {
+				"m_id" : m_id
+			};
+			// 받는 data_memberInfo.jsp 위치!!!!!!!!!
+			$.get(url, sendData, function(data) { // 모달 바디에 넣기
+				console.log(data); // <div>, <br/>, ... 태그랑 \${ } 표현식 사용해서 틀 잡아두기? 
+				$(".modal-body").empty().append(data); // 미리 비우고 자식으로 넣기
+			});
 		});
 		
-		$("#modal-memberInfo").click(function(e) {
-			var href = $(".show-mid").attr("href");
-			var hrefs = href.split("?");
-			console.log(hrefs);
-			var url = hrefs[0];
-			var values = hrefs[1].split("=");
+		// 쪽지 보내기
+		$(".send-message").click(function(e) {
+			e.preventDefault();
+			var m_id = $(this).attr("data-mid");
+			$("#btnSendMemo").attr("data-mid", m_id);
+			$("#modal-sendMessage-btn").trigger("click");
+		});
+		
+		$("#btnSendMemo").click(function() {
+			var memo = $("#txtMemo").val();
+			var m_id = $(this).attr("data-mid");
+			var url="send_message.kh";
 			var sendData = {
-				m_id : values[1]	
+				"m_id" : m_id,
+				"memo" : memo
 			};
-			console.log(sendData);
-			
-			$.ajax({
-				"url" : url,
-				"datatype" : sendData,
-				"success" : function() {
-					
-				}
+			$.post(url, sendData, function(data) {
+				var point = data.trim();
+				$("#m_point").text(point);
+				$("#modal-container-sendMessage").modal("hide"); // 모달 사라짐
 			});
 		});
 	});
@@ -99,6 +112,36 @@
 <title>글목록</title>
 </head>
 <body>
+
+<!-- 쪽지 보내기 -->
+	<div class="row">
+		<div class="col-md-12">
+			 <a id="modal-sendMessage-btn" href="#modal-container-sendMessage" style="display:none;"
+			 role="button" class="btn" data-toggle="modal">쪽지보내기</a>
+			
+			<div class="modal fade" id="modal-container-sendMessage" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">쪽지 보내기</h5>
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<input id="txtMemo" type="text" class="form-control"/>
+						</div>
+						<div class="modal-footer">
+							<button id="btnSendMemo" type="button" class="btn btn-primary">쪽지 보내기</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+<!-- // 쪽지 보내기 -->
 
 <!-- 회원 정보 모달 -->
 	<div class="row">
@@ -116,12 +159,12 @@
 							</button>
 						</div>
 						<div class="modal-body">
-								아이디 : 
-								<input type="text" class="form-control" value="${sessionScope.memberVo.m_id}" readonly/>
-								이름 : 
-								<input type="text" class="form-control" value="${sessionScope.memberVo.m_name}" readonly/>
-								포인트 : 
-								<input type="text" class="form-control" value="${sessionScope.memberVo.m_point}" readonly/>
+<!-- 								아이디 :  -->
+<%-- 								<input type="text" class="form-control" value="${memberVo_another.m_id}" readonly/> --%>
+<!-- 								이름 :  -->
+<%-- 								<input type="text" class="form-control" value="${sessionScope.memberVo.m_name}" readonly/> --%>
+<!-- 								포인트 :  -->
+<%-- 								<input type="text" class="form-control" value="${sessionScope.memberVo.m_point}" readonly/> --%>
 						</div>
 						<div class="modal-footer">
 <!-- 							<button type="button" class="btn btn-primary"></button> -->
@@ -164,7 +207,8 @@
 					<p class="text-muted">
 						<span style="background-color:WhiteSmoke;">
 						${sessionScope.memberVo.m_id}(${sessionScope.memberVo.m_name})님</span>
-						<span class="badge badge-light">${sessionScope.memberVo.m_point} 포인트</span>
+						<span id="m_point" class="badge badge-light">${sessionScope.memberVo.m_point} 포인트</span>
+						<span class="far fa-envelope" style="color:SeaGreen;">${notReadMemoCount}</span>
 					</p>
 					<p>
 						<a class="btn btn-success" href="write_form.kh">글쓰기</a>
@@ -264,12 +308,12 @@
 								<div class="dropdown">
 									<c:choose>
 										<c:when test="${sessionScope.memberVo.m_id != boardVo.m_id}">
-											<span class="span-mid" data-toggle="dropdown">${boardVo.m_id}</span>
+											<span class="span-mid" mid="${boardVo.m_id}" data-toggle="dropdown">${boardVo.m_id}</span>
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 <!-- 										 	<a class="dropdown-item disabled" href="#">Action</a>  -->
 												 <!-- GET 방식으로 m_id 값 보내고 / show_member_info.kh=### command 에 등록된 서비스로 고고-->
-												 <a class="show-mid dropdown-item" href="show_member_info.kh?m_id=${boardVo.m_id}">회원 정보 보기</a> 
-												 <a class="dropdown-item" href="send_message_form.kh?m_id=${boardVo.m_id}">쪽지 보내기</a>
+												 <a class="show-mid dropdown-item" href="#">회원 정보 보기</a> 
+												 <a class="send-message dropdown-item" data-mid="${boardVo.m_id}" href="#">쪽지 보내기</a>
 											</div>
 										</c:when>
 										<c:otherwise>

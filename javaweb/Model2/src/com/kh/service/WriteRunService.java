@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.dao.BoardDao;
+import com.kh.dao.ConnectionManager;
 import com.kh.domain.BoardVo;
 import com.kh.domain.MemberVo;
 import com.kh.util.FileUploadUtil;
@@ -47,7 +48,9 @@ public class WriteRunService implements IService {
 //		System.out.println("write-"+boardVo.toString());
 		
 		// TODO DAO 한테 insert 요청
+		boardDao.setConnection(ConnectionManager.getConnection());
 		int count = boardDao.insertArticle(boardVo);
+		
 		String view = "";
 //		HttpSession session = request.getSession();
 		if (count > 0) {
@@ -61,6 +64,7 @@ public class WriteRunService implements IService {
 		}
 		
 		// 화면이 필요하다면
+		ConnectionManager.close(ConnectionManager.getConnection());
 		return view;
 	} //execute
 

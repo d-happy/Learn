@@ -47,11 +47,54 @@
 			$("#frmPaging").attr("action", "content.md2");
 			$("#frmPaging").submit();
 		});
+		
+		$(".show-mid").click(function(e) {
+			e.preventDefault();
+			var url = "show_member_info.md2";
+			var m_id = $(".span-mid").attr("mid");
+			console.log(m_id);
+			var sendData = {
+				"m_id" : m_id
+			};
+			$("#modal-memberInfo").click();
+			$.get(url, sendData, function(data) {
+				console.log(data);
+				$(".modal-body").empty().append(data);
+			});
+		});
 	});
 </script>
 <title>글목록2</title>
 </head>
 <body>
+
+<!-- 회원 정보 모달 -->
+<div class="row">
+	<div class="col-md-12">
+		 <a id="modal-memberInfo" href="#modal-container-memberInfo" 
+		 role="button" class="btn" data-toggle="modal" style="display:none">Launch demo modal</a>
+		
+		<div class="modal fade" id="modal-container-memberInfo" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">회원 정보 보기</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+<!-- // 회원 정보 모달 -->
 
 <!-- Paging hidden form-->
 <form id="frmPaging" action="list.md2" method="get">
@@ -175,9 +218,9 @@
 								<c:choose>
 									<c:when test="${sessionScope.memberVo.m_id != boardVo.m_id}">
 										<div class="dropdown">
-											<span class="span-mid" data-toggle="dropdown">${boardVo.m_id}</span>
+											<span class="span-mid" mid="${boardVo.m_id}" data-toggle="dropdown">${boardVo.m_id}</span>
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												 <a class="dropdown-item" href="show_member_info.md2?m_id=${boardVo.m_id}">회원 정보 보기</a> 
+												 <a class="show-mid dropdown-item" href="show_member_info.md2?m_id=${boardVo.m_id}">회원 정보 보기</a> 
 												 <a class="dropdown-item" href="send_message_form.md2?m_id=${boardVo.m_id}">쪽지 보내기</a>
 											</div>
 										</div>

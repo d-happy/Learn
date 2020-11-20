@@ -12,6 +12,8 @@ import com.kh.domain.BoardVo;
 import com.kh.domain.MemberVo;
 import com.kh.domain.PagingDto;
 
+import oracle.net.aso.p;
+
 public class MemberDao {
 	
 	private static MemberDao instance;
@@ -23,149 +25,122 @@ public class MemberDao {
 		return instance;
 	}
 	
-	private Connection getConnection() {
-		try {
-			// javax.naming.Context
-			Context ctx = new InitialContext(); // /META-INF/context.xml
-			// javqx.sql.DataSource
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/OracleDB"); // context.xml 에서 name="jdbc/OracleDB"
-			Connection conn = ds.getConnection();
-			return conn;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	} //getConnection
+	private Connection conn;
 	
-	private void close(ResultSet rs, PreparedStatement pstmt, Connection conn) {
+	public void setConnection(Connection conn) {
+		this.conn = conn;
+	}
+	
+	private void close(ResultSet rs, PreparedStatement pstmt) {
 		if (rs != null)    try { rs.close(); }    catch (Exception e) { }
 		if (pstmt != null) try { pstmt.close(); } catch (Exception e) { }
-		if (conn != null)  try { conn.close(); }  catch (Exception e) { }
-	}
-	private void close(PreparedStatement pstmt, Connection conn) {
-		if (pstmt != null) try { pstmt.close(); } catch (Exception e) { }
-		if (conn != null)  try { conn.close(); }  catch (Exception e) { }
 	}
 	private void close(PreparedStatement pstmt) {
 		if (pstmt != null) try { pstmt.close(); } catch (Exception e) { }
 	}
 	
 	// 아이디 중복 확인 
-	public boolean checkDupID(String m_id) {
-		Connection conn = null;
+	public boolean checkDupID(String m_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		try {
-			String sql = "select count(*) cnt from tbl_member"
-					+ "   where m_id = ?";
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_id);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				int count = rs.getInt("cnt");
-				if (count > 0) {
-					return true;
-				}
+		String sql = "select count(*) cnt from tbl_member"
+				+ "   where m_id = ?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, m_id);
+		rs = pstmt.executeQuery();
+		if (rs.next()) {
+			int count = rs.getInt("cnt");
+			if (count > 0) {
+				close(rs, pstmt);
+				return true;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rs, pstmt, conn);
 		}
 		return false;
 	} //checkDupID
 	
 	// 회원 추가
-	public int insertMember(MemberVo memberVo) {
-		Connection conn = null;
+	public int insertMember(MemberVo memberVo) throws Exception {
 		PreparedStatement pstmt = null;
 		
-		try {
-			String sql = "insert into tbl_member"
-					+ "			(m_id, m_pw, m_name)"
-					+ "   values (?, ?, ?)";
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, memberVo.getM_id());
-			pstmt.setString(2, memberVo.getM_pw());
-			pstmt.setString(3, memberVo.getM_name());
-			int count = pstmt.executeUpdate();
-			return count;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt, conn);
-		}
-		return 0;
+		String sql = "insert into tbl_member"
+				+ "			(m_id, m_pw, m_name)"
+				+ "   values (?, ?, ?)";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, memberVo.getM_id());
+		pstmt.setString(2, memberVo.getM_pw());
+		pstmt.setString(3, memberVo.getM_name());
+		int count = pstmt.executeUpdate();
+		close(pstmt);
+		return count;
 	} //insertMember
 	
 	// 로그인
-	public MemberVo login(String m_id, String m_pw) {
-		Connection conn = null;
+	public MemberVo login(String m_id, String m_pw) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		try {
-			String sql = "select * from tbl_member"
-					+ "	  where m_id = ? "
-					+ "   and m_pw = ?";
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_id);
-			pstmt.setString(2, m_pw);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				String m_name = rs.getString("m_name");
-				int m_point = rs.getInt("m_point");
-				
-				MemberVo memberVo = new MemberVo();
-				memberVo.setM_id(m_id);
-				memberVo.setM_pw(m_pw);
-				memberVo.setM_name(m_name);
-				memberVo.setM_point(m_point);
-				
-				return memberVo;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rs, pstmt, conn);
+		String sql = "select * from tbl_member"
+				+ "	  where m_id = ? "
+				+ "   and m_pw = ?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, m_id);
+		pstmt.setString(2, m_pw);
+		rs = pstmt.executeQuery();
+		if (rs.next()) {
+			String m_name = rs.getString("m_name");
+			int m_point = rs.getInt("m_point");
+			
+			MemberVo memberVo = new MemberVo();
+			memberVo.setM_id(m_id);
+			memberVo.setM_pw(m_pw);
+			memberVo.setM_name(m_name);
+			memberVo.setM_point(m_point);
+			
+			close(rs, pstmt);
+			return memberVo;
 		}
 		return null;
 	} //login
 	
 	// 회원 정보 확인
-	public MemberVo selectMember(String m_id) {
-		Connection conn = null;
+	public MemberVo getMember(String m_id) throws Exception {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		try {
-			String sql = "select * from tbl_member"
-					+ "	  where m_id = ? ";
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_id);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				String m_name = rs.getString("m_name");
-				int m_point = rs.getInt("m_point");
-				
-				MemberVo memberVo = new MemberVo();
-				memberVo.setM_id(m_id);
-				memberVo.setM_name(m_name);
-				memberVo.setM_point(m_point);
-				
-				return memberVo;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rs, pstmt, conn);
+		String sql = "select * from tbl_member"
+				+ "	  where m_id = ? ";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, m_id);
+		rs = pstmt.executeQuery();
+		if (rs.next()) {
+			String m_name = rs.getString("m_name");
+			int m_point = rs.getInt("m_point");
+			
+			MemberVo memberVo = new MemberVo();
+			memberVo.setM_id(m_id);
+			memberVo.setM_name(m_name);
+			memberVo.setM_point(m_point);
+			
+			close(rs, pstmt);
+			return memberVo;
 		}
 		return null;
 	} //selectMember
+	
+	// 포인트 변경
+	public int updatePoint (String m_id, int point) throws Exception {
+		PreparedStatement pstmt = null;
+		
+		String sql = "update tbl_member set"
+				+ "		m_point = m_point + ?"
+				+ "   where m_id = ?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, point);
+		pstmt.setString(2, m_id);
+		int count = pstmt.executeUpdate();
+		close(pstmt);
+		return count;
+	} //updatePoint
 	
 } //BoardDao

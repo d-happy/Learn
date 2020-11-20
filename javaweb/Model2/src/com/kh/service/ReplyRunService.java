@@ -1,10 +1,13 @@
 package com.kh.service;
 
+import java.sql.Connection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.dao.BoardDao;
+import com.kh.dao.ConnectionManager;
 import com.kh.domain.BoardVo;
 import com.kh.domain.MemberVo;
 import com.kh.domain.PagingDto;
@@ -16,6 +19,9 @@ public class ReplyRunService implements IService {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		Connection conn = ConnectionManager.getConnection();
+		boardDao.setConnection(conn);
 		
 		// 페이징 데이터
 		int page = Integer.parseInt(request.getParameter("page"));
@@ -29,7 +35,7 @@ public class ReplyRunService implements IService {
 		int re_level = Integer.parseInt(request.getParameter("re_level"));
 		String b_title = request.getParameter("b_title");
 		String b_content = request.getParameter("b_content");
-//		String m_id = request.getParameter("m_id");
+		
 		HttpSession session = request.getSession();
 		MemberVo memberVo = (MemberVo)session.getAttribute("memberVo");
 		String m_id = memberVo.getM_id();
@@ -42,16 +48,26 @@ public class ReplyRunService implements IService {
 		boardVo.setB_content(b_content);
 		boardVo.setM_id(m_id);
 		
-		int count = boardDao.replyArticle(boardVo);
-//		HttpSession session = request.getSession();
-		if (count > 0) {
-			session.setAttribute("message", "reply_success");
+		try {
+			conn.setAutoCommit(false);
+			int count = boardDao.replyArticle(boardVo);
+			if (count > 0) {
+				session.setAttribute("message", "reply_success");
+			}
+			conn.commit();
+		} catch (Exception e) {
+			conn.rollback();
+			e.printStackTrace();
+		} finally {
+			conn.setAutoCommit(true);
 		}
 		
 		// redirect: 여기서 얻은 데이터 굳이 넘길 필요 없음 (MyFrontController에서 확인)
 //		return "redirect:list.kh";
 		PagingDto pagingDto = new PagingDto(page, perPage, searchType, keyword);
 		String strQuery = QueryStringMaker.makePagingQuery(pagingDto, true);
+		
+		ConnectionManager.close(ConnectionManager.getConnection());
 		return "redirect:list.kh" + strQuery;
 	} //execute
 

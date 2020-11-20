@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.dao.BoardDao;
+import com.kh.dao.ConnectionManager;
 import com.kh.domain.BoardVo;
-import com.kh.domain.MemberVo;
 import com.kh.domain.PagingDto;
 import com.kh.util.FileUploadUtil;
 import com.kh.util.QueryStringMaker;
@@ -46,6 +46,7 @@ public class ModifyRunService implements IService {
 		boardVo.setB_file_path(b_file_path);
 		
 		// dao로 데이터베이스에서 글 수정
+		boardDao.setConnection(ConnectionManager.getConnection());
 		int count = boardDao.modifyArticle(boardVo);
 		
 		// 이전 파일 삭제, session에 메시지 저장
@@ -61,6 +62,8 @@ public class ModifyRunService implements IService {
 		// 목록 -> 상세 -> 수정 -> 상세 -> 목록 했을때, 처음하고 마지막 목록이 똑같이 나오기 위해서 pagingDto 필요!!!
 		PagingDto pagingDto = new PagingDto(page, perPage, searchType, keyword);
 		String strQuery = QueryStringMaker.makePagingQuery(pagingDto, false);
+		
+		ConnectionManager.close(ConnectionManager.getConnection());
 		return "redirect:content.kh?b_no=" + b_no + strQuery;
 	} //execute
 

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.dao.BoardDao;
+import com.kh.dao.ConnectionManager;
 import com.kh.domain.PagingDto;
 import com.kh.util.FileUploadUtil;
 import com.kh.util.QueryStringMaker;
@@ -30,7 +31,9 @@ public class DeleteRunService implements IService {
 		String strQuery = QueryStringMaker.makePagingQuery(pagingDto, true);
 		
 		// dao에 b_no 보내서 delete하고 count return받기
+		boardDao.setConnection(ConnectionManager.getConnection());
 		int count = boardDao.deleteArticle(b_no);
+		
 		String view = "redirect:content.kh" + strQuery + "&b_no=" + b_no;
 		if (count > 0) {
 			if (b_file_path != null && !b_file_path.equals("")) {
@@ -44,6 +47,7 @@ public class DeleteRunService implements IService {
 		// pagingDto데이터 request에 저장해서 list.jsp에 보내기 
 		request.setAttribute("pagingDto", pagingDto);
 		
+		ConnectionManager.close(ConnectionManager.getConnection());
 		return view; // list로 돌아가기
 	} //execute
 

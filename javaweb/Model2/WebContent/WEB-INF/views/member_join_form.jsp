@@ -7,6 +7,8 @@
 <%@ include file="include/bootstrap_cdn.jsp" %>
 <script>
 $(function() {
+	
+	// 아이디 중복 체크
 	$("#btnCheckDupId").click(function() {
 		var m_id = $("#m_id").val();
 		// checkDupId : 별도의 서블릿 생성
@@ -35,7 +37,6 @@ $(function() {
 			}
 			$("#frmJoin").submit();
 		});
-		
 	});
 });
 </script>

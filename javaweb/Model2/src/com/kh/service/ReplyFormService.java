@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.dao.BoardDao;
+import com.kh.dao.ConnectionManager;
 import com.kh.domain.BoardVo;
 import com.kh.domain.PagingDto;
 
@@ -17,6 +18,7 @@ public class ReplyFormService implements IService {
 		// content.jsp에서 받은 b_no
 		int b_no = Integer.parseInt(request.getParameter("b_no"));
 		// boardVo 새로 하나 만들고
+		boardDao.setConnection(ConnectionManager.getConnection());
 		BoardVo boardVo = boardDao.selectByBno(b_no, false); // 조회수 증가 X
 		// boardVo라는 이름으로 넣어서 reply_form.jsp로 보냄
 		request.setAttribute("boardVo", boardVo);
@@ -30,6 +32,7 @@ public class ReplyFormService implements IService {
 		PagingDto pagingDto = new PagingDto(page, perPage, searchType, keyword);
 		request.setAttribute("pagingDto", pagingDto);
 		
+		ConnectionManager.close(ConnectionManager.getConnection());
 		return "reply_form"; // 이동할 곳에서 request에 저장한 boardVo 필요함 
 	} //execute
 

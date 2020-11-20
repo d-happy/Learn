@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kh.dao.ConnectionManager;
 import com.kh.dao.MemberDao;
 import com.kh.domain.MemberVo;
 
@@ -23,12 +24,14 @@ public class MemberJoinRunService implements IService {
 		memberVo.setM_pw(m_pw);
 		memberVo.setM_name(m_name);
 		
+		memberDao.setConnection(ConnectionManager.getConnection());
 		int count = memberDao.insertMember(memberVo);
 		if (count > 0) {
 			HttpSession session = request.getSession();
 			session.setAttribute("message", "join_success");
 		}
 		
+		ConnectionManager.close(ConnectionManager.getConnection());
 		return "redirect:login_form.do"; // 로그인창에 넘길 거 없음
 	}
 
