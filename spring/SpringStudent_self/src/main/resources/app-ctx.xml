@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="com.kh.student.Student" id="stu1" scope="prototype">
+		<constructor-arg>
+			<value>사과</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>10</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>1</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>1</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean class="com.kh.student.Student" id="stu2">
+		<constructor-arg>
+			<value>배</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>20</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>2</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>2</value>
+		</constructor-arg>
+	</bean>
+
+
+</beans>

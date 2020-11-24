@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+	
+	<util:list id="hobbies">
+		<value>승마</value>
+		<value>골프</value>
+	</util:list>
+	
+	<bean class="com.kh.student.Person" 
+		  id="kim"
+		  c:name="김길동"
+		  c:age="20"
+		  c:hobbies-ref="hobbies"
+		  p:height="180.5"
+		  p:weight="80.5">
+	</bean>
+
+</beans>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<context:annotation-config></context:annotation-config>
+	
+	<bean class="com.kh.student.AppConfig"></bean>
+	
+	<util:list id="hobbies">
+		<value>수영</value>
+		<value>서핑</value>
+	</util:list>
+	
+	<bean class="com.kh.student.Student" id="lee"
+		c:name="이길동"
+		c:age="44"
+		c:gradeNum="4"
+		c:classNum="4"></bean>
+	
+</beans>
