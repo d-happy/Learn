@@ -303,7 +303,7 @@
 							height="20"/></td>
 							<td class="text-muted" style="padding-left:${boardVo.re_level * 50}px"> <!-- re_level 간격 -->
 							<a class="content_link" data-bno="${boardVo.b_no}" href="#">${boardVo.b_title}</a></td>
-							<!--  -->
+							<!-- 아이디 -->
 							<td class="text-muted">
 								<div class="dropdown">
 									<c:choose>
@@ -322,6 +322,7 @@
 									</c:choose>
 								</div>
 							</td>
+							<!-- // 아이디 -->
 							<td class="text-muted">${boardVo.b_readcount}</td>
 							<td class="text-muted">${boardVo.b_date}</td>
 						</tr>

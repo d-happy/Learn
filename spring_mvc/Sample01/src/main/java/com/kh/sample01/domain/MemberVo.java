@@ -9,7 +9,7 @@ public class MemberVo {
 	private String user_name;
 	private String user_email;
 	private Timestamp reg_date;
-	private Timestamp updata_date;
+	private Timestamp update_date;
 	
 	public String getUser_id() {
 		return user_id;
@@ -41,17 +41,17 @@ public class MemberVo {
 	public void setReg_date(Timestamp reg_date) {
 		this.reg_date = reg_date;
 	}
-	public Timestamp getUpdata_date() {
-		return updata_date;
+	public Timestamp getUpdate_date() {
+		return update_date;
 	}
-	public void setUpdata_date(Timestamp updata_date) {
-		this.updata_date = updata_date;
+	public void setUpdate_date(Timestamp update_date) {
+		this.update_date = update_date;
 	}
 	
 	@Override
 	public String toString() {
 		return "MemberVo [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name + ", user_email="
-				+ user_email + ", reg_date=" + reg_date + ", updata_date=" + updata_date + "]";
+				+ user_email + ", reg_date=" + reg_date + ", update_date=" + update_date + "]";
 	}
 	
 } //MemberVo

@@ -3,9 +3,9 @@
  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  	
-<mapper namespace="com.kh.sample01.member">
+<mapper namespace="com.kh.sample01.member"> <!-- 이 매퍼의 아이디 느낌?? -->
 
-	<select id="getTime">
+	<select id="getTime" resultType="java.sql.Timestamp">
 		select sysdate
 		from dual
 	</select>
@@ -16,6 +16,25 @@
 			(user_id, user_pw, user_name, user_email)
 		values 
 			(#{user_id}, #{user_pw}, #{user_name}, #{user_email})
+	</select>
+	
+	<!-- com.kh.sample01.domain.MemberVo -->
+	<select id="selectMember" resultType="MemberVo">
+		select * 
+		from tbl_member
+		where user_id = #{user_id}
+	</select>
+	
+	<select id="login" resultType="MemberVo">
+		select *
+		from tbl_member
+		where user_id = #{user_id}
+		and user_pw = #{user_pw}
+	</select>
+	
+	<select id="memberList" resultType="MemberVo">
+		select * from tbl_member
+		order by user_id asc
 	</select>
 	
 </mapper>

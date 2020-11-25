@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 	
+<mapper namespace="com.kh.sample01.board"> <!-- 이 매퍼의 아이디 느낌?? -->
+
+	<insert id="insertArticle">
+		insert into tbl_board
+			(b_no, b_title, b_content, user_id, re_group)
+		values 
+			(seq_board_bno.nextval, #{b_title}, #{b_content}, #{user_id}, seq_board_bno.nextval)
+	</insert>
+	
+	<select id="boardList" resultType="BoardVo">
+		select * from tbl_board
+		order by re_group desc, re_seq asc
+	</select>
+	
+	<select id="selectArticle" resultType="BoardVo">
+		select * from tbl_board
+		where b_no = #{b_no}
+	</select>
+	
+	<update id="updateArticle">
+		update tbl_board set
+			b_title = #{b_title},
+			b_content = #{b_content}
+		where b_no = #{b_no}
+	</update>
+	
+	<delete id="deleteArticle">
+		delete from tbl_board
+		where b_no = #{b_no}
+	</delete>
+	
+</mapper>
