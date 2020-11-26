@@ -51,7 +51,7 @@ public class BoardDaoTest {
 	
 	@Test
 	public void testDeleteArticle() {
-		boardDao.deleteArticle(2);
+		boardDao.deleteArticle(5);
 	}
 	
 }

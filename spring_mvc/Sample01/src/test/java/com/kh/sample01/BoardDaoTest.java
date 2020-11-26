@@ -52,7 +52,7 @@ public class BoardDaoTest {
 	
 	@Test
 	public void testDeleteArticle() throws Exception {
-		boardDao.deleteArticle(3);
+		boardDao.deleteArticle(13);
 	}
 	
 } //MemberDaoTest

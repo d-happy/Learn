@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.sample01.domain.BoardVo;
 
 @Repository
-public class BoardDaoImpl implements BoardDao {
+public class BoardDaoImpl implements BoardDao { // 뭐 하면 자동으로 내용 Console에 나옴
 	
 	private static final String NAMESPACE = "com.kh.sample01.board.";
 	
@@ -42,6 +42,11 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public void deleteArticle(int b_no) {
 		sqlSession.delete(NAMESPACE + "deleteArticle", b_no);
+	}
+	
+	@Override
+	public void updateViewCnt(int b_no) {
+		sqlSession.update(NAMESPACE + "updateViewCnt", b_no);
 	}
 
 }

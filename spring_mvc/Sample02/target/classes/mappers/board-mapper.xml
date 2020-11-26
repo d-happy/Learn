@@ -34,4 +34,10 @@
 		where b_no = #{b_no}
 	</delete>
 	
+	<update id="updateViewCnt">
+		update tbl_board set
+			b_viewcnt = b_viewcnt + 1
+		where b_no = #{b_no}
+	</update>
+	
 </mapper>

@@ -46,4 +46,9 @@ public class BoardDaoImpl implements BoardDao {
 		sqlSession.delete(NAMESPACE + "deleteArticle", b_no);
 	}
 
+	@Override
+	public void updateViewCnt(int b_no) {
+		sqlSession.update(NAMESPACE + "updateViewCnt", b_no);
+	}
+	
 }

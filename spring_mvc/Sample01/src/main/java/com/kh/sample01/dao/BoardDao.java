@@ -20,4 +20,7 @@ public interface BoardDao {
 	
 	//글 삭제
 	public void deleteArticle(int b_no);
+	
+	//조회수 증가
+	public void updateViewCnt(int b_no);
 }

@@ -14,7 +14,7 @@ public class BoardVo {
 	private int re_seq;
 	private int re_level;
 	
-	public int getB_bno() {
+	public int getB_no() {
 		return b_no;
 	}
 	public void setB_no(int b_no) {
