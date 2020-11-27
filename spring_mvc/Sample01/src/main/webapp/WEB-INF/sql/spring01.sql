@@ -27,3 +27,37 @@ create table tbl_board(
 );
 -- 시퀀스
 create sequence seq_board_bno;
+--테이블 내용, 시퀀스 삭제 // truncate : 삭제와 커밋 동시
+truncate table tbl_board;
+drop sequence seq_board_bno;
+create sequence seq_board_bno;
+-- 글 500개
+BEGIN								
+	FOR I IN 1..500 LOOP							
+		INSERT INTO TBL_BOARD(B_NO, B_TITLE, B_CONTENT, USER_ID, re_group)						
+		VALUES (						
+			SEQ_BOARD_BNO.NEXTVAL,					
+			'제목' || I,					
+			'내용' || I,					
+			'user01',
+            SEQ_BOARD_BNO.NEXTVAL
+		);						
+	END LOOP;							
+END;								
+/
+--
+select * from tbl_board
+order by re_group desc, re_seq asc;
+-- 커밋
+commit;
+-- 10개 가져오기 // a.* : a 라는 서브 쿼리 내 테이블의 전체 column
+select * from 
+		(select rownum rnum, a.* from 
+								(select * from tbl_board
+                             	 order by re_group desc, re_seq asc) a)
+where rnum between 1 and 10;
+
+
+
+
+

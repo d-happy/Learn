@@ -8,8 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.sample01.domain.BoardVo;
+import com.kh.sample01.domain.PagingDto;
 
-@Repository
+@Repository("dao1")
 public class BoardDaoImpl implements BoardDao { // 뭐 하면 자동으로 내용 Console에 나옴
 	
 	private static final String NAMESPACE = "com.kh.sample01.board.";
@@ -23,8 +24,8 @@ public class BoardDaoImpl implements BoardDao { // 뭐 하면 자동으로 내�
 	}
 
 	@Override
-	public List<BoardVo> boardList() { // selectList : List<> 리턴 가능
-		List<BoardVo> list = sqlSession.selectList(NAMESPACE + "boardList");
+	public List<BoardVo> boardList(PagingDto pagingDto) { // selectList : List<> 리턴 가능
+		List<BoardVo> list = sqlSession.selectList(NAMESPACE + "boardList", pagingDto);
 		return list;
 	}
 
@@ -47,6 +48,12 @@ public class BoardDaoImpl implements BoardDao { // 뭐 하면 자동으로 내�
 	@Override
 	public void updateViewCnt(int b_no) {
 		sqlSession.update(NAMESPACE + "updateViewCnt", b_no);
+	}
+	
+	@Override
+	public int listCount(PagingDto pagingDto) {
+		int count = sqlSession.selectOne(NAMESPACE + "listCount", pagingDto);
+		return count;
 	}
 
 }

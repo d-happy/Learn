@@ -13,8 +13,12 @@
 	</insert>
 	
 	<select id="boardList" resultType="BoardVo">
-		select * from tbl_board
-		order by re_group desc, re_seq asc
+		select * from 
+				(select rownum rnum, a.* from 
+										(select * from tbl_board
+										<include refid="search"></include>
+		                             	 order by re_group desc, re_seq asc) a)
+		where rnum between #{startRow} and #{endRow}
 	</select>
 	
 	<select id="selectArticle" resultType="BoardVo">
@@ -39,5 +43,34 @@
 			b_viewcnt = b_viewcnt + 1
 		where b_no = #{b_no}
 	</update>
+	
+	<!-- #{ } 쓰면 '~' 으로 나타남 -->
+	<select id="listCount" resultType="int">
+		select count(*) from tbl_board
+		<include refid="search"></include>
+	</select>
+	
+	<!--  -->
+	<sql id="search">
+		<if test="searchType != null">
+			<choose>
+				<when test='searchType == "t"'>
+					where b_title   like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "c"'>
+					where b_content like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "tc"'>
+					where b_title   like '%' || #{keyword} || '%'
+					or	  b_content like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "tcw"'>
+					where b_title   like '%' || #{keyword} || '%'
+					or	  b_content like '%' || #{keyword} || '%'
+					or	  user_id   like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</sql>
 	
 </mapper>

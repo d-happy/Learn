@@ -6,6 +6,7 @@
 
 <script>
 $(function() {
+	
 	var msg = "${msg}";
 	if (msg == "writeSuccess") {
 		alert("글쓰기 성공2");
@@ -13,10 +14,28 @@ $(function() {
 		alert("삭제 성공2");
 	}
 	
+	$("a.page-link").click(function() {
+		var page = $(this).attr("data-page");
+		console.log(page);
+		$("#frmPaging").find("input[name=page]").val(page);
+		$("#frmPaging").submit();
+	});
+	
+	$("#btnSearch").click(function() {
+		var searchType = $("#searchType").val();
+		var keyword = $("#keyword").val();
+		var frmPaging = $("#frmPaging");
+		frmPaging.find("input[name=searchType]").val(searchType);
+		frmPaging.find("input[name=keyword]").val(keyword);
+		frmPaging.find("input[name=page]").val(1);
+		frmPaging.submit();
+	});
+	
 });
 </script>
 
-<div>${boardList}</div><br/>
+<%-- <div>${boardList}</div><br/> --%>
+<%@include file="../include/frmPaging.jsp" %>
 
 <div class="container-fluid">
 
@@ -24,6 +43,33 @@ $(function() {
 		<div class="col-md-1"></div>
 		<div class="col-md-10">
 			<a type="button" class="btn btn-success" href="/board/writeForm2">글쓰기</a>
+<!-- 			<label>검색</label> -->
+			<select id="searchType">
+				<option>선택</option>
+				<option>-------------------------</option>
+				<option value="t"
+					<c:if test="${pagingDto.searchType == 't'}">
+						selected
+					</c:if>
+				>제목</option>
+				<option value="c"
+					<c:if test="${pagingDto.searchType == 'c'}">
+						selected
+					</c:if>
+				>내용</option>
+				<option value="tc"
+					<c:if test="${pagingDto.searchType == 'tc'}">
+						selected
+					</c:if>
+				>제목+내용</option>
+				<option value="tcw"
+					<c:if test="${pagingDto.searchType == 'tcw'}">
+						selected
+					</c:if>
+				>제목+내용+작성자</option>
+			</select>
+			<input id="keyword" value="${pagingDto.keyword}"/>
+			<button type="button" id="btnSearch">검색</button>
 		</div>
 		<div class="col-md-1"></div>
 	</div>
@@ -55,6 +101,35 @@ $(function() {
 				</tbody>
 			</table>
 			
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<nav>
+				<ul class="pagination">
+					<c:if test="${pagingDto.startPage != 1}">
+						<li class="page-item"><a class="page-link" href="#"
+						data-page="${pagingDto.startPage - 1}">이전</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${pagingDto.startPage}" end="${pagingDto.endPage}">
+						<li
+							<c:choose>
+							<c:when test="${i == pagingDto.page}">
+								class="page-item active"
+							</c:when>
+							<c:otherwise>
+								class="page-item"
+							</c:otherwise>
+							</c:choose>
+						><a class="page-link" href="#" data-page="${i}">${i}</a></li>
+					</c:forEach>
+					<c:if test="${pagingDto.endPage < pagingDto.totalPage}">
+						<li class="page-item"><a class="page-link" href="#"
+						data-page="${pagingDto.endPage + 1}">다음</a></li>
+					</c:if>
+				</ul>
+			</nav>
 		</div>
 	</div>
 	

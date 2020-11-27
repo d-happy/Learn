@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sample01.domain.BoardVo;
+import com.kh.sample01.domain.PagingDto;
 import com.kh.sample01.service.BoardService;
 
 @Controller // @Controller 라고 정의
@@ -22,9 +23,19 @@ public class BoardController {
 	private BoardService boardService; // 요청받은 Request에 대응하려고 필요한 애
 	
 	@RequestMapping(value="/listAll", method=RequestMethod.GET) // 메인 URL(HOST)~/board/listAll 되면 생기는 일
-	public String listAll(Model model) throws Exception {
-		List<BoardVo> boardList = boardService.boardList();
+	public String listAll(Model model, PagingDto pagingDto) throws Exception {
+		System.out.println("pagingDto1 :" + pagingDto);
+		int count = boardService.listCount(pagingDto);
+		pagingDto.setTotalCount(count);
+		pagingDto.setPagingInfo();
+		System.out.println("pagingDto2 :" + pagingDto);
+		
+		List<BoardVo> boardList = boardService.boardList(pagingDto);
+		System.out.println("BoardController, listAll, :" + boardList);
+		
 		model.addAttribute("boardList", boardList); // 뷰에 데이터 보내기
+		model.addAttribute("pagingDto", pagingDto);
+		
 		// 포워드 - 데이터 같이 ??
 		return "board/listAll"; // WEB-INF/views/listAll.jsp
 	}
@@ -39,6 +50,7 @@ public class BoardController {
 		// 커맨드 객체 자동 생성 -> ~~~
 		// BoardVo boardVo = new BoardVo();
 		// boardVo.setB_title(request.getParameter("b_title"));
+		// boardVo.setB_content(request.getParameter("b_content"));
 		//파라미터로 주어진 boardVo에 값을 넣어서 전달.											
 		//boardVo.setB_title이런거 다해줌											
 		// 이걸 커맨드 객체라고 함. -> setter.(조건은 vo에 지정된 setter와 name이 같아야함)											

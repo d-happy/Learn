@@ -13,6 +13,7 @@ import com.kh.sample02.dao.BoardDao;
 import com.kh.sample02.dao.MemberDao;
 import com.kh.sample02.domain.BoardVo;
 import com.kh.sample02.domain.MemberVo;
+import com.kh.sample02.domain.PagingDto;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations= {"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
@@ -32,7 +33,12 @@ public class BoardDaoTest {
 	
 	@Test
 	public void testBoardList() {
-		List<BoardVo> boardList = boardDao.boardList(); // ???
+		PagingDto pagingDto = new PagingDto();
+		pagingDto.setTotalCount(boardDao.listCount(pagingDto));
+		pagingDto.setSearchType("t");
+		pagingDto.setKeyword("11");
+		pagingDto.setPagingInfo();
+		List<BoardVo> boardList = boardDao.boardList(pagingDto); // ???
 	}
 	
 	@Test
@@ -52,6 +58,12 @@ public class BoardDaoTest {
 	@Test
 	public void testDeleteArticle() {
 		boardDao.deleteArticle(5);
+	}
+	
+	@Test
+	public void testListCount() {
+		PagingDto pagingDto = new PagingDto();
+		int count = boardDao.listCount(pagingDto);
 	}
 	
 }

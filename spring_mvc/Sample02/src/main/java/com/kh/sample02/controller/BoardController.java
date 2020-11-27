@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sample02.domain.BoardVo;
+import com.kh.sample02.domain.PagingDto;
 import com.kh.sample02.service.BoardService;
 
 @Controller
@@ -21,9 +22,16 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping(value="/listAll2", method=RequestMethod.GET)
-	public String listAll(Model model) throws Exception {
-		List<BoardVo> boardList = boardService.boardList();
+	public String listAll(Model model, PagingDto pagingDto) throws Exception {
+		System.out.println("pagingDto :" + pagingDto);
+		int count = boardService.listCount(pagingDto);
+		pagingDto.setTotalCount(count);
+		pagingDto.setPagingInfo();
+		System.out.println("pagingDto-totalCount :" + pagingDto);
+		
+		List<BoardVo> boardList = boardService.boardList(pagingDto);
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("pagingDto", pagingDto);
 		return "board/listAll2";
 	}
 	

@@ -3,11 +3,13 @@ package com.kh.sample01.service;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Qualifier;
 
 import org.springframework.stereotype.Service;
 
 import com.kh.sample01.dao.BoardDao;
 import com.kh.sample01.domain.BoardVo;
+import com.kh.sample01.domain.PagingDto;
 
 @Service
 public class BoardServiceImpl implements BoardService { // 메소드 오버라이드해서 구현하는 서비스 클래스
@@ -21,8 +23,8 @@ public class BoardServiceImpl implements BoardService { // 메소드 오버라�
 	}
 
 	@Override
-	public List<BoardVo> boardList() {
-		List<BoardVo> boardList = boardDao.boardList();
+	public List<BoardVo> boardList(PagingDto pagingDto) {
+		List<BoardVo> boardList = boardDao.boardList(pagingDto);
 		return boardList;
 	}
 
@@ -41,6 +43,12 @@ public class BoardServiceImpl implements BoardService { // 메소드 오버라�
 	@Override
 	public void deleteArticle(int b_no) {
 		boardDao.deleteArticle(b_no);
+	}
+	
+	@Override
+	public int listCount(PagingDto pagingDto) {
+		int count = boardDao.listCount(pagingDto);
+		return count;
 	}
 
 } //BoardServiceImpl

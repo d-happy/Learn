@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.sample02.domain.BoardVo;
+import com.kh.sample02.domain.PagingDto;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -24,8 +25,8 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public List<BoardVo> boardList() {
-		List<BoardVo> list = sqlSession.selectList(NAMESPACE + "boardList");
+	public List<BoardVo> boardList(PagingDto pagingDto) {
+		List<BoardVo> list = sqlSession.selectList(NAMESPACE + "boardList", pagingDto);
 		return list;
 	}
 
@@ -49,6 +50,12 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public void updateViewCnt(int b_no) {
 		sqlSession.update(NAMESPACE + "updateViewCnt", b_no);
+	}
+	
+	@Override
+	public int listCount(PagingDto pagingDto) {
+		int count = sqlSession.selectOne(NAMESPACE + "listCount", pagingDto);
+		return count;
 	}
 	
 }

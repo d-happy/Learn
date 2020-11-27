@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.sample01.dao.BoardDao;
 import com.kh.sample01.domain.BoardVo;
+import com.kh.sample01.domain.PagingDto;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations= {"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
@@ -31,7 +32,14 @@ public class BoardDaoTest {
 	
 	@Test
 	public void testBoardList() throws Exception {
-		List<BoardVo> boardList = boardDao.boardList();
+		PagingDto pagingDto = new PagingDto();
+		pagingDto.setPage(11);
+		pagingDto.setPerPage(10);
+		pagingDto.setSearchType("t");
+		pagingDto.setKeyword("제목1");
+		pagingDto.setTotalCount(boardDao.listCount(pagingDto));
+		pagingDto.setPagingInfo();
+		List<BoardVo> boardList = boardDao.boardList(pagingDto);
 		System.out.println("boardList :" + boardList);
 	}
 	
@@ -53,6 +61,15 @@ public class BoardDaoTest {
 	@Test
 	public void testDeleteArticle() throws Exception {
 		boardDao.deleteArticle(13);
+	}
+	
+	@Test
+	public void testLIstCount() throws Exception {
+		PagingDto pagingDto = new PagingDto();
+		pagingDto.setSearchType("t"); // 검색 조건 : 제목
+		pagingDto.setKeyword("10"); // 제목에 10 들어가는거
+		int count = boardDao.listCount(pagingDto);
+		System.out.println("count :" + count); // 15
 	}
 	
 } //MemberDaoTest
