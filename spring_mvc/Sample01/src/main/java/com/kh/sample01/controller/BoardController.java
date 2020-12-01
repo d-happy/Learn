@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -14,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.sample01.domain.BoardVo;
 import com.kh.sample01.domain.PagingDto;
 import com.kh.sample01.service.BoardService;
+import com.kh.sample01.util.MyUrlUtil;
 
 @Controller // @Controller 라고 정의
 @RequestMapping(value="/board") // 메인 URL(HOST)~/board 되면 BoardController 얘가 처리함
@@ -61,27 +61,35 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/content", method=RequestMethod.GET)
-	public String content(int b_no, Model model) throws Exception {
+	public String content(int b_no, PagingDto pagingDto, Model model) throws Exception {
 		// int b_no = Integer.psrseInt();
+		System.out.println("pagingDto-content :" + pagingDto);
 		System.out.println("b_no :" + b_no);
+		
 		BoardVo boardVo = boardService.selectArticle(b_no);
 		model.addAttribute("boardVo", boardVo);
+		model.addAttribute("pagingDto", pagingDto);
 		return "board/content";
 	}
 	
 	@RequestMapping(value="/updateRun", method=RequestMethod.POST)
-	public String updateRun(BoardVo boardVo, RedirectAttributes rttr) throws Exception {
+	public String updateRun(BoardVo boardVo, PagingDto pagingDto, RedirectAttributes rttr) throws Exception {
 		boardService.updateArticle(boardVo);
 		System.out.println("boardVo :" + boardVo);
+		System.out.println("pagingDto-update :" + pagingDto);
+		
 		rttr.addFlashAttribute("msg", "updateSuccess");
-		return "redirect:/board/content?b_no=" + boardVo.getB_no();
+//		rttr.addAttribute("pagingDto", pagingDto);
+		String url = MyUrlUtil.makePagingUrl(pagingDto, boardVo.getB_no());
+		return "redirect:/board/content" + url;
 	}
 	
 	@RequestMapping(value="/deleteRun", method=RequestMethod.GET)
-	public String deleteRun(int b_no, RedirectAttributes rttr) throws Exception {
+	public String deleteRun(int b_no, PagingDto pagingDto, RedirectAttributes rttr) throws Exception {
 		boardService.deleteArticle(b_no);
 		rttr.addFlashAttribute("msg", "deleteSuccess");
-		return "redirect:/board/listAll";
+		String url = MyUrlUtil.makePagingUrl(pagingDto);
+		return "redirect:/board/listAll" + url;
 	}
 	
 } //BoardController

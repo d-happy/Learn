@@ -31,10 +31,19 @@ $(function() {
 		frmPaging.submit();
 	});
 	
+	$(".a_title").click(function(e) {
+		e.preventDefault();
+		var b_no = $(this).attr("data-bno");
+		$("#frmPaging > input[name=b_no]").val(b_no);
+		$("#frmPaging").prop("action", "/board/content2");
+		$("#frmPaging").submit();
+	});
+	
 });
 </script>
 
 <%-- <div>${boardList}</div><br/> --%>
+<!-- frmPaging -->
 <%@include file="../include/frmPaging.jsp" %>
 
 <div class="container-fluid">
@@ -92,7 +101,7 @@ $(function() {
 				<c:forEach var="boardVo" items="${boardList}">
 					<tr>
 						<td>${boardVo.b_no}</td>
-						<td><a href="/board/content2?b_no=${boardVo.b_no}">${boardVo.b_title}</a></td>
+						<td><a class="a_title" href="#" data-bno="${boardVo.b_no}">${boardVo.b_title}</a></td>
 						<td>${boardVo.user_id}</td>
 						<td>${boardVo.b_regdate}</td>
 						<td>${boardVo.b_viewcnt}</td>

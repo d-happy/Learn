@@ -35,6 +35,15 @@ $(function() {
 		frmPaging.submit();
 	});
 	
+	// 게시글 제목 클릭
+	$(".a_title").click(function(e) {
+		e.preventDefault(); // a태그의 링크 기능 막기
+		var b_no = $(this).attr("data-bno");
+		$("#frmPaging > input[name=b_no]").val(b_no);
+		$("#frmPaging").attr("action", "/board/content");
+		$("#frmPaging").submit();
+	});
+	
 });
 </script>
 
@@ -103,7 +112,7 @@ $(function() {
 				<c:forEach var="boardVo" items="${boardList}">
 					<tr>
 						<td>${boardVo.b_no}</td>
-						<td><a href="/board/content?b_no=${boardVo.b_no}">${boardVo.b_title}</a></td>
+						<td><a class="a_title" href="#" data-bno="${boardVo.b_no}">${boardVo.b_title}</a></td>
 						<td>${boardVo.user_id}</td>
 						<td>${boardVo.b_regdate}</td>
 						<td>${boardVo.b_viewcnt}</td>

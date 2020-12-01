@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.sample02.domain.BoardVo;
 import com.kh.sample02.domain.PagingDto;
 import com.kh.sample02.service.BoardService;
+import com.kh.sample02.util.MyUrlUtil;
 
 @Controller
 @RequestMapping(value="/board")
@@ -49,26 +50,31 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/content2", method=RequestMethod.GET)
-	public String content(int b_no, Model model) throws Exception {
+	public String content(int b_no, PagingDto pagingDto, Model model) throws Exception {
 		System.out.println("b_no :" + b_no);
+		System.out.println("pagingDto-content :" + pagingDto);
 		BoardVo boardVo = boardService.selectArticle(b_no);
 		model.addAttribute("boardVo", boardVo);
+		model.addAttribute("pagingDto", pagingDto);
 		return "board/content2";
 	}
 	
 	@RequestMapping(value="/updateRun2", method=RequestMethod.POST)
-	public String updateRun(BoardVo boardVo, RedirectAttributes rttr) throws Exception {
+	public String updateRun(BoardVo boardVo, PagingDto pagingDto, RedirectAttributes rttr) throws Exception {
 		System.out.println("boardVo:" + boardVo);
+		System.out.println("pagingDto-update :" + pagingDto);
 		boardService.updateArticle(boardVo);
 		rttr.addFlashAttribute("msg", "updateSuccess");
-		return "redirect:/board/content2?b_no=" + boardVo.getB_no();
+		String url = MyUrlUtil.makeurl(pagingDto, boardVo.getB_no(), "updateRun2");
+		return "redirect:/board/content2" + url;
 	}
 	
 	@RequestMapping(value="/deleteRun2", method=RequestMethod.GET)
-	public String deleteRun(int b_no, RedirectAttributes rttr) throws Exception {
+	public String deleteRun(int b_no, PagingDto pagingDto, RedirectAttributes rttr) throws Exception {
 		boardService.deleteArticle(b_no);
 		rttr.addFlashAttribute("msg", "deleteSuccess");
-		return "redirect:/board/listAll2";
+		String url = MyUrlUtil.makeurl(pagingDto, b_no, "deleteRun2");
+		return "redirect:/board/listAll2" + url;
 	}
 	
 }
