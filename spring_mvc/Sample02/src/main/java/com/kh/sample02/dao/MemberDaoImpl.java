@@ -53,4 +53,13 @@ public class MemberDaoImpl implements MemberDao {
 		List<MemberVo> list= sqlSession.selectList(NAMESPACE + "memberList");
 		return list;
 	}
+	
+	@Override
+	public void updatePoint(String user_id, int point) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("user_id", user_id);
+		map.put("point", point);
+		sqlSession.update(NAMESPACE + "updatePoint", map);
+	}
+	
 }

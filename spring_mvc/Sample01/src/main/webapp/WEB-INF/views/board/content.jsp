@@ -39,7 +39,7 @@ $(function() {
 	$("#btnCommentList").click(function() {
 		var url = "/comment/getCommentList/${boardVo.b_no}"
 		$.get(url, function(data) {
-			console.log(data);
+// 			console.log(data);
 			// [{}, {}, {}] 자바스크립트 객체
 			$("#commentTable > tbody").empty();
 			$.each(data, function() {
@@ -56,7 +56,9 @@ $(function() {
 				tr.find("td").eq(1).text(this.c_content);
 				tr.find("td").eq(2).text(this.user_id);
 				tr.find("td").eq(3).text(changeDateString(this.c_regdate));
-				$("#commentTable").append(tr);
+				tr.find("td").eq(4).find("button").attr("data-cno", this.c_no); // 댓글 수정, 삭제 버튼에 c_no 넣기
+				tr.find("td").eq(5).find("button").attr("data-cno", this.c_no);
+				$("#commentTable > tbody").append(tr);
 			});
 // 			$("#commentTable > tbody").remove();
 		});
@@ -78,16 +80,77 @@ $(function() {
 		// header에 json 형식임을 설정
 		// JSON.stringfy(json) -> json 형식을 문자열 형식
 		// dataType -> text
-		$.ajax ({
-			"url" : url,
-			"header" : {
-				"Content-Type", "application/json"
+		$.ajax ({ // 안에 항목은... "" 필요 없다...
+			url : url,
+			headers : {
+				"Content-Type":"application/json"
 			},
-			"method" : "post",
+			method : "POST",
+			dataType : "text",
+			data : JSON.stringify(sendData),
+			success : function(data) {
+				console.log(data);
+				if (data == "success") {
+					$("#btnCommentList").trigger("click");
+					$("#c_content").val("");
+					$("#c_user_id").val("");
+				}
+			}
+		});
+	});
+	
+	// 댓글 삭제 버튼
+// 	$(".btnCommentDelete").click(function() {
+	// -> 페이지 소스에 없는 새로 생성한 엘리먼트 -> click 이벤트 적용 안 됨 -> on 사용
+	$("#tableTbody").on("click", ".btnCommentDelete", function() {
+		var b_no = "${boardVo.b_no}";
+		// $("#tableTbody") 자식인 $(".btnCommentDelete") 중에서 click된 엘리먼트
+		// -> $(".btnCommentDelete") 하면 모든 해당 클래스 엘리먼트라서,  undefined 나옴
+		var c_no = $(this).attr("data-cno");
+		var url = "/comment/deleteComment/" + b_no + "/" + c_no;
+		$.get(url, function(data) {
+			console.log(data);
+			if (data == "success") {
+				$("#btnCommentList").trigger("click");
+			}
+		});
+	}); // 댓글 삭제 버튼
+	
+	// 댓글 수정 버튼
+	$("#tableTbody").on("click", ".btnCommentModify", function() {
+		var c_content = $(this).parent().parent().find("td").eq(1).text();
+		$("#commentContentModify").val(c_content);
+		$("#divModal > input[name=c_no]").val($(this).attr("data-cno")); // 모달 밑 히든으로 c_no 넣기
+		
+		$("#modal-modify").trigger("click");
+	});
+	
+	// 모달창 저장 버튼
+	$("#commentModalSave").click(function() {
+		var c_no = $("#divModal > input[name=c_no]").val();
+		var c_content = $("#commentContentModify").val();
+		console.log(c_no);
+		console.log(c_content);
+		
+		var sendData = {
+			"c_no" : c_no,
+			"c_content" : c_content
+		};
+		
+		$.ajax ({ // "" 상관 없다... 다른 오타였나봄...
+			"url" : "/comment/updateComment",
+			"headers" : {
+				"Content-Type" : "application/json"
+			},
 			"dataType" : "text",
-			"data" : JSON.stringfy(sendData),
+			"data" : JSON.stringify(sendData),
+			"method" : "post",
 			"success" : function(data) {
 				console.log(data);
+				if (data == "success") {
+					$("#commentModalClose").trigger("click");
+					$("#btnCommentList").trigger("click");					
+				}
 			}
 		});
 	});
@@ -95,11 +158,42 @@ $(function() {
 });
 </script>
 
-<div class="container-fluid">
-
 <!-- frmPaging -->
 <%@include file="../include/frmPaging.jsp" %>
 <!-- // frmPaging -->
+
+<!-- 댓글 수정 모달 창 -->
+<div class="row" id="divModal">
+	<input type="hidden" name="c_no"/>
+	<div class="col-md-12">
+		 <a id="modal-modify" href="#modal-container-modify" role="button" 
+		 class="btn" data-toggle="modal" style="display:none;">댓글 수정 모달창</a>
+		
+		<div class="modal fade" id="modal-container-modify" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">댓글 수정</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input id="commentContentModify" type="text" class="form-control"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="commentModalSave">저장</button>
+						<button type="button" class="btn btn-secondary" 
+						data-dismiss="modal" id="commentModalClose">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+<div class="container-fluid">
 
 ${boardVo}<br/>
 ${pagingDto}<br/><br/>
@@ -161,16 +255,18 @@ ${pagingDto}<br/><br/>
 	
 	<!-- 댓글 목록 -->
 	<div class="row">
-		<div class="col-md-12">
-		
-			<table id="trTable">
+		<div class="col-md-12" >
+			<table id="trTable" style="display:none;">
 				<tr>
 					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>
+					<td><button type="button" class="btn btn-xs btn-warning btnCommentModify">수정</button></td>
+					<td><button type="button" class="btn btn-xs btn-danger btnCommentDelete">삭제</button></td>
 				</tr>
 			</table>
+			
 			<table id="commentTable" class="table table-bordered">
 				<thead>
 					<tr>
@@ -180,7 +276,7 @@ ${pagingDto}<br/><br/>
 						<th>날짜</th>
 					</tr>
 				</thead>
-				<tbody></tbody>
+				<tbody id="tableTbody"></tbody>
 			</table>
 		</div>
 	</div>

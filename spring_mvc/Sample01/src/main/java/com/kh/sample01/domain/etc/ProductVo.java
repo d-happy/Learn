@@ -1,4 +1,4 @@
-package com.kh.sample01.domain;
+package com.kh.sample01.domain.etc;
 
 public class ProductVo {
 	private String name;

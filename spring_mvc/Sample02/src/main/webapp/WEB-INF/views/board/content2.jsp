@@ -10,32 +10,38 @@ $(function() {
 		alert("수정 완료2");
 	}
 	
+	// 수정
 	$("#btnUpdate").click(function() {
 		$(".update").prop("readonly", false);
 		$(this).hide("slow");
 		$("#btnUpdateFinish").show(1000);
 	});
 	
+	// 목록
 	$("#btnList").click(function(e) {
 		e.preventDefault();
 		$("#frmPaging").submit();
 	});
 	
+	// 수정 완료
 	$("#btnUpdateFinish").click(function() {
 		$("#frmPaging > input").prependTo($("#frmUpdate"));
 		$("#frmUpdate").submit();
 	});
 	
+	// 삭제
 	$("#btnDelete").click(function(e) {
 		e.preventDefault();
 		$("#frmPaging").attr("action", "/board/deleteRun2");
 		$("#frmPaging").submit();
 	});
 	
-	$("#btnComment").click(function() {
+	
+	// 댓글 목록
+	$("#btnCommentList").click(function() {
 		var url = "/comment/getCommentList/${boardVo.b_no}";
 		$.get(url, function(data) {
-			console.log(data);
+// 			console.log(data);
 			$("#tableComment > tbody").empty();
 			$.each(data, function() {
 				var tr = $("#tableTr > tbody > tr:eq(0)").clone();
@@ -43,8 +49,89 @@ $(function() {
 				tr.find("td").eq(1).text(this.c_content);
 				tr.find("td").eq(2).text(this.user_id);
 				tr.find("td").eq(3).text(changeDateString(this.c_regdate));
+				tr.find("td").eq(4).find("button").attr("data-cno", this.c_no);
+				tr.find("td").eq(5).find("button").attr("data-cno", this.c_no);
 				$("#tableComment > tbody").append(tr);
 			});
+		});
+	});
+	
+	// 댓글 작성 버튼
+	$("#btnCommentInsert").click(function() {
+		var url = "/comment/insertComment";
+		var sendData = {
+				"b_no" : parseInt("${boardVo.b_no}"),
+				"c_content" : $("#c_content").val(),
+				"user_id" : $("#c_user_id").val()
+		};
+		console.log(sendData);
+		$.ajax ({
+			url : url,
+			headers : {
+				"Content-Type":"application/json"
+			},
+			method : "POST",
+			dataType : "text",
+			data : JSON.stringify(sendData),
+			success : function(data) {
+				console.log(data);
+				if (data == "success2") {
+					$("#btnCommentList").trigger("click");
+					$("#c_content").val("");
+					$("#c_user_id").val("");
+				}
+			}
+		});
+	});
+	
+	// 댓글 삭제
+	$("#tableTbody").on("click", ".btnCommentDelete", function() {
+		var b_no = "${boardVo.b_no}";
+		var c_no = $(this).attr("data-cno");
+		var url = "/comment/deleteComment" + "/" + b_no + "/" + c_no;
+		console.log(b_no);
+		console.log(c_no);
+		console.log(url);
+		$.get(url, function(data) {
+			console.log(data);
+			if (data == "success2") {
+				$("#btnCommentList").trigger("click");
+			}
+		});
+	});
+	
+	// 댓글 수정
+	$("#tableTbody").on("click", ".btnCommentModify", function() {
+		var c_content = $(this).parent().parent().find("td").eq(1).text();
+		var c_no = $(this).attr("data-cno");
+		$("#commentContentModify").val(c_content);
+		$("#divModal > input[name=c_no]").val(c_no);
+		$("#modal-modify").trigger("click");
+	});
+	
+	$("#btnModifyFinish").click(function() {
+		var c_no = $("#divModal > input[name=c_no]").val();
+		var c_content = $("#commentContentModify").val();
+		var sendData = {
+				"c_no" : c_no,
+				"c_content" : c_content
+		};
+		console.log(sendData);
+		$.ajax({
+			"url" : "/comment/updateComment",
+			"method" : "post",
+			"headers" : {
+				"Content-Type" : "application/json"
+			},
+			"dataType" : "text",
+			"data" : JSON.stringify(sendData),
+			"success" : function(data) {
+				console.log(data);
+				if (data == "success2") {
+					$("#btnModifyClose").trigger("click");
+					$("#btnCommentList").trigger("click");
+				}
+			}
 		});
 	});
 	
@@ -56,6 +143,37 @@ ${pagingDto}<br/><br/>
 
 <!-- frmPaging -->
 <%@include file="../include/frmPaging.jsp" %>
+
+<div class="row" id="divModal">
+	<input type="hidden" name="c_no"/>
+	<div class="col-md-12">
+	
+		 <a id="modal-modify" href="#modal-container-modify" role="button" 
+		 class="btn" data-toggle="modal" style="display:none;">댓글 수정 모달 창</a>
+		
+		<div class="modal fade" id="modal-container-modify" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">댓글 수정</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="text" class="form-control" id="commentContentModify"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="btnModifyFinish">수정</button>
+						<button type="button" class="btn btn-secondary" 
+						data-dismiss="modal" id="btnModifyClose">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
 
 <div class="container-fluid">
 
@@ -94,7 +212,19 @@ ${pagingDto}<br/><br/>
 	
 	<div class="row">
 		<div class="col-md-12">
-			<button id="btnComment" type="button" class="btn btn-primary">댓글 보기</button>
+			<button id="btnCommentList" type="button" class="btn btn-primary">댓글 보기</button>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-8">
+			<input type="text" class="form-control" id="c_content" placeholder="댓글 내용"/>
+		</div>
+		<div class="col-md-2">
+			<input type="text" class="form-control" id="c_user_id" placeholder="작성자"/>
+		</div>
+		<div class="col-md-2">
+			<button type="button" class="btn btn-success" id="btnCommentInsert">댓글 작성</button>
 		</div>
 	</div>
 	
@@ -106,6 +236,8 @@ ${pagingDto}<br/><br/>
 					<td></td>
 					<td></td>
 					<td></td>
+					<td><button type="button" class="btn btn-xs btn-warning btnCommentModify">수정</button></td>
+					<td><button type="button" class="btn btn-xs btn-danger btnCommentDelete">삭제</button></td>
 				</tr>
 			</table>
 			
@@ -118,7 +250,7 @@ ${pagingDto}<br/><br/>
 						<th>날짜</th>
 					</tr>
 				</thead>	
-				<tbody></tbody>		
+				<tbody id="tableTbody"></tbody>		
 			</table>
 		</div>
 	</div>

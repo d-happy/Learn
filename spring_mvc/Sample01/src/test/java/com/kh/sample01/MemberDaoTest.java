@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.sample01.dao.MemberDao;
+import com.kh.sample01.dao.PointDao;
 import com.kh.sample01.domain.MemberVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -50,6 +51,11 @@ public class MemberDaoTest {
 	public void testMemberList() throws Exception {
 		List<MemberVo> list = memberDao.memberList();
 		System.out.println("list :" + list);
+	}
+	
+	@Test
+	public void testUpdatePoint() throws Exception {
+		memberDao.updatePoint("user01", PointDao.SEND_MESSAGE_POINT);
 	}
 	
 } //MemberDaoTest

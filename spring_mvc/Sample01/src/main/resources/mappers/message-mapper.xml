@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 	
+<mapper namespace="com.kh.sample01.message">
+
+	<!-- 쪽지 보내기 -->
+	<insert id="insertMessage">
+		insert into tbl_message(msg_no, msg_content, msg_sender, msg_receiver)
+		values (seq_message_no.nextval, #{msg_content}, #{msg_sender}, #{msg_receiver})
+	</insert>
+	
+	<!-- 쪽지 읽기 -->
+	<select id="selectMessage" resultType="MessageVo">
+		select * from tbl_message
+		where msg_no = #{msg_no}
+	</select>
+	
+	<!-- 쪽지 읽은 시간 변경 -->
+	<update id="updateOpenDate">
+		update tbl_message set
+			msg_opendate = sysdate 
+		where msg_no = #{msg_no}
+		and msg_opendate is null
+	</update>
+	
+	<!-- 해당 쪽지 읽었는지 -->
+<!-- 	<select id="selectOpenDate" resultType="int"> -->
+<!-- 		select count(*) from tbl_message -->
+<!-- 		where msg_no = ${msg_no} -->
+<!-- 		and msg_opendate is null -->
+<!-- 	</select> -->
+	
+</mapper>

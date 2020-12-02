@@ -10,6 +10,7 @@ public class MemberVo {
 	private String user_email;
 	private Timestamp reg_date;
 	private Timestamp update_date;
+	private int user_point;
 	
 	public String getUser_id() {
 		return user_id;
@@ -47,11 +48,18 @@ public class MemberVo {
 	public void setUpdate_date(Timestamp update_date) {
 		this.update_date = update_date;
 	}
+	public int getUser_point() {
+		return user_point;
+	}
+	public void setUser_point(int user_point) {
+		this.user_point = user_point;
+	}
 	
 	@Override
 	public String toString() {
 		return "MemberVo [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name + ", user_email="
-				+ user_email + ", reg_date=" + reg_date + ", update_date=" + update_date + "]";
+				+ user_email + ", reg_date=" + reg_date + ", update_date=" + update_date + ", user_point=" + user_point
+				+ "]";
 	}
 	
 } //MemberVo

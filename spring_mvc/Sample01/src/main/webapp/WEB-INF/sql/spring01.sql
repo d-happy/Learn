@@ -85,4 +85,53 @@ select * from tbl_comment
 where b_no = 500
 order by c_no desc;
 
+-- 메시지(쪽지) 테이블
+-- 메시지 번호
+-- 메시지 내용
+-- 보낸 사람
+-- 받는 사람
+-- 받은 날짜
+-- 읽은 날짜
+create table tbl_message(
+	msg_no number primary key,
+	msg_content varchar2(200) not null,
+	msg_sender varchar2(20) references tbl_member(user_id),
+	msg_receiver varchar2(20) references tbl_member(user_id),
+	msg_senddate timestamp default sysdate,
+	msg_opendate timestamp
+);
 
+create sequence seq_message_no;
+
+-- 포인트 카테고리
+-- 포인트 코드 : 1001      1002
+-- 포인트 설명 : 쪽지보내기     쪽지읽기
+create table tbl_point_cate(
+	point_code varchar2(4) primary key,
+	point_desc varchar2(30) not null
+);
+
+insert into tbl_point_cate (point_code, point_desc)
+values ('1001', '쪽지보내기');
+insert into tbl_point_cate (point_code, point_desc)
+values ('1002', '쪽기읽기');
+
+-- 포인트 테이블
+-- 포인트 번호
+-- 아이디
+-- 포인트 코드
+-- 포인트 점수
+-- 포인트 생긴 날짜
+create table tbl_point(
+	point_no number primary key,
+	user_id varchar2(20) references tbl_member(user_id),
+	point_code varchar2(4) references tbl_point_cate(point_code),
+	point_score number default 0,
+	point_date timestamp default sysdate
+);
+
+create sequence seq_point_no;
+
+-- 사용자 테이블에 포인트 컬럼 추가
+alter table tbl_member
+add (user_point number default 0);

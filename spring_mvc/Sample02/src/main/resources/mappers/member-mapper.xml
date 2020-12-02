@@ -35,4 +35,10 @@
 		order by user_id asc
 	</select>
 	
+	<update id="updatePoint">
+		update tbl_member set
+			user_point = user_point + #{point}
+		where user_id = #{user_id}
+	</update>
+	
 </mapper>

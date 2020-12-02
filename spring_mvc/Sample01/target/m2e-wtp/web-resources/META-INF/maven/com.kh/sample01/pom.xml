@@ -58,6 +58,22 @@
     <scope>test</scope>
 </dependency>
 
+<!-- 트랜잭션 -->
+<!-- spring-aop -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-aop</artifactId>
+    <version>4.1.7.RELEASE</version>
+</dependency>
+
+<!-- aspectjweaver -->
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>1.6.10</version>
+    <scope>runtime</scope>
+</dependency>
+
 
 		<!-- Spring -->
 		<dependency>
