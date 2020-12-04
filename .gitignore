@@ -140,4 +140,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Nongbu 폴더, 파일 무시
+nongbu/
+nongbu.*
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,java,java-web,database,text
