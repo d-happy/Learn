@@ -11,6 +11,7 @@ public class MemberVo {
 	private Timestamp reg_date;
 	private Timestamp update_date;
 	private int user_point;
+	private String user_pic;
 	
 	public String getUser_id() {
 		return user_id;
@@ -54,12 +55,18 @@ public class MemberVo {
 	public void setUser_point(int user_point) {
 		this.user_point = user_point;
 	}
+	public String getUser_pic() {
+		return user_pic;
+	}
+	public void setUser_pic(String user_pic) {
+		this.user_pic = user_pic;
+	}
 	
 	@Override
 	public String toString() {
 		return "MemberVo [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name + ", user_email="
 				+ user_email + ", reg_date=" + reg_date + ", update_date=" + update_date + ", user_point=" + user_point
-				+ "]";
+				+ ", user_pic=" + user_pic + "]";
 	}
 	
 }

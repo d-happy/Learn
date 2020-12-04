@@ -34,9 +34,11 @@ public class BoardDaoTest {
 	@Test
 	public void testBoardList() {
 		PagingDto pagingDto = new PagingDto();
+		pagingDto.setPage(1);
+		pagingDto.setPerPage(10);
+//		pagingDto.setSearchType("t");
+//		pagingDto.setKeyword("11");
 		pagingDto.setTotalCount(boardDao.listCount(pagingDto));
-		pagingDto.setSearchType("t");
-		pagingDto.setKeyword("11");
 		pagingDto.setPagingInfo();
 		List<BoardVo> boardList = boardDao.boardList(pagingDto); // ???
 	}

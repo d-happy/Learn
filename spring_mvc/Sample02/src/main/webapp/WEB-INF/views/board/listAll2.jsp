@@ -12,6 +12,8 @@ $(function() {
 		alert("글쓰기 성공2");
 	} else if (msg == "deleteSuccess") {
 		alert("삭제 성공2");
+	} else if (msg == "loginSuccess") {
+		alert("로그인 성공2");
 	}
 	
 	$("a.page-link").click(function() {
@@ -39,12 +41,87 @@ $(function() {
 		$("#frmPaging").submit();
 	});
 	
+	$(".message_send").click(function(e) {
+		e.preventDefault();
+		var msg_receiver = $(this).attr("data-userid");
+		$("#msg_receiver").val(msg_receiver);
+		$("#modal-message").trigger("click");
+	});
+	
+	$("#btnMessageSend").click(function() {
+		var msg_receiver = $("#msg_receiver").val();
+		var msg_content = $("#msg_content").val();
+		console.log(msg_receiver);
+		console.log(msg_content);
+		$("#btnMessageClose").trigger("click");
+		$("#msg_receiver").val("");
+		$("#msg_content").val("");
+		
+		var url = "/message/sendMessage";
+		var sendData = {
+				"msg_sender" : "user02",
+				"msg_receiver" : msg_receiver,
+				"msg_content" : msg_content
+		};
+		$.ajax({
+			url : url,
+			method : "post",
+			dataType : "text",
+			data : JSON.stringify(sendData), 
+			headers : {
+				"Content-Type":"application/json"
+			},
+			success : function(data) {
+				console.log(data);
+				if (data == "success2") {
+					alert(msg_receiver + "한테 쪽지 보냄");
+				}
+			}
+		});
+	});
+	
 });
 </script>
 
 <%-- <div>${boardList}</div><br/> --%>
 <!-- frmPaging -->
 <%@include file="../include/frmPaging.jsp" %>
+<!-- // frmPaging -->
+
+<!-- 쪽지 모달 -->
+<div class="row">
+	<div class="col-md-12">
+		 <a id="modal-message" href="#modal-container-message" role="button" 
+		 class="btn" data-toggle="modal">쪽지 보내기 모달</a>
+		
+		<div class="modal fade" id="modal-container-message" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">쪽지 보내기</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" id="msg_receiver"/>
+						<input class="form-control" id="msg_content"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" 
+						id="btnMessageSend">보내기</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" 
+						id="btnMessageClose">닫기</button>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+</div>
+<!-- // 쪽지 모달 -->
 
 <div class="container-fluid">
 
@@ -101,8 +178,17 @@ $(function() {
 				<c:forEach var="boardVo" items="${boardList}">
 					<tr>
 						<td>${boardVo.b_no}</td>
-						<td><a class="a_title" href="#" data-bno="${boardVo.b_no}">${boardVo.b_title}</a></td>
-						<td>${boardVo.user_id}</td>
+						<td><a class="a_title" href="#" data-bno="${boardVo.b_no}">${boardVo.b_title} <span style="color:red"> / ${boardVo.comment_cnt}</span></a></td>
+						<td>
+						<div class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown">${boardVo.user_id}</a>
+							<div class="dropdown-menu message_send" data-userid="${boardVo.user_id}"
+								 aria-labelledby="dropdownMenuButton">
+								 <a class="dropdown-item" href="#">쪽지 보내기</a><br/>
+								 <a class="dropdown-item" href="#">포인트 선물하기</a>
+							</div>
+						</div>
+						</td>
 						<td>${boardVo.b_regdate}</td>
 						<td>${boardVo.b_viewcnt}</td>
 					</tr>

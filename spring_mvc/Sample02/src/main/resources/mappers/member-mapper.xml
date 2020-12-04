@@ -12,9 +12,9 @@
 	
 	<select id="insertMember">
 		insert into tbl_member
-			(user_id, user_pw, user_name, user_email)
+			(user_id, user_pw, user_name, user_email, user_pic)
 		values 
-			(#{user_id}, #{user_pw}, #{user_name}, #{user_email})
+			(#{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_pic})
 	</select>
 	
 	<select id="selectMember" resultType="MemberVo">

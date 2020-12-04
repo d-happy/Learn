@@ -29,7 +29,7 @@ public class MessageServiceTest {
 	
 	@Test
 	public void testReadMessage() throws Exception {
-		MessageVo messageVo = messageService.readMessage("user01", 3);
+		MessageVo messageVo = messageService.readMessage("user01", 24);
 		System.out.println("messageVo :" + messageVo);
 	}
 }

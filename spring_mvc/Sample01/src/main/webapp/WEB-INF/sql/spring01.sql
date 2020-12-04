@@ -135,3 +135,26 @@ create sequence seq_point_no;
 -- 사용자 테이블에 포인트 컬럼 추가
 alter table tbl_member
 add (user_point number default 0);
+
+
+-- 
+select count(*) from tbl_comment
+where b_no = 500;
+
+-- 각각의 글에 대해서 댓글 갯수 구함
+select b_no, count(*) from tbl_comment
+group by b_no;
+
+select * from tbl_comment;
+
+select count(*) from tbl_board; -- 전체 글 500개
+
+select b.*, nvl(c.cnt, 0) comment_cnt -- nvl(c.cnt, 0) : cnt = null, 0으로 표현
+from tbl_board b, (select b_no, count(*) cnt from tbl_comment
+                   group by b_no) c
+where b.b_no = c.b_no(+) -- (+) null 값도 표현
+order by b.b_no desc;
+
+-- 회원 테이블에 사용자 사진 컬럼 추가
+alter table tbl_member
+add (user_pic varchar2(100));

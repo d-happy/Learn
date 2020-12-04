@@ -243,9 +243,17 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                  <span class="hidden-xs">${memberVo.userid} (${memberVo.username})</span>
-                  <span class="badge">${memberVo.member_point}</span>
+                	<c:choose>
+		           		<c:when test="${empty sessionScope.memberVo.user_pic}">
+			            	<img src="/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image" />
+		           		</c:when>
+		           		<c:otherwise>
+			            	<img src="/displayImage?fileName=${sessionScope.memberVo.user_pic}" class="user-image" alt="User Image" />
+		           		</c:otherwise>
+		           	</c:choose>
+<!--                   <img src="/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/> -->
+                  <span class="hidden-xs">${sessionScope.memberVo.user_id} (${sessionScope.memberVo.user_name})</span>
+                  <span class="badge">${sessionScope.memberVo.user_point}</span>
                 </a>
                 
                 <ul class="dropdown-menu">
@@ -297,18 +305,24 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+           	<c:choose>
+           		<c:when test="${empty sessionScope.memberVo.user_pic}">
+	            	<img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+           		</c:when>
+           		<c:otherwise>
+	            	<img src="/displayImage?fileName=${sessionScope.memberVo.user_pic}" class="img-circle" alt="User Image" />
+           		</c:otherwise>
+           	</c:choose>
             </div>
             <div class="pull-left info">
             <c:choose>
-            <c:when test="${not empty sessionScope.user_id }">
-              	<p>${sessionScope.user_id}</p>
-              	<a href="/member/logout"><i class="fa fa-circle text-success"></i> 로그아웃</a>
-            </c:when>
-            <c:otherwise>
-            	<a href="/member/login"><i class="fa fa-circle text-danger"></i> 로그인</a>
-            	<a href="/member/memberJoinForm"><i class="fa fa-circle text-warning"></i> 회원가입</a>
-            </c:otherwise>
+	            <c:when test="${empty sessionScope.memberVo}">
+	            	<a href="/loginForm"><i class="fa fa-circle text-danger"></i> 로그인</a>
+	            	<a href="/memberJoinForm"><i class="fa fa-circle text-warning"></i> 회원가입</a>
+	            </c:when>
+	            <c:otherwise>
+	              	<a href="/logout"><i class="fa fa-circle text-success"></i> 로그아웃</a>
+	            </c:otherwise>
             </c:choose>
             </div>
           </div>

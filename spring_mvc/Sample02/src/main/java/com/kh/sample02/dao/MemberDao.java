@@ -13,4 +13,5 @@ public interface MemberDao {
 	public MemberVo login(String user_id, String user_pw);
 	public List<MemberVo> memberList();
 	public void updatePoint(String user_id, int point);
+	
 }

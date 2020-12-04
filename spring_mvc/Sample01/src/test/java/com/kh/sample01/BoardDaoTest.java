@@ -33,10 +33,10 @@ public class BoardDaoTest {
 	@Test
 	public void testBoardList() throws Exception {
 		PagingDto pagingDto = new PagingDto();
-		pagingDto.setPage(11);
+		pagingDto.setPage(1);
 		pagingDto.setPerPage(10);
-		pagingDto.setSearchType("t");
-		pagingDto.setKeyword("제목1");
+//		pagingDto.setSearchType("t");
+//		pagingDto.setKeyword("제목1");
 		pagingDto.setTotalCount(boardDao.listCount(pagingDto));
 		pagingDto.setPagingInfo();
 		List<BoardVo> boardList = boardDao.boardList(pagingDto);

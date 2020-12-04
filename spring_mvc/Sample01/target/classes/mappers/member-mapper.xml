@@ -13,9 +13,9 @@
 	<!-- #{ } 알아서 찾아줌?? -->
 	<select id="insertMember">
 		insert into tbl_member
-			(user_id, user_pw, user_name, user_email)
+			(user_id, user_pw, user_name, user_email, user_pic)
 		values 
-			(#{user_id}, #{user_pw}, #{user_name}, #{user_email})
+			(#{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_pic})
 	</select>
 	
 	<!-- com.kh.sample01.domain.MemberVo -->

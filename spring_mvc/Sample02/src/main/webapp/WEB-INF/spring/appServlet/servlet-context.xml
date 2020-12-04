@@ -23,6 +23,13 @@
 	
 	<context:component-scan base-package="com.kh.sample02" />
 	
+	<!-- 최대 업로드 용량 10MB -->
+	<beans:bean 
+		id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485750"></beans:property>
+	</beans:bean>
+	
 	
 	
 </beans:beans>

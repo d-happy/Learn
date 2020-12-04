@@ -15,7 +15,11 @@
 	<select id="boardList" resultType="BoardVo">
 		select * from 
 				(select rownum rnum, a.* from 
-										(select * from tbl_board
+										(select b.*, nvl(c.cnt, 0) comment_cnt 
+										 from tbl_board b, (select b_no, count(*) cnt from tbl_comment
+										                    group by b_no) c
+							             where 1 = 1
+										 and b.b_no = c.b_no(+)
 										<include refid="search"></include>
 		                             	 order by re_group desc, re_seq asc) a)
 		where rnum between #{startRow} and #{endRow}
@@ -47,27 +51,28 @@
 	<!-- #{ } 쓰면 '~' 으로 나타남 -->
 	<select id="listCount" resultType="int">
 		select count(*) from tbl_board
+		where 1 = 1
 		<include refid="search"></include>
 	</select>
 	
-	<!--  -->
+	<!-- 검색 조건 -->
 	<sql id="search">
 		<if test="searchType != null">
 			<choose>
 				<when test='searchType == "t"'>
-					where b_title   like '%' || #{keyword} || '%'
+					and b_title   like '%' || #{keyword} || '%'
 				</when>
 				<when test='searchType == "c"'>
-					where b_content like '%' || #{keyword} || '%'
+					and b_content like '%' || #{keyword} || '%'
 				</when>
 				<when test='searchType == "tc"'>
-					where b_title   like '%' || #{keyword} || '%'
-					or	  b_content like '%' || #{keyword} || '%'
+					and b_title   like '%' || #{keyword} || '%'
+					or	b_content like '%' || #{keyword} || '%'
 				</when>
 				<when test='searchType == "tcw"'>
-					where b_title   like '%' || #{keyword} || '%'
-					or	  b_content like '%' || #{keyword} || '%'
-					or	  user_id   like '%' || #{keyword} || '%'
+					and b_title   like '%' || #{keyword} || '%'
+					or	b_content like '%' || #{keyword} || '%'
+					or	user_id   like '%' || #{keyword} || '%'
 				</when>
 			</choose>
 		</if>

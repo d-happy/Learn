@@ -13,6 +13,8 @@ $(function() {
 		alert("글쓰기 성공");
 	} else if (msg == "deleteSuccess") {
 		alert("삭제 성공");
+	} else if (msg == "loginSuccess") {
+		alert("로그인 성공!");
 	}
 	
 	// 페이지네이션 - 페이지 번호 클릭
@@ -44,12 +46,105 @@ $(function() {
 		$("#frmPaging").submit();
 	});
 	
+	// 쪽지 보내기 클릭
+	$(".message_send").click(function(e) {
+		e.preventDefault();
+		var msg_receiver = $(this).attr("data-userid");
+		$("#msg_receiver").val(msg_receiver);
+		$("#modal-message").trigger("click");
+	});
+	
+	// 쪽지 보내기 모달창 보내기 버튼
+	$("#btnMessageSend").click(function() {
+		var msg_receiver = $("#msg_receiver").val();
+		var msg_content = $("#msg_content").val();
+		console.log(msg_receiver);
+		console.log(msg_content);
+		$("#btnMessageClose").trigger("click");
+		$("#msg_receiver").val("");
+		$("#msg_content").val("");
+		
+		var url = "/message/sendMessage";
+		var sendData = {
+				// 로그인 한 후에 ~~~ 페이지소스보기 -> 확인 !!!
+				"msg_sender" : "${sessionScope.memberVo.user_id}", // 임시로 user0?이 보냄
+				"msg_receiver" : msg_receiver,
+				"msg_content" : msg_content
+		};
+		$.ajax({
+			url : url,
+			dataType : "text",
+			data : JSON.stringify(sendData),
+			method : "post",
+			headers : {
+				"Content-Type":"application/json"
+			},
+			success : function(data) {
+				console.log(data);
+				if (data == "success") {
+					alert(msg_receiver + "님께 쪽지 보냄");
+				}
+			}
+		});
+	});
+	
 });
 </script>
 
 <!-- 페이징 폼 : jsp 파일 따로 있지만, 나중에 -->
 <%@include file="../include/frmPaging.jsp" %>
 <!-- // 페이징 폼 -->
+
+<!-- 쪽지 보내기 모달 창 -->
+<div class="row">
+	<div class="col-md-12">
+		 <a id="modal-message" href="#modal-container-message" role="button" 
+		 class="btn" data-toggle="modal" style="display:none;">쪽지 보내기 모달</a>
+		
+		<div class="modal fade" id="modal-container-message" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">쪽지 보내기</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input id="msg_receiver" type="hidden"/>
+						<input id="msg_content" class="form-control"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" 
+						id="btnMessageSend">보내기</button> 
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" 
+						id="btnMessageClose">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+<!-- // 쪽지 보내기 모달 창 -->
+
+<!-- 회원 정보 보기 팝업 -->
+<!-- <div class="row"> -->
+<!-- 	<div class="col-md-12"> -->
+<!-- 		<div class="dropdown"> -->
+<!-- 			<button class="btn btn-primary dropdown-toggle" type="button"  -->
+<!-- 			id="dropdownMenuButton" data-toggle="dropdown">Action</button> -->
+			
+<!-- 			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
+<!-- 				 <a class="dropdown-item disabled" href="#">Action</a>  -->
+<!-- 				 <a class="dropdown-item" href="#">Another action</a>  -->
+<!-- 				 <a class="dropdown-item" href="#">Something else here</a> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+<!-- // 회원 정보 보기 팝업 -->
+
 
 <div class="container-fluid">
 
@@ -112,8 +207,19 @@ $(function() {
 				<c:forEach var="boardVo" items="${boardList}">
 					<tr>
 						<td>${boardVo.b_no}</td>
-						<td><a class="a_title" href="#" data-bno="${boardVo.b_no}">${boardVo.b_title}</a></td>
-						<td>${boardVo.user_id}</td>
+						<td><a class="a_title" href="#" data-bno="${boardVo.b_no}">${boardVo.b_title} <span style="color:orange"> [${boardVo.comment_cnt}]</span></a></td>
+						<td>
+						<div class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown"
+								style="cursor:pointer;">${boardVo.user_id}</a>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+								 style="background-color:#eeddff;">
+								 <a class="dropdown-item message_send" href="#"
+								 	data-userid="${boardVo.user_id}">쪽지 보내기</a><br/>
+								 <a class="dropdown-item" href="#">포인트 선물하기</a>
+							</div>
+						</div>
+						</td>
 						<td>${boardVo.b_regdate}</td>
 						<td>${boardVo.b_viewcnt}</td>
 					</tr>

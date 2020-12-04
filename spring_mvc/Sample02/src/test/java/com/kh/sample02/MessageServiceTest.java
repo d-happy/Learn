@@ -7,28 +7,28 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.kh.sample02.dao.MessageDao;
 import com.kh.sample02.domain.MessageVo;
+import com.kh.sample02.service.MessageService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations= {"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
-public class MessageDaoTest {
+public class MessageServiceTest {
 
 	@Inject
-	private MessageDao messageDao;
+	private MessageService messageService;
 	
 	@Test
-	public void testInsertMessage() throws Exception {
+	public void testSendMessage() throws Exception {
 		MessageVo messageVo = new MessageVo();
-		messageVo.setMsg_content("쪽지2");
-		messageVo.setMsg_sender("user01");
-		messageVo.setMsg_receiver("user02");
-		messageDao.insertMessage(messageVo);
+		messageVo.setMsg_content("쪽지회신1");
+		messageVo.setMsg_sender("user02");
+		messageVo.setMsg_receiver("user01");
+		messageService.sendMessage(messageVo);
 	}
 	
 	@Test
-	public void testSelectMessage() throws Exception {
-		MessageVo messageVo = messageDao.selectMessage(3);
+	public void testReadMessage() throws Exception {
+		MessageVo messageVo = messageService.readMessage("user02", 2);
 		System.out.println("messageVo :" + messageVo);
 	}
 }

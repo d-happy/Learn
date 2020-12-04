@@ -13,6 +13,7 @@ public class BoardVo {
 	private int re_group;
 	private int re_seq;
 	private int re_level;
+	private int comment_cnt;
 	
 	public int getB_no() {
 		return b_no;
@@ -68,12 +69,18 @@ public class BoardVo {
 	public void setRe_level(int re_level) {
 		this.re_level = re_level;
 	}
+	public int getComment_cnt() {
+		return comment_cnt;
+	}
+	public void setComment_cnt(int comment_cnt) {
+		this.comment_cnt = comment_cnt;
+	}
 	
 	@Override
 	public String toString() {
 		return "BoardVo [b_no=" + b_no + ", b_title=" + b_title + ", b_content=" + b_content + ", user_id=" + user_id
 				+ ", b_regdate=" + b_regdate + ", b_viewcnt=" + b_viewcnt + ", re_group=" + re_group + ", re_seq="
-				+ re_seq + ", re_level=" + re_level + "]";
+				+ re_seq + ", re_level=" + re_level + ", comment_cnt=" + comment_cnt + "]";
 	}
 	
 }
