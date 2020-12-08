@@ -1,5 +1,7 @@
 package com.kh.sample01.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -54,6 +56,40 @@ public class MessageServiceImpl implements MessageService {
 		// tbl_message -> update
 		MessageVo messageVo = messageDao.selectMessage(msg_no);
 		return messageVo;
+	}
+	
+	@Override
+	public int notReadCount(String msg_receiver) throws Exception {
+		int count = messageDao.notReadCount(msg_receiver);
+		return count;
+	}
+	
+	@Override
+	public List<MessageVo> receiveMessageList(String msg_receiver) throws Exception {
+		List<MessageVo> messageList = messageDao.receiveMessageList(msg_receiver);
+		return messageList;
+	}
+	
+	@Override
+	public List<MessageVo> sendMessageList(String msg_sender) throws Exception {
+		List<MessageVo> messageList = messageDao.sendMessageList(msg_sender);
+		return messageList;
+	}
+	
+	@Override
+	@Transactional // delete 여러번 반복 -> 트랜잭션 하기
+	public void delete(int[] arr_msg_no) throws Exception {
+		for (int i = 0; i < arr_msg_no.length; i++) {
+			messageDao.delete(arr_msg_no[i]);
+		}
+	}
+	
+	@Override
+	@Transactional
+	public void stateChange(int[] arr_msg_no) throws Exception {
+		for (int i = 0; i < arr_msg_no.length; i++) {
+			messageDao.stateChange(arr_msg_no[i]);
+		}
 	}
 	
 }

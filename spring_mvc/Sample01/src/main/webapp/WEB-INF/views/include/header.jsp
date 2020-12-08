@@ -255,7 +255,7 @@
                  	</c:otherwise>
                  </c:choose>
                  <span class="hidden-xs">${sessionScope.memberVo.user_id} (${sessionScope.memberVo.user_name})</span>
-                 <span class="badge">${sessionScope.memberVo.user_point}</span>
+                 <span class="badge" id="user_point">${sessionScope.memberVo.user_point}</span>
                 </a>
                 
                 <ul class="dropdown-menu">
@@ -415,12 +415,14 @@
                 <small class="label pull-right bg-red">3</small>
               </a>
             </li>
-            <li>
-              <a href="../mailbox/mailbox.html">
-                <i class="fa fa-envelope"></i> <span>Mailbox</span>
-                <small class="label pull-right bg-yellow">12</small>
-              </a>
-            </li>
+            <c:if test="${not empty sessionScope.memberVo}">
+	            <li>
+	              <a href="/message/messageList?type=receive">
+	                <i class="fa fa-envelope"></i> <span>쪽지함</span>
+	                <small class="label pull-right bg-yellow" id="notReadCount">${sessionScope.memberVo.notReadCount}</small>
+	              </a>
+	            </li>
+            </c:if>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-folder"></i> <span>Examples</span>

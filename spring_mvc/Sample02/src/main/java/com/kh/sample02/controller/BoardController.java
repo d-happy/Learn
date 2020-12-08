@@ -3,6 +3,7 @@ package com.kh.sample02.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sample02.domain.BoardVo;
+import com.kh.sample02.domain.MemberVo;
 import com.kh.sample02.domain.PagingDto;
 import com.kh.sample02.service.BoardService;
 import com.kh.sample02.util.MyUrlUtil;
@@ -24,11 +26,11 @@ public class BoardController {
 	
 	@RequestMapping(value="/listAll2", method=RequestMethod.GET)
 	public String listAll(Model model, PagingDto pagingDto) throws Exception {
-		System.out.println("pagingDto :" + pagingDto);
+//		System.out.println("pagingDto :" + pagingDto);
 		int count = boardService.listCount(pagingDto);
 		pagingDto.setTotalCount(count);
 		pagingDto.setPagingInfo();
-		System.out.println("pagingDto-totalCount :" + pagingDto);
+//		System.out.println("pagingDto-totalCount :" + pagingDto);
 		
 		List<BoardVo> boardList = boardService.boardList(pagingDto);
 		model.addAttribute("boardList", boardList);
@@ -42,8 +44,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/writeRun2", method=RequestMethod.POST)
-	public String writeRun(BoardVo boardVo, RedirectAttributes rttr) throws Exception {
-		System.out.println("boardVo :" + boardVo);
+	public String writeRun(BoardVo boardVo, RedirectAttributes rttr, HttpSession session) throws Exception {
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
+		boardVo.setUser_id(memberVo.getUser_id());
+//		System.out.println("boardVo :" + boardVo);
 		boardService.insertArticle(boardVo);
 		rttr.addFlashAttribute("msg", "writeSuccess");
 		return "redirect:/board/listAll2";
@@ -51,8 +55,8 @@ public class BoardController {
 	
 	@RequestMapping(value="/content2", method=RequestMethod.GET)
 	public String content(int b_no, PagingDto pagingDto, Model model) throws Exception {
-		System.out.println("b_no :" + b_no);
-		System.out.println("pagingDto-content :" + pagingDto);
+//		System.out.println("b_no :" + b_no);
+//		System.out.println("pagingDto-content :" + pagingDto);
 		BoardVo boardVo = boardService.selectArticle(b_no);
 		model.addAttribute("boardVo", boardVo);
 		model.addAttribute("pagingDto", pagingDto);
@@ -61,8 +65,8 @@ public class BoardController {
 	
 	@RequestMapping(value="/updateRun2", method=RequestMethod.POST)
 	public String updateRun(BoardVo boardVo, PagingDto pagingDto, RedirectAttributes rttr) throws Exception {
-		System.out.println("boardVo:" + boardVo);
-		System.out.println("pagingDto-update :" + pagingDto);
+//		System.out.println("boardVo:" + boardVo);
+//		System.out.println("pagingDto-update :" + pagingDto);
 		boardService.updateArticle(boardVo);
 		rttr.addFlashAttribute("msg", "updateSuccess");
 		String url = MyUrlUtil.makeurl(pagingDto, boardVo.getB_no(), "updateRun2");

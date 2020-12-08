@@ -30,6 +30,16 @@
 		<beans:property name="maxUploadSize" value="10485750"></beans:property>
 	</beans:bean>
 	
+	<!-- 인터셉터 -->
+	<beans:bean class="com.kh.sample02.interceptor.AuthInterceptor"
+		id="authInterceptor"></beans:bean>
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/board/**/*"/>
+			<exclude-mapping path="/board/listAll2"/>
+			<beans:ref bean="authInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

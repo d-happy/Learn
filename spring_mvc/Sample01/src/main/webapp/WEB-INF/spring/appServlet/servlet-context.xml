@@ -30,5 +30,26 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10485750"></beans:property>
 	</beans:bean>
+	
+	<!-- 인터셉터 -->
+	<beans:bean class="com.kh.sample01.interceptor.etc.SampleInterceptor"
+		id="sample01Interceptor"></beans:bean>
+	<beans:bean class="com.kh.sample01.interceptor.AuthInterceptor"
+		id="authInterceptor"></beans:bean>
+	
+	<!-- 인터셉터할 매핑, 제외할 거, 사용할 빈 정의 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/doA"/>
+			<mapping path="/doB"/>
+			<beans:ref bean="sample01Interceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/board/**/*"/>
+			<mapping path="/message/**/*"/>
+			<exclude-mapping path="/board/listAll"/>
+			<beans:ref bean="authInterceptor"/>
+		</interceptor>
+	</interceptors>
 											
 </beans:beans>

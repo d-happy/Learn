@@ -12,6 +12,7 @@ public class MemberVo {
 	private Timestamp update_date;
 	private int user_point;
 	private String user_pic;
+	private int notReadCount; // 데이터베이스 안 함
 	
 	public String getUser_id() {
 		return user_id;
@@ -61,12 +62,18 @@ public class MemberVo {
 	public void setUser_pic(String user_pic) {
 		this.user_pic = user_pic;
 	}
+	public int getNotReadCount() {
+		return notReadCount;
+	}
+	public void setNotReadCount(int notReadCount) {
+		this.notReadCount = notReadCount;
+	}
 	
 	@Override
 	public String toString() {
 		return "MemberVo [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name + ", user_email="
 				+ user_email + ", reg_date=" + reg_date + ", update_date=" + update_date + ", user_point=" + user_point
-				+ ", user_pic=" + user_pic + "]";
+				+ ", user_pic=" + user_pic + ", notReadCount=" + notReadCount + "]";
 	}
 	
 } //MemberVo

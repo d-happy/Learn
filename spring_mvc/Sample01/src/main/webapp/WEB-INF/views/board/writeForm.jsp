@@ -20,11 +20,11 @@
 					placeholder="내용을 입력해주세요"></textarea>
 				</div>
 				
-				<div class="form-group">
-					<label for="user_id">아이디</label>
-					<textarea class="form-control" id="user_id" name="user_id"
-					placeholder="아이디를 입력해주세요" required></textarea>
-				</div>
+<!-- 				<div class="form-group"> -->
+<!-- 					<label for="user_id">아이디</label> -->
+<!-- 					<textarea class="form-control" id="user_id" name="user_id" -->
+<!-- 					placeholder="아이디를 입력해주세요" required></textarea> -->
+<!-- 				</div> -->
 				
 				<button type="submit" class="btn btn-primary">작성완료</button>
 			</form>

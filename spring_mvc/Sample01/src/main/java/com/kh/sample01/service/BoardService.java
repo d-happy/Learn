@@ -22,6 +22,9 @@ public interface BoardService { // 메소드 정의한 인터페이스
 	//글 삭제
 	public void deleteArticle(int b_no);
 	
+	//조회수 증가
+	public void updateViewCnt(int b_no);
+	
 	//글 갯수
 	public int listCount(PagingDto pagingDto);
 	

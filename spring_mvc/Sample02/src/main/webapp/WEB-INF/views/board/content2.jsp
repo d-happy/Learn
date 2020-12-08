@@ -49,8 +49,15 @@ $(function() {
 				tr.find("td").eq(1).text(this.c_content);
 				tr.find("td").eq(2).text(this.user_id);
 				tr.find("td").eq(3).text(changeDateString(this.c_regdate));
-				tr.find("td").eq(4).find("button").attr("data-cno", this.c_no);
-				tr.find("td").eq(5).find("button").attr("data-cno", this.c_no);
+				
+				if ("${sessionScope.memberVo.user_id}" == this.user_id) {
+					tr.find("td").eq(4).find("button").attr("data-cno", this.c_no);
+					tr.find("td").eq(5).find("button").attr("data-cno", this.c_no);
+				} else {
+					tr.find("td").eq(4).empty();
+					tr.find("td").eq(5).empty();
+				}
+				
 				$("#tableComment > tbody").append(tr);
 			});
 		});
@@ -61,8 +68,7 @@ $(function() {
 		var url = "/comment/insertComment";
 		var sendData = {
 				"b_no" : parseInt("${boardVo.b_no}"),
-				"c_content" : $("#c_content").val(),
-				"user_id" : $("#c_user_id").val()
+				"c_content" : $("#c_content").val()
 		};
 		console.log(sendData);
 		$.ajax ({
@@ -201,10 +207,12 @@ ${pagingDto}<br/><br/>
 				</div>
 				
 				<a type="button" class="btn btn-success" href="/board/listAll2" id="btnList">목록</a>
-				<button id="btnUpdate" type="button" class="btn btn-warning">수정</button>
-				<button id="btnUpdateFinish" type="button" class="btn btn-warning"
-					style="display:none">수정완료</button>
-				<a id="btnDelete" type="button" class="btn btn-danger" href="#">삭제</a>
+				<c:if test="${sessionScope.memberVo.user_id == boardVo.user_id}">
+					<button id="btnUpdate" type="button" class="btn btn-warning">수정</button>
+					<button id="btnUpdateFinish" type="button" class="btn btn-warning"
+						style="display:none">수정완료</button>
+					<a id="btnDelete" type="button" class="btn btn-danger" href="#">삭제</a>
+				</c:if>
 			</form>
 			
 		</div>
@@ -220,9 +228,9 @@ ${pagingDto}<br/><br/>
 		<div class="col-md-8">
 			<input type="text" class="form-control" id="c_content" placeholder="댓글 내용"/>
 		</div>
-		<div class="col-md-2">
-			<input type="text" class="form-control" id="c_user_id" placeholder="작성자"/>
-		</div>
+<!-- 		<div class="col-md-2"> -->
+<!-- 			<input type="text" class="form-control" id="c_user_id" placeholder="작성자"/> -->
+<!-- 		</div> -->
 		<div class="col-md-2">
 			<button type="button" class="btn btn-success" id="btnCommentInsert">댓글 작성</button>
 		</div>

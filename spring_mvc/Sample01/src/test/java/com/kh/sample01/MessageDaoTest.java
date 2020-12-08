@@ -32,4 +32,10 @@ public class MessageDaoTest {
 		System.out.println("messageVo :" + messageVo);
 	}
 	
+	@Test
+	public void testNotReadCount() throws Exception {
+		int count = messageDao.notReadCount("user03");
+		System.out.println("count :" + count);
+	}
+	
 }

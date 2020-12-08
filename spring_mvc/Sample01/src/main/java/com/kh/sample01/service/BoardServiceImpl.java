@@ -46,6 +46,11 @@ public class BoardServiceImpl implements BoardService { // 메소드 오버라�
 	}
 	
 	@Override
+	public void updateViewCnt(int b_no) {
+		boardDao.updateViewCnt(b_no);
+	}
+	
+	@Override
 	public int listCount(PagingDto pagingDto) {
 		int count = boardDao.listCount(pagingDto);
 		return count;

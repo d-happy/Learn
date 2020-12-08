@@ -244,8 +244,11 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 	<c:choose>
-		           		<c:when test="${empty sessionScope.memberVo.user_pic}">
+		           		<c:when test="${empty sessionScope.memberVo}">
 			            	<img src="/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image" />
+		           		</c:when>
+		           		<c:when test="${empty sessionScope.memberVo.user_pic}">
+			            	<img src="/resources/dist/img/default-50x50.gif" class="user-image" alt="User Image" />
 		           		</c:when>
 		           		<c:otherwise>
 			            	<img src="/displayImage?fileName=${sessionScope.memberVo.user_pic}" class="user-image" alt="User Image" />
@@ -253,7 +256,7 @@
 		           	</c:choose>
 <!--                   <img src="/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/> -->
                   <span class="hidden-xs">${sessionScope.memberVo.user_id} (${sessionScope.memberVo.user_name})</span>
-                  <span class="badge">${sessionScope.memberVo.user_point}</span>
+                  <span class="badge" id="user_point">${sessionScope.memberVo.user_point}</span>
                 </a>
                 
                 <ul class="dropdown-menu">
@@ -306,8 +309,11 @@
           <div class="user-panel">
             <div class="pull-left image">
            	<c:choose>
-           		<c:when test="${empty sessionScope.memberVo.user_pic}">
+           		<c:when test="${empty sessionScope.memberVo}">
 	            	<img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+           		</c:when>
+           		<c:when test="${empty sessionScope.memberVo.user_pic}">
+	            	<img src="/resources/dist/img/default-50x50.gif" class="user-image" alt="User Image" />
            		</c:when>
            		<c:otherwise>
 	            	<img src="/displayImage?fileName=${sessionScope.memberVo.user_pic}" class="img-circle" alt="User Image" />
@@ -422,10 +428,12 @@
               </a>
             </li>
             <li>
-              <a href="../mailbox/mailbox.html">
-                <i class="fa fa-envelope"></i> <span>Mailbox</span>
-                <small class="label pull-right bg-yellow">12</small>
-              </a>
+            	<c:if test="${not empty sessionScope.memberVo}">
+	              <a href="/message/messageList?type=send">
+	                <i class="fa fa-envelope"></i> <span>쪽지함</span>
+	                <small class="label pull-right bg-yellow" id="notReadCount">${sessionScope.memberVo.notReadCount}</small>
+	              </a>
+            	</c:if>
             </li>
             <li class="treeview">
               <a href="#">

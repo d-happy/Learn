@@ -1,10 +1,12 @@
-package com.kh.sample02;
+package com.kh.sample02.controller;
 
+import java.io.FileInputStream;
 import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sample02.domain.MemberVo;
 import com.kh.sample02.service.MemberService;
+import com.kh.sample02.service.MessageService;
 import com.kh.sample02.util.MyUploadFileUtil;
 
 @Controller
@@ -28,6 +31,9 @@ public class HomeController {
 	
 	@Inject
 	private MemberService memberService;
+	
+	@Inject
+	private MessageService messageService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -84,7 +90,14 @@ public class HomeController {
 		String page = "";
 		if (memberVo != null) {
 			rttr.addFlashAttribute("msg", "loginSuccess");
-			page = "redirect:/board/listAll2";
+			String targetLocation = (String) session.getAttribute("targetLocation");
+			if (targetLocation != null) {
+				page = "redirect:" + targetLocation;
+			} else {
+				page = "redirect:/board/listAll2";
+			}
+			int notReadCount = messageService.notReadCount(user_id);
+			memberVo.setNotReadCount(notReadCount);
 			session.setAttribute("memberVo", memberVo);
 		} else {
 			rttr.addFlashAttribute("msg", "loginFail");
@@ -94,9 +107,12 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/displayImage", method=RequestMethod.GET)
-	public void displayImage(String fileName) throws Exception {
-		System.out.println("fileName :" + fileName);
-		
+	@ResponseBody
+	public byte[] displayImage(String fileName) throws Exception {
+//		System.out.println("fileName :" + fileName);
+		FileInputStream fis = new FileInputStream(fileName);
+		byte[] bytes = IOUtils.toByteArray(fis);
+		return bytes;
 		// 파일 바이트 바이너리 이미지 ~~ ???
 	}
 	

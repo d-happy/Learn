@@ -67,7 +67,7 @@ $(function() {
 		var url = "/message/sendMessage";
 		var sendData = {
 				// 로그인 한 후에 ~~~ 페이지소스보기 -> 확인 !!!
-				"msg_sender" : "${sessionScope.memberVo.user_id}", // 임시로 user0?이 보냄
+// 				"msg_sender" : "${sessionScope.memberVo.user_id}", // 임시로 user0?이 보냄
 				"msg_receiver" : msg_receiver,
 				"msg_content" : msg_content
 		};
@@ -81,8 +81,9 @@ $(function() {
 			},
 			success : function(data) {
 				console.log(data);
-				if (data == "success") {
+				if (data != "") {
 					alert(msg_receiver + "님께 쪽지 보냄");
+					$("#user_point").text(data);
 				}
 			}
 		});
@@ -144,7 +145,6 @@ $(function() {
 <!-- 	</div> -->
 <!-- </div> -->
 <!-- // 회원 정보 보기 팝업 -->
-
 
 <div class="container-fluid">
 
@@ -209,19 +209,26 @@ $(function() {
 						<td>${boardVo.b_no}</td>
 						<td><a class="a_title" href="#" data-bno="${boardVo.b_no}">${boardVo.b_title} <span style="color:orange"> [${boardVo.comment_cnt}]</span></a></td>
 						<td>
-						<div class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown"
-								style="cursor:pointer;">${boardVo.user_id}</a>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-								 style="background-color:#eeddff;">
-								 <a class="dropdown-item message_send" href="#"
-								 	data-userid="${boardVo.user_id}">쪽지 보내기</a><br/>
-								 <a class="dropdown-item" href="#">포인트 선물하기</a>
+						<c:choose>
+						<c:when test="${sessionScope.memberVo.user_id != boardVo.user_id}">
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown"
+									style="cursor:pointer;">${boardVo.user_id}</a>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+									 style="background-color:#eeddff;">
+									 <a class="dropdown-item message_send" href="#"
+									 	data-userid="${boardVo.user_id}">쪽지 보내기</a><br/>
+									 <a class="dropdown-item" href="#">포인트 선물하기</a>
+								</div>
 							</div>
-						</div>
+						</c:when>
+						<c:otherwise>
+							${boardVo.user_id}
+						</c:otherwise>
+						</c:choose>
 						</td>
 						<td>${boardVo.b_regdate}</td>
-						<td>${boardVo.b_viewcnt}</td>
+						<td><span class="badge">${boardVo.b_viewcnt}</span></td>
 					</tr>
 				</c:forEach>
 				</tbody>

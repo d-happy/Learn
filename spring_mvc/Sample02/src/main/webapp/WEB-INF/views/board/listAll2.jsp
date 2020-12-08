@@ -59,7 +59,6 @@ $(function() {
 		
 		var url = "/message/sendMessage";
 		var sendData = {
-				"msg_sender" : "user02",
 				"msg_receiver" : msg_receiver,
 				"msg_content" : msg_content
 		};
@@ -73,8 +72,9 @@ $(function() {
 			},
 			success : function(data) {
 				console.log(data);
-				if (data == "success2") {
+				if (data != "") {
 					alert(msg_receiver + "한테 쪽지 보냄");
+					$("#user_point").text(data);
 				}
 			}
 		});

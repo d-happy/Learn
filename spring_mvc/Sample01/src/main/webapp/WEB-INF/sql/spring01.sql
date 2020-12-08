@@ -158,3 +158,5 @@ order by b.b_no desc;
 -- 회원 테이블에 사용자 사진 컬럼 추가
 alter table tbl_member
 add (user_pic varchar2(100));
+
+-- 

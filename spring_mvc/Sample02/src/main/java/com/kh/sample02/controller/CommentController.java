@@ -3,6 +3,7 @@ package com.kh.sample02.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.sample02.domain.CommentVo;
+import com.kh.sample02.domain.MemberVo;
+import com.kh.sample02.domain.MessageVo;
 import com.kh.sample02.service.CommentService;
 
 @RestController
@@ -30,7 +33,9 @@ public class CommentController {
 	
 	@RequestMapping(value="/insertComment", method=RequestMethod.POST)
 //	@ResponseBody
-	public String insertComment(@RequestBody CommentVo commentVo) throws Exception {
+	public String insertComment(@RequestBody CommentVo commentVo, HttpSession session) throws Exception {
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
+		commentVo.setUser_id(memberVo.getUser_id());
 		System.out.println("commentVo :" + commentVo);
 		commentService.insertComment(commentVo);
 		return "success2";

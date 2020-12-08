@@ -14,6 +14,7 @@ public class BoardVo {
 	private int re_seq;
 	private int re_level;
 	private int comment_cnt;
+	private int like_count;
 	
 	public int getB_no() {
 		return b_no;
@@ -75,12 +76,19 @@ public class BoardVo {
 	public void setComment_cnt(int comment_cnt) {
 		this.comment_cnt = comment_cnt;
 	}
+	public int getLike_count() {
+		return like_count;
+	}
+	public void setLike_count(int like_count) {
+		this.like_count = like_count;
+	}
 	
 	@Override
 	public String toString() {
 		return "BoardVo [b_no=" + b_no + ", b_title=" + b_title + ", b_content=" + b_content + ", user_id=" + user_id
 				+ ", b_regdate=" + b_regdate + ", b_viewcnt=" + b_viewcnt + ", re_group=" + re_group + ", re_seq="
-				+ re_seq + ", re_level=" + re_level + ", comment_cnt=" + comment_cnt + "]";
+				+ re_seq + ", re_level=" + re_level + ", comment_cnt=" + comment_cnt + ", like_count=" + like_count
+				+ "]";
 	}
 	
 }

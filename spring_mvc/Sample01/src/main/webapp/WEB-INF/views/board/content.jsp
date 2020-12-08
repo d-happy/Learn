@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+
+<style>
+.red-color{
+	color: red;
+}
+</style>
 <script src="/resources/js/myScript.js"></script>
 <script>
 $(function() {
@@ -56,8 +62,15 @@ $(function() {
 				tr.find("td").eq(1).text(this.c_content);
 				tr.find("td").eq(2).text(this.user_id);
 				tr.find("td").eq(3).text(changeDateString(this.c_regdate));
-				tr.find("td").eq(4).find("button").attr("data-cno", this.c_no); // 댓글 수정, 삭제 버튼에 c_no 넣기
-				tr.find("td").eq(5).find("button").attr("data-cno", this.c_no);
+				
+				if ("${sessionScope.memberVo.user_id}" == this.user_id) {
+					tr.find("td").eq(4).find("button").attr("data-cno", this.c_no); // 댓글 수정, 삭제 버튼에 c_no 넣기
+					tr.find("td").eq(5).find("button").attr("data-cno", this.c_no);
+				} else {
+					tr.find("td").eq(4).empty(); // 작성자 아니면, 수정 삭제 못하게 <td>안의 <button> 비우기
+					tr.find("td").eq(5).empty();
+				}
+				
 				$("#commentTable > tbody").append(tr);
 			});
 // 			$("#commentTable > tbody").remove();
@@ -69,8 +82,8 @@ $(function() {
 		var url = "/comment/insertComment";
 		var sendData = {
 				"b_no" : parseInt("${boardVo.b_no}"),
-				"c_content" : $("#c_content").val(),
-				"user_id" : $("#c_user_id").val()
+				"c_content" : $("#c_content").val()
+// 				"user_id" : $("#c_user_id").val()
 		};
 		console.log(sendData);
 // 		$.post(url, sendData, function(data) {
@@ -224,11 +237,27 @@ ${pagingDto}<br/><br/>
 				</div>
 				
 				<a type="button" class="btn btn-success" href="/board/listAll" id="btnList">목록</a>
-				<button id="btnUpdate" type="button" class="btn btn-warning">수정</button>
-				<button id="btnUpdateFinish" type="button" class="btn btn-warning"
-					style="display:none">수정완료</button>
-				<a id="btnDelete" type="button" class="btn btn-danger" href="#">삭제</a>
+				<c:if test="${sessionScope.memberVo.user_id == boardVo.user_id}">
+					<button id="btnUpdate" type="button" class="btn btn-warning">수정</button>
+					<button id="btnUpdateFinish" type="button" class="btn btn-warning"
+						style="display:none">수정완료</button>
+					<a id="btnDelete" type="button" class="btn btn-danger" href="#">삭제</a>
+				</c:if>
 			</form>
+			
+			<div style="padding: 20px;">
+				<span 
+					<c:choose>
+						<c:when test="${isLike == true}">
+							class="glyphicon glyphicon-heart red-color"
+						</c:when>
+						<c:otherwise>
+							class="glyphicon glyphicon-heart"
+						</c:otherwise>
+					</c:choose>
+					id="heart" style="font-size: 50px; cursor: pointer;"></span>
+				<span>100</span>
+			</div>
 			
 		</div>
 	</div><br/>
@@ -245,9 +274,9 @@ ${pagingDto}<br/><br/>
 		<div class="col-md-8">
 			<input type="text" class="form-control" placeholder="내용" id="c_content"/>
 		</div>
-		<div class="col-md-2">
-			<input type="text" class="form-control" placeholder="작성자" id="c_user_id"/>
-		</div>
+<!-- 		<div class="col-md-2"> -->
+<!-- 			<input type="text" class="form-control" placeholder="작성자" id="c_user_id"/> -->
+<!-- 		</div> -->
 		<div class="col-md-2">
 			<button type="button" class="btn btn-primary" id="btnCommentInsert">완료</button>
 		</div>

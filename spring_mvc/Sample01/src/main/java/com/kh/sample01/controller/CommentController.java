@@ -3,6 +3,7 @@ package com.kh.sample01.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.sample01.domain.CommentVo;
+import com.kh.sample01.domain.MemberVo;
 import com.kh.sample01.service.CommentService;
 
 @RestController // ##.jsp 아니고 Json 형태로 객체 데이터를 반환 // 메소드 각각 안 하고 전부 다 @ResponseBody 적용됨
@@ -29,13 +31,15 @@ public class CommentController {
 	@RequestMapping(value="/getCommentList/{b_no}", method=RequestMethod.GET)
 //	@ResponseBody // ##.jsp 아니고 Json 형태로 객체 데이터를 반환
 	public List<CommentVo> getCommentList(@PathVariable("b_no") int b_no) throws Exception {
-		System.out.println("b_no-get :" + b_no);
+//		System.out.println("b_no-get :" + b_no);
 		List<CommentVo> commentList = commentService.getCommentList(b_no);
 		return commentList;
 	}
 	
 	@RequestMapping(value="/insertComment", method=RequestMethod.POST)
-	public String insertComment(@RequestBody CommentVo commentVo) throws Exception {
+	public String insertComment(@RequestBody CommentVo commentVo, HttpSession session) throws Exception {
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
+		commentVo.setUser_id(memberVo.getUser_id());
 		System.out.println("commentVo-insert :" + commentVo);
 		commentService.insertComment(commentVo);
 		return "success";
@@ -43,7 +47,7 @@ public class CommentController {
 	
 	@RequestMapping(value="/updateComment", method=RequestMethod.POST)
 	public String updateComment(@RequestBody CommentVo commentVo) throws Exception {
-		System.out.println("commentVo-update :" + commentVo);
+//		System.out.println("commentVo-update :" + commentVo);
 		commentService.updateComment(commentVo);
 		return "success";
 	}
@@ -51,8 +55,8 @@ public class CommentController {
 	@RequestMapping(value="/deleteComment/{b_no}/{c_no}", method=RequestMethod.GET)
 	public String deleteComment(@PathVariable("b_no") int b_no,
 								@PathVariable("c_no") int c_no) throws Exception {
-		System.out.println("b_no-delete :" + b_no);
-		System.out.println("c_no-delete :" + c_no);
+//		System.out.println("b_no-delete :" + b_no);
+//		System.out.println("c_no-delete :" + c_no);
 		commentService.deleteComment(c_no);
 		return "success";
 	}

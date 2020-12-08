@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sample01.domain.MemberVo;
 import com.kh.sample01.service.MemberService;
+import com.kh.sample01.service.MessageService;
 import com.kh.sample01.util.MyFileUploadUtil;
 
 @Controller
@@ -30,6 +31,9 @@ public class HomeController {
 	
 	@Inject
 	private MemberService memberService;
+	
+	@Inject
+	private MessageService messageService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -45,7 +49,7 @@ public class HomeController {
 	@ResponseBody
 	public String checkDupId(@PathVariable String user_id) throws Exception {
 		MemberVo memberVo = memberService.checkDupId(user_id);
-		System.out.println("user_id :" + user_id + " | memberVo :" + memberVo);
+//		System.out.println("user_id :" + user_id + " | memberVo :" + memberVo);
 		String result = "";
 		if (memberVo == null) {
 			result = "not join";
@@ -84,11 +88,18 @@ public class HomeController {
 		MemberVo memberVo = memberService.login(user_id, user_pw);
 		String page = "";
 		if (memberVo != null) {
+			int notReadCount = messageService.notReadCount(memberVo.getUser_id());
+			memberVo.setNotReadCount(notReadCount);
 			session.setAttribute("memberVo", memberVo);
-			page = "redirect:board/listAll";
+			String targetLocation = (String) session.getAttribute("targetLocation");
+			if (targetLocation != null) {
+				page = "redirect:" + targetLocation; // targetLocation = /~
+			} else {
+				page = "redirect:/board/listAll";
+			}
 			rttr.addFlashAttribute("msg", "loginSuccess");
 		} else {
-			page = "redirect:loginForm";
+			page = "redirect:/loginForm";
 			rttr.addFlashAttribute("msg", "loginFail");
 		}
 		return page;
@@ -97,7 +108,7 @@ public class HomeController {
 	@RequestMapping(value="/displayImage", method=RequestMethod.GET)
 	@ResponseBody
 	public byte[] displayImage(@RequestParam("fileName") String fileName) throws Exception {
-		System.out.println("fileName :" + fileName);
+//		System.out.println("fileName :" + fileName);
 		FileInputStream fis = new FileInputStream(fileName);
 		// org.apache.commons.io.IOUtils
 		byte[] bytes = IOUtils.toByteArray(fis); // 바이트 배열 = 바이너리 ??
