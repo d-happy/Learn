@@ -1,4 +1,4 @@
-package com.kh.sample01.dao;
+package com.kh.sample02.dao;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class LikeDaoImpl implements LikeDao {
 	
-	private static final String NAMESPACE = "com.kh.sample01.like.";
+	private static final String NAMESPACE = "com.kh.sample02.like.";
 	
 	@Inject
-	private SqlSession sqlSession;
+	SqlSession sqlSession;
 
 	@Override
 	public void insertLike(String user_id, int b_no) throws Exception {
@@ -22,6 +22,15 @@ public class LikeDaoImpl implements LikeDao {
 		map.put("user_id", user_id);
 		map.put("b_no", b_no);
 		sqlSession.insert(NAMESPACE + "insertLike", map);
+	}
+
+	@Override
+	public void deleteLike(String user_id, int b_no) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("user_id", user_id);
+		map.put("b_no", b_no);
+		sqlSession.delete(NAMESPACE + "deleteLike", map);
+
 	}
 
 	@Override
@@ -36,12 +45,4 @@ public class LikeDaoImpl implements LikeDao {
 		return false;
 	}
 
-	@Override
-	public void deleteLike(String user_id, int b_no) throws Exception {
-		Map<String, Object> map = new HashMap<>();
-		map.put("user_id", user_id);
-		map.put("b_no", b_no);
-		sqlSession.delete(NAMESPACE + "deleteLike", map);
-	}
-	
 }

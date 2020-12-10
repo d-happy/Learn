@@ -32,3 +32,14 @@ function make2digits(num) {
 	}
 	return num;
 }
+
+function isImage(fileName) {
+	var dotIndex = fileName.lastIndexOf(".");
+	var extName = fileName.substring(dotIndex + 1);
+	var upper = extName.toUpperCase();
+	if (upper == "JPG" || upper == "PNG" || upper == "GIF") {
+		return true;
+	} else {
+		return false;
+	}
+}

@@ -5,6 +5,7 @@
 
 <script type="text/javascript">
 $(function() {
+	
 	var msg = "${msg}";
 	if (msg == "notImage") {
 		alert("가입실패\n사진 첨부는 이미지 파일만 해주세요");

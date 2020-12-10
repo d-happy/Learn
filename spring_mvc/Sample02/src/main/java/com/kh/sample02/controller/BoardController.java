@@ -15,6 +15,7 @@ import com.kh.sample02.domain.BoardVo;
 import com.kh.sample02.domain.MemberVo;
 import com.kh.sample02.domain.PagingDto;
 import com.kh.sample02.service.BoardService;
+import com.kh.sample02.service.LikeService;
 import com.kh.sample02.util.MyUrlUtil;
 
 @Controller
@@ -23,6 +24,9 @@ public class BoardController {
 	
 	@Inject
 	private BoardService boardService;
+	
+	@Inject
+	private LikeService likeService;
 	
 	@RequestMapping(value="/listAll2", method=RequestMethod.GET)
 	public String listAll(Model model, PagingDto pagingDto) throws Exception {
@@ -47,19 +51,24 @@ public class BoardController {
 	public String writeRun(BoardVo boardVo, RedirectAttributes rttr, HttpSession session) throws Exception {
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		boardVo.setUser_id(memberVo.getUser_id());
-//		System.out.println("boardVo :" + boardVo);
+		System.out.println("boardVo :" + boardVo);
 		boardService.insertArticle(boardVo);
 		rttr.addFlashAttribute("msg", "writeSuccess");
 		return "redirect:/board/listAll2";
 	}
 	
 	@RequestMapping(value="/content2", method=RequestMethod.GET)
-	public String content(int b_no, PagingDto pagingDto, Model model) throws Exception {
+	public String content(int b_no, PagingDto pagingDto, Model model, HttpSession session) throws Exception {
 //		System.out.println("b_no :" + b_no);
 //		System.out.println("pagingDto-content :" + pagingDto);
 		BoardVo boardVo = boardService.selectArticle(b_no);
+//		boardVo.setLike_count(0);
 		model.addAttribute("boardVo", boardVo);
 		model.addAttribute("pagingDto", pagingDto);
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
+		boolean isLike = likeService.isLike(memberVo.getUser_id(), b_no);
+//		System.out.println(isLike);
+		model.addAttribute("isLike", isLike);
 		return "board/content2";
 	}
 	

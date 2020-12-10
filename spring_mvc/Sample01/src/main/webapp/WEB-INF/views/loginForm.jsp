@@ -20,11 +20,13 @@
 			<form role="form" action="loginRun" method="post">
 				<div class="form-group">
 					<label for="user_id">아이디</label> 
-					<input type="text" class="form-control" id="user_id" name="user_id" required/>
+					<input type="text" class="form-control" id="user_id" name="user_id" 
+						required value="user01"/>
 				</div>
 				<div class="form-group">
 					<label for="user_pw">비밀번호</label>
-					 <input type="password" class="form-control" id="user_pw" name="user_pw" required/>
+					 <input type="password" class="form-control" id="user_pw" name="user_pw" 
+					 	required value="1234"/>
 				</div>
 				<div class="checkbox">
 					<label><input type="checkbox"/>아이디 저장</label>

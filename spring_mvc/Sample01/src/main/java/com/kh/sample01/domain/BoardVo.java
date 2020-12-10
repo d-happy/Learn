@@ -1,6 +1,7 @@
 package com.kh.sample01.domain;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 public class BoardVo {
 
@@ -15,6 +16,8 @@ public class BoardVo {
 	private int re_level;
 	private int comment_cnt;
 	private int like_count;
+	
+	private String[] files;
 	
 	public int getB_no() {
 		return b_no;
@@ -82,13 +85,19 @@ public class BoardVo {
 	public void setLike_count(int like_count) {
 		this.like_count = like_count;
 	}
+	public String[] getFiles() {
+		return files;
+	}
+	public void setFiles(String[] files) {
+		this.files = files;
+	}
 	
 	@Override
 	public String toString() {
 		return "BoardVo [b_no=" + b_no + ", b_title=" + b_title + ", b_content=" + b_content + ", user_id=" + user_id
 				+ ", b_regdate=" + b_regdate + ", b_viewcnt=" + b_viewcnt + ", re_group=" + re_group + ", re_seq="
 				+ re_seq + ", re_level=" + re_level + ", comment_cnt=" + comment_cnt + ", like_count=" + like_count
-				+ "]";
+				+ ", files=" + Arrays.toString(files) + "]";
 	}
 	
 }

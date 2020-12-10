@@ -2,27 +2,24 @@
 <!DOCTYPE mapper
  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 	
-<mapper namespace="com.kh.sample01.like">
+ 
+<mapper namespace="com.kh.sample02.like">
 
-	<!-- 좋아요 추가 -->
 	<insert id="insertLike">
 		insert into tbl_like (user_id, b_no)
 		values (#{user_id}, #{b_no})
 	</insert>
-		
-	<!-- 좋아요 여부 -->
-	<select id="isLike" resultType="int">
-		select count(*) from tbl_like
-		where user_id = #{user_id}
-		and b_no = #{b_no}
-	</select>	
 	
-	<!-- 좋아요 삭제 -->
 	<delete id="deleteLike">
 		delete from tbl_like
 		where user_id = #{user_id}
 		and b_no = #{b_no}
 	</delete>
+	
+	<select id="isLike" resultType="int">
+		select count(*) from tbl_like
+		where user_id = #{user_id}
+		and b_no = #{b_no}
+	</select>
 	
 </mapper>

@@ -37,7 +37,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		return "redirect:/board/listAll"; // redirect 방법으로 listAll.jsp로 이동
+		return "redirect:/board/listAll"; // redirect 諛⑸쾿�쑝濡� listAll.jsp濡� �씠�룞
 	}
 	
 	@RequestMapping(value="/memberJoinForm", method=RequestMethod.GET)
@@ -79,7 +79,7 @@ public class HomeController {
 	
 	@RequestMapping(value="/loginForm", method=RequestMethod.GET)
 	public void loginForm() throws Exception {
-//		return "loginForm"; // WEB-INF/views/loginForm.jsp -> void는 value="/loginForm" 따라감
+//		return "loginForm"; // WEB-INF/views/loginForm.jsp -> void�뒗 value="/loginForm" �뵲�씪媛�
 	}
 	
 	@RequestMapping(value="/loginRun", method=RequestMethod.POST)
@@ -111,7 +111,7 @@ public class HomeController {
 //		System.out.println("fileName :" + fileName);
 		FileInputStream fis = new FileInputStream(fileName);
 		// org.apache.commons.io.IOUtils
-		byte[] bytes = IOUtils.toByteArray(fis); // 바이트 배열 = 바이너리 ??
+		byte[] bytes = IOUtils.toByteArray(fis); // 諛붿씠�듃 諛곗뿴 = 諛붿씠�꼫由� ??
 		return bytes;
 	}
 	
@@ -119,6 +119,27 @@ public class HomeController {
 	public String logout(HttpSession session) throws Exception {
 		session.invalidate();
 		return "redirect:/loginForm";
+	}
+	
+	@RequestMapping(value="/uploadAjax", method=RequestMethod.POST)
+	@ResponseBody
+	public String uploadAjax(MultipartFile file) throws Exception {
+		System.out.println("file.getOriginalFilename() :" + file.getOriginalFilename());
+		String originalName = file.getOriginalFilename();
+		String filePath = MyFileUploadUtil.uploadFile("G:/upload", originalName, file.getBytes());
+		if (MyFileUploadUtil.isImage(originalName)) {
+			MyFileUploadUtil.makeThumbnail(filePath);
+		}
+		System.out.println("filePath :" + filePath);
+		return filePath;
+	}
+	
+	@RequestMapping(value="/deleteAjax", method=RequestMethod.GET)
+	@ResponseBody
+	public String deleteAjax(String fileName) throws Exception {
+		System.out.println("fileName :" + fileName);
+		MyFileUploadUtil.deleteFile(fileName);
+		return "success";
 	}
 	
 }

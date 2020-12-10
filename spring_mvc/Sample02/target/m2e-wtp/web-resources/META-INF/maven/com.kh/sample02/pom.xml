@@ -82,6 +82,14 @@
     <version>1.3.1</version>
 </dependency>
 
+<!-- 이미지 스케일러 -->
+<!-- https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib -->
+<dependency>
+    <groupId>org.imgscalr</groupId>
+    <artifactId>imgscalr-lib</artifactId>
+    <version>4.2</version>
+</dependency>
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

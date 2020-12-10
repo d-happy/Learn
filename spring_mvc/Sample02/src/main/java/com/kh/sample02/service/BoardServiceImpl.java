@@ -18,7 +18,15 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void insertArticle(BoardVo boardVo) {
+		int b_no = boardDao.getBnoNextVal();
+		boardVo.setB_no(b_no);
 		boardDao.insertArticle(boardVo);
+		String[] files = boardVo.getFiles();
+		if (files != null && files.length > 0) {
+			for (String fileName : files) {
+				boardDao.insertAttach(fileName, b_no);
+			}
+		}
 	}
 
 	@Override
@@ -31,6 +39,8 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVo selectArticle(int b_no) {
 		boardDao.updateViewCnt(b_no);
 		BoardVo boardVo = boardDao.selectArticle(b_no);
+		String[] filenames = boardDao.getFileNames(b_no); // 첨부파일 목록
+		boardVo.setFiles(filenames);
 		return boardVo;
 	}
 

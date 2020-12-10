@@ -37,6 +37,8 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/board/**/*"/>
+			<mapping path="/message/**/*"/>
+			<mapping path="/like/**/*"/>
 			<exclude-mapping path="/board/listAll2"/>
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>

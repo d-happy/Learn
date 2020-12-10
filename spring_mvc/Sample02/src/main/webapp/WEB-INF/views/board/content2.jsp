@@ -1,6 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+
+<style>
+.red-color{
+	color : red;
+}
+.divUploaded {
+	width: 150px;
+	float: left;
+}
+#divButton {
+	clear: both;
+}
+</style>
 <script src="/resources/js/myScript.js"></script>
 <script>
 $(function() {
@@ -141,6 +154,34 @@ $(function() {
 		});
 	});
 	
+	// heart
+	$("#heart").click(function() {
+		var has = $(this).hasClass("red-color");
+		var that = $(this);
+		var count = parseInt($("#heartCount").text());
+		var url = "";
+		
+		if (has) {
+			url = "/like/deleteLike/${boardVo.b_no}";
+		} else {
+			url = "/like/insertLike/${boardVo.b_no}";
+		}
+		
+		$.get(url, function(data) {
+			console.log(data);
+			if (data == "success2") {
+				if (has) {
+					that.removeClass("red-color");
+					count--;
+				} else {
+					that.addClass("red-color");
+					count++;
+				}
+				$("#heartCount").text(count);				
+			}
+		});
+	});
+	
 });
 </script>
 
@@ -206,14 +247,41 @@ ${pagingDto}<br/><br/>
 					value="${boardVo.user_id}" readonly/>
 				</div>
 				
-				<a type="button" class="btn btn-success" href="/board/listAll2" id="btnList">목록</a>
-				<c:if test="${sessionScope.memberVo.user_id == boardVo.user_id}">
-					<button id="btnUpdate" type="button" class="btn btn-warning">수정</button>
-					<button id="btnUpdateFinish" type="button" class="btn btn-warning"
-						style="display:none">수정완료</button>
-					<a id="btnDelete" type="button" class="btn btn-danger" href="#">삭제</a>
-				</c:if>
+				<div class="uploadedList">
+					<c:forEach var="filename" items="${boardVo.files}">
+					<div class="divUploaded text-center">
+						<img height="100" src='/displayImage?fileName=${filename}' class="img-rounded"/><br/>
+						<span>img</span>
+					</div>
+					</c:forEach>
+				</div>
+				
+				<div style="clear:left;"></div>
+				
+				<div style="padding:10px; float:left;">
+					<a type="button" class="btn btn-success" href="/board/listAll2" id="btnList">목록</a>
+					<c:if test="${sessionScope.memberVo.user_id == boardVo.user_id}">
+						<button id="btnUpdate" type="button" class="btn btn-warning">수정</button>
+						<button id="btnUpdateFinish" type="button" class="btn btn-warning"
+							style="display:none">수정완료</button>
+						<a id="btnDelete" type="button" class="btn btn-danger" href="#">삭제</a>
+					</c:if>
+				</div>
 			</form>
+			
+			<div style="padding:0px; float:left;">
+				<span 
+					<c:choose>
+						<c:when test="${isLike == true}">
+							class="glyphicon glyphicon-heart red-color"
+						</c:when>
+						<c:otherwise>
+							class="glyphicon glyphicon-heart"
+						</c:otherwise>
+					</c:choose>
+					id="heart" style="font-size: 50px; cursor: pointer;"></span>
+				(<span id="heartCount">${boardVo.like_count}</span>)
+			</div>
 			
 		</div>
 	</div><br/>

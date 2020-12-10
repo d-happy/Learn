@@ -159,4 +159,26 @@ order by b.b_no desc;
 alter table tbl_member
 add (user_pic varchar2(100));
 
--- 
+-- 좋아요 테이블
+create table tbl_like (
+    b_no number references tbl_board(b_no),
+    user_id varchar2(20) references tbl_member(user_id)
+);
+
+-- 보드 테이블에 좋아요 갯수 컬럼 추가
+alter table tbl_board
+add (like_count number default 0);
+
+-- 좋아요 테이블 테스트
+insert into tbl_like (user_id, b_no)
+values ('user01', 521);
+
+commit;
+
+delete from tbl_like;
+
+-- 첨부파일 테이블
+create table tbl_attach (
+	fileName varchar2(100) primary key,
+	b_no references tbl_board(b_no)
+);

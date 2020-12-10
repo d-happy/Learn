@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.sample01.util.MyFileUploadUtil;
 import com.kh.sample02.domain.MemberVo;
 import com.kh.sample02.service.MemberService;
 import com.kh.sample02.service.MessageService;
@@ -120,6 +121,27 @@ public class HomeController {
 	public String logout(HttpSession session) throws Exception {
 		session.invalidate();
 		return "redirect:/loginForm";
+	}
+	
+	@RequestMapping(value="/uploadAjax", method=RequestMethod.POST)
+	@ResponseBody
+	public String uploadAjax(MultipartFile file) throws Exception {
+		System.out.println("file.getOriginalFilename() :" + file.getOriginalFilename());
+		String originalName = file.getOriginalFilename();
+		String filePath = MyUploadFileUtil.getfilePath("G:/upload2", originalName, file.getBytes());
+		if (MyUploadFileUtil.isImage(originalName)) {
+			MyUploadFileUtil.makeThumbnail(filePath);
+		}
+		System.out.println("filePath :" + filePath);
+		return filePath;
+	}
+	
+	@RequestMapping(value="/deleteAjax", method=RequestMethod.GET)
+	@ResponseBody
+	public String deleteAjax(String fileName) throws Exception {
+		System.out.println("fileName :" + fileName);
+		MyFileUploadUtil.deleteFile(fileName);
+		return "success";
 	}
 	
 }

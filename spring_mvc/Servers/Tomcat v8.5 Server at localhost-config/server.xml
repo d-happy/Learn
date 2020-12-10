@@ -157,7 +157,7 @@
       
       <Context docBase="Sample01" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Sample01"/>
       <Context docBase="Sample02" path="/2" reloadable="true" source="org.eclipse.jst.jee.server:Sample02"/>
-      <Context docBase="NongBu" path="/nongbu" reloadable="true" source="org.eclipse.jst.jee.server:NongBu"/></Host>
+      </Host>
     </Engine>
   </Service>
 </Server>

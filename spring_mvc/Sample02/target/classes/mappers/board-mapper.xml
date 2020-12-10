@@ -5,11 +5,21 @@
  
 <mapper namespace="com.kh.sample02.board">
 
+	<select id="getBnoNextVal" resultType="int">
+		select seq_board_bno.nextval
+		from dual
+	</select>
+
 	<insert id="insertArticle">
 		insert into tbl_board
 			(b_no, b_title, b_content, user_id, re_group)
 		values
-			(seq_board_bno.nextval, #{b_title}, #{b_content}, #{user_id}, seq_board_bno.nextval)
+			(#{b_no}, #{b_title}, #{b_content}, #{user_id}, #{b_no})
+	</insert>
+	
+	<insert id="insertAttach">
+		insert into tbl_attach (fileName, b_no)
+		values (#{fileName}, #{b_no})
 	</insert>
 	
 	<select id="boardList" resultType="BoardVo">
@@ -73,5 +83,16 @@
 			</choose>
 		</if>
 	</sql>
+	
+	<update id="updateLikeCount">
+		update tbl_board set
+			like_count = like_count + #{like_count}
+		where b_no = #{b_no}
+	</update>
+	
+	<select id="getFileNames" resultType="String">
+		select fileName from tbl_attach
+		where b_no = #{b_no}
+	</select>
 	
 </mapper>

@@ -30,4 +30,16 @@ public interface BoardDao {
 	//글 갯수
 	public int listCount(PagingDto pagingDto);
 	
+	//좋아요 카운트 변경
+	public void updateLikeCount(int like_count, int b_no);
+	
+	// bno nextval
+	public int getBnoNextVal();
+	
+	//첨부파일 추가
+	public void insertAttach(String fileName, int b_no);
+	
+	// 첨부파일명
+	public String[] getFileNames(int b_no);
+	
 }

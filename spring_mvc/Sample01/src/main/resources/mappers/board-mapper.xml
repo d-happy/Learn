@@ -5,11 +5,30 @@
  	
 <mapper namespace="com.kh.sample01.board"> <!-- 이 매퍼의 아이디 느낌?? -->
 
+	<!-- b_no.nextval -->
+	<select id="getBnoNextval" resultType="int">
+		select seq_board_bno.nextval
+		from dual
+	</select>
+
 	<insert id="insertArticle">
 		insert into tbl_board
 			(b_no, b_title, b_content, user_id, re_group)
 		values 
-			(seq_board_bno.nextval, #{b_title}, #{b_content}, #{user_id}, seq_board_bno.nextval)
+			(#{b_no}, #{b_title}, #{b_content}, #{user_id}, #{b_no})
+	</insert>
+	
+	<!-- <insert id="insertArticle">
+		insert into tbl_board
+			(b_no, b_title, b_content, user_id, re_group)
+		values 
+			(#{b_no}, #{b_title}, #{b_content}, #{user_id}, seq_board_bno.nextval)
+	</insert> -->
+	
+	<!-- 첨부파일 insert -->
+	<insert id="insertAttach">
+		insert into tbl_attach (fileName, b_no)
+		values (#{fileName}, #{b_no})
 	</insert>
 	
 	<select id="boardList" resultType="BoardVo">
@@ -77,5 +96,18 @@
 			</choose>
 		</if>
 	</sql>
+	
+	<!-- 좋아요 카운트 변경 -->
+	<update id="updateLikeCount">
+		update tbl_board set
+			like_count = like_count + #{like_count}
+		where b_no = #{b_no}
+	</update>
+	
+	<!-- 첨부파일명 -->
+	<select id="getFileNames" resultType="String">
+		select fileName from tbl_attach
+		where b_no = #{b_no}
+	</select>
 	
 </mapper>

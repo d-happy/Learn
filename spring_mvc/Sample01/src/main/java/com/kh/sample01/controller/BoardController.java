@@ -62,7 +62,7 @@ public class BoardController {
 		// 이걸 커맨드 객체라고 함. -> setter.(조건은 vo에 지정된 setter와 name이 같아야함)	
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		boardVo.setUser_id(memberVo.getUser_id());
-//		System.out.println("boardVo :" + boardVo);
+		System.out.println("boardVo :" + boardVo);
 		boardService.insertArticle(boardVo);
 		rttr.addFlashAttribute("msg", "writeSuccess");
 		return "redirect:/board/listAll";

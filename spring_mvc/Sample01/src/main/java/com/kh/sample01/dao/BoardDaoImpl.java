@@ -1,6 +1,8 @@
 package com.kh.sample01.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.sample01.domain.BoardVo;
 import com.kh.sample01.domain.PagingDto;
 
-@Repository("dao1")
+@Repository
 public class BoardDaoImpl implements BoardDao { // 뭐 하면 자동으로 내용 Console에 나옴
 	
 	private static final String NAMESPACE = "com.kh.sample01.board.";
@@ -55,5 +57,37 @@ public class BoardDaoImpl implements BoardDao { // 뭐 하면 자동으로 내�
 		int count = sqlSession.selectOne(NAMESPACE + "listCount", pagingDto);
 		return count;
 	}
+	
+	@Override
+	public void updateLikeCount(int like_count, int b_no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("like_count", like_count);
+		map.put("b_no", b_no);
+		sqlSession.update(NAMESPACE + "updateLikeCount", map);
+	}
 
+	@Override
+	public void insertAttach(String fileName, int b_no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("fileName", fileName);
+		map.put("b_no", b_no);
+		sqlSession.update(NAMESPACE + "insertAttach", map);
+	}
+	
+	@Override
+	public int getBnoNextval() {
+		int b_no = sqlSession.selectOne(NAMESPACE + "getBnoNextval");
+		return b_no;
+	}
+	
+	@Override
+	public String[] getFileNames(int b_no) {
+		List<String> filenames = sqlSession.selectList(NAMESPACE + "getFileNames", b_no);
+		String[] arr = new String[filenames.size()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = filenames.get(i);
+		}
+		return arr;
+	}
+	
 }
