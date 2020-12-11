@@ -56,8 +56,19 @@
 		where b_no = #{b_no}
 	</update>
 	
+	<update id="updateAttach">
+		update tbl_attach set
+			filename = #{filename}
+		where b_no = #{b_no}
+	</update>
+	
 	<delete id="deleteArticle">
 		delete from tbl_board
+		where b_no = #{b_no}
+	</delete>
+	
+	<delete id="deleteAttach">
+		delete from tbl_attach
 		where b_no = #{b_no}
 	</delete>
 	

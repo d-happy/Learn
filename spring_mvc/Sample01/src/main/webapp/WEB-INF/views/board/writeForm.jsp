@@ -36,6 +36,7 @@ $(function() {
 		e.preventDefault();
 	});
 	
+	// 첨부 파일 창에 보임
 	$("#fileDrop").on("drop", function(e) {
 		e.preventDefault();
 // 		console.log(e);
@@ -100,7 +101,7 @@ $(function() {
 // 		return false; // 전송 막기
 	});
 	
-	// 
+	// 첨부 파일 삭제
 	$("#uploadedList").on("click", ".a_times", function(e) {
 // 		$("#div_spinner").show();
 		$("#modal-spinner").trigger("click");
@@ -147,12 +148,9 @@ $(function() {
 						<div class="modal-body">
 							<img src="/resources/images/spinner.gif"/>
 						</div>
-						<div class="modal-footer">
-						</div>
+<!-- 						<div class="modal-footer"></div> -->
 					</div>
-					
 				</div>
-				
 			</div>
 			
 		</div>

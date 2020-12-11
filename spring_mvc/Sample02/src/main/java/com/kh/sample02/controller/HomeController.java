@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.sample01.util.MyFileUploadUtil;
 import com.kh.sample02.domain.MemberVo;
 import com.kh.sample02.service.MemberService;
 import com.kh.sample02.service.MessageService;
@@ -140,7 +139,7 @@ public class HomeController {
 	@ResponseBody
 	public String deleteAjax(String fileName) throws Exception {
 		System.out.println("fileName :" + fileName);
-		MyFileUploadUtil.deleteFile(fileName);
+		MyUploadFileUtil.deleteFile(fileName);
 		return "success";
 	}
 	

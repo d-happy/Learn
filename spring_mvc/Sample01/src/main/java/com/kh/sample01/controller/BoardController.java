@@ -91,7 +91,7 @@ public class BoardController {
 	@RequestMapping(value="/updateRun", method=RequestMethod.POST)
 	public String updateRun(BoardVo boardVo, PagingDto pagingDto, RedirectAttributes rttr) throws Exception {
 		boardService.updateArticle(boardVo);
-//		System.out.println("boardVo :" + boardVo);
+		System.out.println("boardVo :" + boardVo); // 파일 리무브하면, 여기로 지운건 안 넘어옴...
 //		System.out.println("pagingDto-update :" + pagingDto);
 		rttr.addFlashAttribute("msg", "updateSuccess");
 //		rttr.addAttribute("pagingDto", pagingDto);

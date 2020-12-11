@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@taglib prefix="myfn" uri="/WEB-INF/tlds/myfunc.tld" %>
+    
 <%@include file="../include/header.jsp"%>
 
 <style>
@@ -187,6 +190,7 @@ $(function() {
 
 ${boardVo}<br/>
 ${pagingDto}<br/><br/>
+${myfn:isImage("a.jpg")}
 
 <!-- frmPaging -->
 <%@include file="../include/frmPaging.jsp" %>
@@ -250,8 +254,17 @@ ${pagingDto}<br/><br/>
 				<div class="uploadedList">
 					<c:forEach var="filename" items="${boardVo.files}">
 					<div class="divUploaded text-center">
-						<img height="100" src='/displayImage?fileName=${filename}' class="img-rounded"/><br/>
-						<span>img</span>
+						<img height="100"
+						<c:choose>
+							<c:when test="${myfn:isImage(filename) == true}">
+								src='/displayImage?fileName=${filename}' 
+							</c:when>
+							<c:otherwise>
+								src="/resources/images/file_icon.png"
+							</c:otherwise>
+						</c:choose>
+						class="img-rounded"/><br/>
+						<span>${myfn:getShortName(filename)}</span>
 					</div>
 					</c:forEach>
 				</div>

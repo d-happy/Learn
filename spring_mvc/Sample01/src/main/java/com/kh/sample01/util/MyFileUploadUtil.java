@@ -167,4 +167,10 @@ public class MyFileUploadUtil {
 		}
 	}
 	
+	public static String getShortName(String filename) {
+		int underIndex = filename.indexOf("_");
+		String shortName = filename.substring(underIndex + 1);
+		return shortName;
+	}
+	
 } //MyFileUploadUtil 

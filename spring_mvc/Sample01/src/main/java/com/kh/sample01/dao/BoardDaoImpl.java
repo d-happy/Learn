@@ -90,4 +90,17 @@ public class BoardDaoImpl implements BoardDao { // 뭐 하면 자동으로 내�
 		return arr;
 	}
 	
+	@Override
+	public void deleteAttach(int b_no) {
+		sqlSession.delete(NAMESPACE + "deleteAttach", b_no);
+	}
+	
+	@Override
+	public void updateAttach(String fileName, int b_no) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("fileName", fileName);
+		map.put("b_no", b_no);
+		sqlSession.update(NAMESPACE + "updateAttach", map);
+	}
+	
 }
