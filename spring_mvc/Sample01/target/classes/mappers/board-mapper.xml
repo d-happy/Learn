@@ -28,8 +28,26 @@
 	<!-- 첨부파일 insert -->
 	<insert id="insertAttach">
 		insert into tbl_attach (fileName, b_no)
-		values (#{fileName}, #{b_no})
+		select #{fileName}, #{b_no} from dual
+		where not exists (
+			select 0 from tbl_attach
+			where fileName = #{fileName}
+			and b_no = #{b_no}
+		)
 	</insert>
+	
+	<!-- 첨부파일 deleteAll -->
+	<delete id="deleteAttachAll">
+		delete from tbl_attach
+		where b_no = #{b_no}
+	</delete>
+	
+	<!-- 첨부파일 delete 파일 따로따로 -->
+	<delete id="deleteAttach">
+		delete from tbl_attach
+		where fileName = #{fileName}
+		and b_no = #{b_no}
+	</delete>
 	
 	<select id="boardList" resultType="BoardVo">
 		select * from 
@@ -56,19 +74,14 @@
 		where b_no = #{b_no}
 	</update>
 	
-	<update id="updateAttach">
+	<!-- <update id="updateAttach">
 		update tbl_attach set
 			filename = #{filename}
 		where b_no = #{b_no}
-	</update>
+	</update> -->
 	
 	<delete id="deleteArticle">
 		delete from tbl_board
-		where b_no = #{b_no}
-	</delete>
-	
-	<delete id="deleteAttach">
-		delete from tbl_attach
 		where b_no = #{b_no}
 	</delete>
 	

@@ -44,43 +44,55 @@ $(function() {
 	});
 	
 	
-	
+	/* ---------------------------------------------------- */
 	$("#fileDrop").on("dragenter dragover", function(e) {
 		e.preventDefault();
 	});
 	
-	// x 클릭 - 첨부 파일 삭제 (눈에 보이는, 히든 인풋)
+	// x 클릭 - 첨부 파일 삭제 (눈에 보이는, 첨부파일 따로 각각 삭제)
 	$(".divUploaded").on("click", ".a_times", function(e) {
-// 		$("#modal-spinner").trigger("click");
+// 		e.preventDefault();
+		$("#modal-spinner").trigger("click");
 		var that = $(this);
-		e.preventDefault();
 		console.log("click");
-// 		that.parent().remove();
-		var fileName = $(this).parent().attr("data-fileName");
+		var b_no = $("#b_no").val();
+		var fileName = that.parent().attr("data-fileName");
+		var url_delete_attach = "/deleteAttach";
+		var sendData = {
+				"b_no" : b_no ,
+				"fileName" : fileName
+		};
+		$.post(url_delete_attach, sendData, function(data) {
+			console.log(data);
+			if (data == "success") {
+				
+			}
+		});
+		
 		var url = "/deleteAjax?fileName=" + fileName;
 		$.get(url, function(data) {
 			console.log(data);
 			if (data == "success") {
-// 				$("#modalClose").trigger("click");
+				$("#modalClose").trigger("click");
 				that.parent().remove();
 			}
 		});
 	});
 	
-	// 폼 전송 -> 이미지 아닌지, 썸네일 아니라 원본
-	$("#frmUpdate").submit(function() {
-		var div = $("#uploadedList > .divUploaded");
-		div.each(function(index) {
-			console.log($(this));
-			var fileName = $(this).attr("data-fileName"); 
-			var html = "<input type='hidden' name='files["+index+"]' value='"+fileName+"'/>";
-			console.log(html);
-			$("#frmUpdate").prepend(html);
-		});
-// 		return false; // 전송 막기
-	});
+// 	// 폼 전송 -> 이미지 아닌지, 썸네일 아니라 원본
+// 	$("#frmUpdate").submit(function() {
+// 		var div = $("#uploadedList > .divUploaded");
+// 		div.each(function(index) {
+// 			console.log($(this));
+// 			var fileName = $(this).attr("data-fileName"); 
+// 			var html = "<input type='hidden' name='files["+index+"]' value='"+fileName+"'/>";
+// 			console.log(html);
+// 			$("#frmUpdate").prepend(html);
+// 		});
+// // 		return false; // 전송 막기
+// 	});
 	
-	// 첨부 파일 창에 보임
+	// 첨부 파일 창에 보임 + 저장 폴더에 저장 + 테이블에 
 	$("#fileDrop").on("drop", function(e) {
 		e.preventDefault();
 // 		console.log(e);
@@ -96,13 +108,13 @@ $(function() {
 			"method" : "post",
 			"url" : url,
 			"data" : formData,
-			"success" : function(data) {
+			"success" : function(data) { // 원래 파일 이름
 				var slashIndex = data.lastIndexOf("/");
 				var front = data.substring(0, slashIndex + 1); // G:/upload/2020/12/9/
 				var rear = data.substring(slashIndex + 1); //  uuid_name.jpg
 				var fileName = front + "sm_" + rear; // G:/upload/2020/12/9/sm_uuid_name
 				
-				var div = $("#uploadedList").prev().clone();
+				var div = $("#uploadedList").prev().clone(); // divUploaded
 				div.attr("data-fileName", data);
 				var img = div.find("img");
 				if (isImage(rear)) {
@@ -110,13 +122,14 @@ $(function() {
 				}
 				var span = div.find("span");
 				span.text(fileName.substring(fileName.lastIndexOf("_") + 1));
+				div.find(".a_times").attr("data-fileName", data);
 				
 				$("#uploadedList").append(div);
 				div.show();
 			}
 		});
 	});
-	
+	/* ---------------------------------------------------- */
 	
 	
 	$("#btnList").click(function(e) {
@@ -126,6 +139,14 @@ $(function() {
 	
 	// 수정 완료 버튼
 	$("#btnUpdateFinish").click(function() {
+		var div = $("#uploadedList > .divUploaded");
+		div.each(function(index) {
+			var fileName = $(this).attr("data-fileName"); 
+			var html = "<input type='hidden' name='files["+index+"]' value='"+fileName+"'/>";
+			console.log(html);
+			$("#frmUpdate").prepend(html);
+		});
+		
 		$("#frmPaging > input").prependTo($("#frmUpdate")); // prepend : 앞에 붙임
 		console.log("updateRun");
 		$("#frmUpdate").submit();
@@ -135,10 +156,10 @@ $(function() {
 	// 삭제 버튼
 	$("#btnDelete").click(function(e) {
 		e.preventDefault();
-		var div = $("#uploadedList > .divUploaded");
-		div.each(function(index) {
-			div.find(".a_times").trigger("click");
-		});
+// 		var div = $("#uploadedList > .divUploaded");
+// 		div.each(function(index) {
+// 			div.find(".a_times").trigger("click");
+// 		});
 		$("#frmPaging").attr("action", "/board/deleteRun");
 		$("#frmPaging").submit();
 	})
@@ -307,38 +328,67 @@ $(function() {
 <%@include file="../include/frmPaging.jsp" %>
 <!-- // frmPaging -->
 
-<!-- 댓글 수정 모달 창 -->
-<div class="row" id="divModal">
-	<input type="hidden" name="c_no"/>
-	<div class="col-md-12">
-		 <a id="modal-modify" href="#modal-container-modify" role="button" 
-		 class="btn" data-toggle="modal" style="display:none;">댓글 수정 모달창</a>
-		
-		<div class="modal fade" id="modal-container-modify" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="myModalLabel">댓글 수정</h5>
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<input id="commentContentModify" type="text" class="form-control"/>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="commentModalSave">저장</button>
-						<button type="button" class="btn btn-secondary" 
-						data-dismiss="modal" id="commentModalClose">닫기</button>
+<div class="container-fluid">
+
+	<!-- 스피너 모달 창 -->
+	<div class="row">
+		<div class="col-md-12">
+			 <a id="modal-spinner" href="#modal-container-spinner" role="button" 
+			 class="btn" data-toggle="modal" style="display:none;">스피너 모달</a>
+			
+			<div class="modal fade" id="modal-container-spinner" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">
+								파일 삭제중...
+							</h5> 
+							<button id="modalClose" type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<img src="/resources/images/spinner.gif"/>
+						</div>
 					</div>
 				</div>
 			</div>
+			
 		</div>
-		
 	</div>
-</div>
+	<!-- //스피너 모달 창 -->
 
-<div class="container-fluid">
+	<!-- 댓글 수정 모달 창 -->
+	<div class="row" id="divModal">
+		<input type="hidden" name="c_no"/>
+		<div class="col-md-12">
+			 <a id="modal-modify" href="#modal-container-modify" role="button" 
+			 class="btn" data-toggle="modal" style="display:none;">댓글 수정 모달창</a>
+			
+			<div class="modal fade" id="modal-container-modify" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">댓글 수정</h5>
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<input id="commentContentModify" type="text" class="form-control"/>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" id="commentModalSave">저장</button>
+							<button type="button" class="btn btn-secondary" 
+							data-dismiss="modal" id="commentModalClose">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<!-- //댓글 수정 모달 창 -->
 
 ${boardVo}<br/>
 ${pagingDto}<br/><br/>
@@ -347,7 +397,7 @@ ${pagingDto}<br/><br/>
 		<div class="col-md-12">
 		
 			<form id="frmUpdate" role="form" action="/board/updateRun" method="post">
-<%-- 				<input type="hidden" name="b_no" value="${boardVo.b_no}"/> --%>
+				<input type="hidden" id="b_no" name="b_no" value="${boardVo.b_no}"/>
 
 <%-- 				<c:forEach var="filename" items="${boardVo.files}"> --%>
 <%-- 					<input type="hidden" name=files value="${filename}"  --%>
@@ -377,7 +427,7 @@ ${pagingDto}<br/><br/>
 				<div>
 					<label id="lblFile" style="display:none;">첨부할 파일을 드래그 &amp; 드롭하세요</label>
 					<div id="fileDrop"></div>
-				</div>
+<!-- 				</div> -->
 				
 				<!-- 파일 하나당 표현할 영역 -->
 				<div class="divUploaded" style="display:none;">

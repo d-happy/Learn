@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
@@ -83,12 +85,26 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/loginRun", method=RequestMethod.POST)
-	public String loginRun(String user_id, String user_pw, 
-						 HttpSession session, RedirectAttributes rttr) throws Exception {
+	public String loginRun(String user_id, String user_pw, String saveId,
+						 HttpSession session, RedirectAttributes rttr,
+						 HttpServletResponse response) throws Exception {
 		MemberVo memberVo = memberService.login(user_id, user_pw);
 		System.out.println("memberVo :" + memberVo);
 		String page = "";
 		if (memberVo != null) {
+			
+			Cookie cookie = new Cookie("saveId", user_id);
+			if (saveId != null && !saveId.equals("")) {
+				cookie.setMaxAge(60 * 60 * 24 * 7); // 1주일
+			} else {
+				cookie.setMaxAge(0); // 유효기간 0 -> 바로 없애겠다
+			}
+			response.addCookie(cookie);
+			
+			int notReadCount = messageService.notReadCount(user_id);
+			memberVo.setNotReadCount(notReadCount);
+			session.setAttribute("memberVo", memberVo);
+			
 			rttr.addFlashAttribute("msg", "loginSuccess");
 			String targetLocation = (String) session.getAttribute("targetLocation");
 			if (targetLocation != null) {
@@ -96,9 +112,6 @@ public class HomeController {
 			} else {
 				page = "redirect:/board/listAll2";
 			}
-			int notReadCount = messageService.notReadCount(user_id);
-			memberVo.setNotReadCount(notReadCount);
-			session.setAttribute("memberVo", memberVo);
 		} else {
 			rttr.addFlashAttribute("msg", "loginFail");
 			page = "redirect:loginForm";

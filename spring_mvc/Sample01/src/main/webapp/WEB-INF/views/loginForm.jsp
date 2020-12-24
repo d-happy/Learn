@@ -21,15 +21,18 @@
 				<div class="form-group">
 					<label for="user_id">아이디</label> 
 					<input type="text" class="form-control" id="user_id" name="user_id" 
-						required value="user01"/>
+						value="${cookie.saveId.value}" required/>
 				</div>
 				<div class="form-group">
 					<label for="user_pw">비밀번호</label>
-					 <input type="password" class="form-control" id="user_pw" name="user_pw" 
-					 	required value="1234"/>
+					 <input type="password" class="form-control" id="user_pw" name="user_pw" required/>
 				</div>
 				<div class="checkbox">
-					<label><input type="checkbox"/>아이디 저장</label>
+					<label><input type="checkbox" name="saveId"
+					<c:if test="${not empty cookie.saveId.value}">
+						checked
+					</c:if>
+					/>아이디 저장</label>
 				</div>
 				<button type="submit" class="btn btn-primary">로그인</button>
 			</form>

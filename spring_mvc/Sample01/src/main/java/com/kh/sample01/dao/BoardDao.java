@@ -29,9 +29,11 @@ public interface BoardDao {
 	public int getBnoNextval();
 	// 첨부파일명
 	public String[] getFileNames(int b_no);
-	//첨부파일 삭제
-	public void deleteAttach(int b_no);
+	//첨부파일 삭제 따로따로
+	public void deleteAttach(int b_no, String fileName);
+	//첨부파일 삭제 전부
+	public void deleteAttachAll(int b_no);
 	//첨부파일 수정
-	public void updateAttach(String fileName, int b_no);
+//	public void updateAttach(String fileName, int b_no);
 	
 }

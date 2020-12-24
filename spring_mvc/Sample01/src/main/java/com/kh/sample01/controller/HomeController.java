@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.sample01.domain.MemberVo;
+import com.kh.sample01.service.BoardService;
 import com.kh.sample01.service.MemberService;
 import com.kh.sample01.service.MessageService;
 import com.kh.sample01.util.MyFileUploadUtil;
@@ -34,6 +37,9 @@ public class HomeController {
 	
 	@Inject
 	private MessageService messageService;
+	
+	@Inject
+	private BoardService boardService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -83,11 +89,22 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/loginRun", method=RequestMethod.POST)
-	public String loginRun(String user_id, String user_pw, 
-						   HttpSession session, RedirectAttributes rttr) throws Exception {
+	public String loginRun(String user_id, String user_pw, String saveId,
+						   HttpSession session, RedirectAttributes rttr, 
+						   HttpServletResponse response) throws Exception {
 		MemberVo memberVo = memberService.login(user_id, user_pw);
 		String page = "";
 		if (memberVo != null) {
+			
+			// String saveId(input checkbox) -> 아이디 저장 선택하면 on 아니면 null
+			Cookie cookie = new Cookie("saveId", user_id);
+			if (saveId != null && !saveId.equals("")) {
+				cookie.setMaxAge(60 * 60 * 24 * 7); // 1주일
+			} else {
+				cookie.setMaxAge(0); // 유효기간 0 -> 바로 없애겠다
+			}
+			response.addCookie(cookie);
+			
 			int notReadCount = messageService.notReadCount(memberVo.getUser_id());
 			memberVo.setNotReadCount(notReadCount);
 			session.setAttribute("memberVo", memberVo);
@@ -139,6 +156,13 @@ public class HomeController {
 	public String deleteAjax(String fileName) throws Exception {
 		System.out.println("fileName :" + fileName);
 		MyFileUploadUtil.deleteFile(fileName);
+		return "success";
+	}
+	
+	@RequestMapping(value="/deleteAttach", method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteAttach(int b_no, String fileName) throws Exception {
+		boardService.deleteAttach(b_no, fileName);
 		return "success";
 	}
 	

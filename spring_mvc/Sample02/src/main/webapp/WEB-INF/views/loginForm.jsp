@@ -30,6 +30,13 @@ $(function() {
 					<input type="password" class="form-control" id="user_pw" name="user_pw" 
 					value="1234" required/>
 				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" name="saveId"
+					<c:if test="${not empty cookie.saveId.value}">
+						checked
+					</c:if>
+					/>아이디 저장</label>
+				</div>
 				<button type="submit" class="btn btn-primary">로그인</button>
 			</form>
 		</div>

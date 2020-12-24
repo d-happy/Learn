@@ -91,10 +91,19 @@ public class BoardDaoImpl implements BoardDao { // 뭐 하면 자동으로 내�
 	}
 	
 	@Override
-	public void deleteAttach(int b_no) {
-		sqlSession.delete(NAMESPACE + "deleteAttach", b_no);
+	public void deleteAttach(int b_no, String fileName) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("fileName", fileName);
+		map.put("b_no", b_no);
+		sqlSession.delete(NAMESPACE + "deleteAttach", map);
 	}
 	
+	@Override
+	public void deleteAttachAll(int b_no) {
+		sqlSession.delete(NAMESPACE + "deleteAttachAll", b_no);
+	}
+	
+	/*
 	@Override
 	public void updateAttach(String fileName, int b_no) {
 		Map<String, Object> map = new HashMap<>();
@@ -103,4 +112,5 @@ public class BoardDaoImpl implements BoardDao { // 뭐 하면 자동으로 내�
 		sqlSession.update(NAMESPACE + "updateAttach", map);
 	}
 	
+	*/
 }

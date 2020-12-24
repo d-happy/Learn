@@ -16,6 +16,7 @@ import com.kh.sample01.domain.MemberVo;
 import com.kh.sample01.domain.PagingDto;
 import com.kh.sample01.service.BoardService;
 import com.kh.sample01.service.LikeService;
+import com.kh.sample01.util.MyFileUploadUtil;
 import com.kh.sample01.util.MyUrlUtil;
 
 @Controller // @Controller 라고 정의
@@ -101,8 +102,19 @@ public class BoardController {
 	
 	@RequestMapping(value="/deleteRun", method=RequestMethod.GET)
 	public String deleteRun(int b_no, PagingDto pagingDto, RedirectAttributes rttr) throws Exception {
+		
+		BoardVo boardVo = boardService.selectArticle(b_no);
+		String[] arr = boardVo.getFiles();
+		if (arr != null) {
+			for (int i =0; i < arr.length; i++) {
+				String fileName = arr[i];
+				MyFileUploadUtil.deleteFile(fileName);
+			}
+		}
+		
 		boardService.deleteArticle(b_no);
 		rttr.addFlashAttribute("msg", "deleteSuccess");
+		
 		String url = MyUrlUtil.makePagingUrl(pagingDto);
 		return "redirect:/board/listAll" + url;
 	}

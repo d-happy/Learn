@@ -22,6 +22,9 @@ public interface BoardService { // 메소드 정의한 인터페이스
 	//글 삭제
 	public void deleteArticle(int b_no);
 	
+	//첨부 파일 삭제 따로따로
+	public void deleteAttach(int b_no, String fileName);
+	
 	//조회수 증가
 	public void updateViewCnt(int b_no);
 	

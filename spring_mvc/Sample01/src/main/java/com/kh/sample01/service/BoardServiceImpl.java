@@ -49,21 +49,34 @@ public class BoardServiceImpl implements BoardService { // 메소드 오버라�
 
 	@Override
 	public void updateArticle(BoardVo boardVo) {
-		boardDao.deleteAttach(boardVo.getB_no());
-		boardDao.updateArticle(boardVo);
+//		boardDao.deleteAttach(boardVo.getB_no());
 		String[] files = boardVo.getFiles();
 		if (files != null && files.length > 0) { // 첨부파일 있다면
 			for (String fileName : files) {
 				boardDao.insertAttach(fileName, boardVo.getB_no());
 			}
 		}
+		boardDao.updateArticle(boardVo);
 	}
 
+	/*
 	@Override
 	@Transactional
 	public void deleteArticle(int b_no) { // 아니면 에러 ORA-02292 뜸
 		boardDao.deleteAttach(b_no); // tbl_attach의 b_no는 tbl_board 참조하니까
 		boardDao.deleteArticle(b_no); // 먼저 tbl_attach 삭제 -> tbl_board 삭제해야함
+	}
+	*/
+	
+	@Override
+	public void deleteArticle(int b_no) {
+		boardDao.deleteAttachAll(b_no);
+		boardDao.deleteArticle(b_no); 
+	}
+	
+	@Override
+	public void deleteAttach(int b_no, String fileName) {
+		boardDao.deleteAttach(b_no, fileName);
 	}
 	
 	@Override
